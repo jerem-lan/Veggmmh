@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap');
+
+/* ----------------------------
+	Base
+---------------------------- */
+* {
+  -webkit-font-smoothing : none;
+  -webkit-font-smoothing : antialiased;
+  -webkit-font-smoothing : subpixel-antialiased;
+  box-sizing: border-box;
+}
+body {
+  background-color: #FCFBF7;
+  font-family: 'Quicksand', sans-serif;
+  color: #444;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+h1,h2,h3,h4,h5,h6 {
+  margin: 0;
+  padding: 0;
+}
+input::placeholder {
+  opacity: 1;
+}
+
+/* ----------------------------
+Connexion
+---------------------------- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; 
+  height: 600px;
+  align-content: center;
+}
+input:focus,
+select:focus {
+    outline: none;
+}
+.subscriptionInput {
+    margin: 15px 0;
+    padding-bottom: 10px;
+    background-color: #FCFBF7;
+    border: none;
+    border-bottom: 1px solid #444;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1em;
+    font-weight: 600;
+    width: 290px ;
+  }
+/* input[type="text"]:disabled,
+input[type="text"]:read-only {
+    background-color: transparent;
+    border-bottom-color: #a5a5a5;
+    color: #a5a5a5;
+} */
+.subscriptionInput::placeholder {
+    color: #444;
+}
+
+.alert--error {
+  color: red;
+}
+
+.Button--subscription {
+  display: inline-block;
+  border: none;
+	background-color: #56B693;
+	font-size: 0;
+  padding: 20px;
+  margin: 0;
+  text-decoration: none;
+  border-radius: 50%;
+  align-self: flex-end;
+}
+
+/* ----------------------------
+Link
+---------------------------- */
+
+a {
+  outline: none;
+  text-decoration: underline;
+  font-weight: 600;
+}
+a:link {
+  color: #444;
+}
+a:visited {
+  color: #444;
+}
+a:focus {
+  color: #444;
+}
+a:hover {    
+  color: #56B693;
+}
+a:active {
+  color: #444;
+}
+
+
+/* ----------------------------
+NotFound
+---------------------------- */
+.Content {
+  width: 360px;
+  background-color: #FCFBF7;
+  border: 1px solid black;
+  padding: 20px;
+}
+.Section {
+  padding: 1px;
+}
+.SectionTitle {
+  cursor: pointer;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+.SectionContent {
+  transition: .2s;
+}
+.iconArrow {
+  transition: .2s;
+  margin-right: 10px;
+}
+.hideSection > .SectionContent {
+  animation: .3s hideSection;
+  animation-fill-mode: forwards;
+}
+.hideSection > .SectionTitle > .iconArrow {
+  transform: rotate(-90deg);
+}
+@keyframes hideSection {
+  40% {transform: translateY(-20px); opacity: 0;}
+  100% {transform: translateY(-20px); opacity: 0; height: 0}
+}
+.Tools {
+  margin-left: auto;
+}
+.Button {
+  transition: .2s;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+.Button:hover {
+  transform: scale(1.2);
+}
+.Button--fav {
+  margin-right: 15px;
+}
+.Card {
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 60px;
+  transition: .2s;
+  border-radius: 10px;
+  background-color: #ECF5EE;
+}
+.Card:hover {
+  transform: translateX(5px);
+}
+.CardTitle {
+  max-width: 220px;
+}
+
+/* ----------------------------
+	NotFound
+---------------------------- */
+.notFound {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	margin: 0;
+	background: #eceff1;
+}
