@@ -1,26 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './index.css';
+import './styles/App.css';
 
-import App from './App';
+import IndexPage from './components/IndexPage'
 import LoginPage from './components/LoginPage'
 import RegistrationPage from './components/RegistrationPage'
-// import PrivateRoute from './components/'
+import DashboardPage from './components/DashboardPage';
+import DashboardFavPage from './components/DashboardFavPage';
 import NotFound from './components/NotFound'
 
 import * as serviceWorker from './serviceWorker';
 
-import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 const Root = () => (
     <Router>
         <Switch>
-            {/* <PrivateRoute exact path='/' component={App} /> */}
-            <Route exact path='/' component={LoginPage} />
+            <Route exact path='/' component={IndexPage} />
+            <Route path='/login' component={LoginPage} />
             <Route path='/register' component={RegistrationPage} />
-            <Route path='/dashboard/:username' component={App} />
-            {/* <Redirect from="*" to="/" /> */}
+            <Route path='/dashboard/:username' component={DashboardPage} />
+            <Route path='/mon-espace/:username' component={DashboardFavPage} />
             <Route component={NotFound} />
         </Switch>
     </Router>
