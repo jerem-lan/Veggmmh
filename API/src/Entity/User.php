@@ -49,7 +49,6 @@ class User implements UserInterface
      * @Assert\Length(
      *                  min = 8,
      *                  minMessage = "Le mot de passe doit contenir 8 caractères minimum.")
-     * @Groups({ "users_read" })
      */
     private $password;
 
@@ -102,9 +101,8 @@ class User implements UserInterface
     private $postcode;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Date d'inscription manquante.")
-     * @Assert\DateTime(message="La date doit être au format JJ-MM-YYYY")
      * @Groups({ "users_read" })
      */
     private $registrationDate;
@@ -116,16 +114,19 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Ad", mappedBy="user", orphanRemoval=true)
+     * @Groups({ "users_read" })
      */
     private $ad;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="user")
+     * @Groups({ "users_read" })
      */
     private $recipe;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Recipe")
+     * @Groups({ "users_read" })
      */
     private $bookmark;
 
@@ -258,12 +259,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRegistrationDate(): ?\DateTimeInterface
+    public function getRegistrationDate(): ?string
     {
         return $this->registrationDate;
     }
 
-    public function setRegistrationDate(\DateTimeInterface $registrationDate): self
+    public function setRegistrationDate(string $registrationDate): self
     {
         $this->registrationDate = $registrationDate;
 
