@@ -6,11 +6,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- *  @ApiResource()
+ *  @ApiResource(
+ *      normalizationContext = {"groups"= { "users_read" }}
+ * )
+ * @UniqueEntity("username", message="Nom d'utilisateur déjà existant.")
+ * @UniqueEntity("email", message="Adresse mail déjà existante.")
  */
 class User implements UserInterface
 {
@@ -18,11 +25,15 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({ "users_read" })
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotNull(message="Email manquant.")
+     * @Assert\Email(message="Format d'email invalide.")
+     * @Groups({ "users_read" })
      */
     private $email;
 
@@ -34,31 +45,67 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Mot de passe manquant.")
+     * @Assert\Length(
+     *                  min = 8,
+     *                  minMessage = "Le mot de passe doit contenir 8 caractères minimum.")
+     * @Groups({ "users_read" })
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="nom d'utilisateur manquant.")
+     * @Assert\Length(
+     *                  min = 3,
+     *                  max = 20,
+     *                  minMessage = "Le nom d'utilisateur doit contenir 3 caractères minimum.",
+     *                  maxMessage = "Le nom d'utilisateur doit contenir 20 caractères maximum.")
+     * @Groups({ "users_read" })
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="prénom manquant.")
+     * @Assert\Length(
+     *                  min = 2,
+     *                  max = 20,
+     *                  minMessage = "Le prénom doit contenir 2 caractères minimum.",
+     *                  maxMessage = "Le prénom doit contenir 20 caractères maximum.")
+     * @Groups({ "users_read" })
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="nom manquant.")
+     * @Assert\Length(
+     *                  min = 2,
+     *                  max = 20,
+     *                  minMessage = "Le nom doit contenir 2 caractères minimum.",
+     *                  maxMessage = "Le nom doit contenir 20 caractères maximum.")
+     * @Groups({ "users_read" })
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="code postal manquant.")
+     * @Assert\Length(
+     *                  min = 5,
+     *                  max = 5,
+     *                  exactMessage = "Le code postal doit contenir 5 caractères.")
+     * @Assert\Type(type="numeric")
+     * @Groups({ "users_read" })
      */
     private $postcode;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message="Date d'inscription manquante.")
+     * @Assert\DateTime(message="La date doit être au format JJ-MM-YYYY")
+     * @Groups({ "users_read" })
      */
     private $registrationDate;
 
@@ -114,7 +161,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
     /**
