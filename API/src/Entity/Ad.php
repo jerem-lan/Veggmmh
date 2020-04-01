@@ -19,7 +19,7 @@ class Ad
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string")
      */
     private $creationDate;
 
@@ -39,7 +39,7 @@ class Ad
     private $postcode;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $modificationDate;
 
@@ -54,12 +54,12 @@ class Ad
         return $this->id;
     }
 
-    public function getCreationDate(): ?\DateTimeInterface
+    public function getCreationDate(): ?string
     {
         return $this->creationDate;
     }
 
-    public function setCreationDate(\DateTimeInterface $creationDate): self
+    public function setCreationDate(string $creationDate): self
     {
         $this->creationDate = $creationDate;
 
@@ -102,12 +102,12 @@ class Ad
         return $this;
     }
 
-    public function getModificationDate(): ?\DateTimeInterface
+    public function getModificationDate(): ?string
     {
         return $this->modificationDate;
     }
 
-    public function setModificationDate(?\DateTimeInterface $modificationDate): self
+    public function setModificationDate(?string $modificationDate): self
     {
         $this->modificationDate = $modificationDate;
 

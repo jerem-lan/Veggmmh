@@ -4,10 +4,17 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RecipeRepository")
- * @ApiResource()
+ * @ApiResource(
+ *      subresourceOperations = {
+ *          "api_users_recipes_get_subresource" = {
+ *              "normalization_context" = { "groups" = {"recipes_subresource"}}
+ *          }
+ *      }
+ * )
  */
 class Recipe
 {
@@ -15,51 +22,61 @@ class Recipe
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"recipes_subresource"})
      */
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string")
+     * @Groups({"recipes_subresource"})
      */
     private $creationDate;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"recipes_subresource"})
      */
     private $ingredients;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"recipes_subresource"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"recipes_subresource"})
      */
     private $nbServings;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"recipes_subresource"})
      */
     private $preparationTime;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"recipes_subresource"})
      */
     private $steps;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"recipes_subresource"})
      */
     private $notes;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"recipes_subresource"})
      */
     private $recipeTitle;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups({"recipes_subresource"})
      */
     private $rating;
 
@@ -73,12 +90,12 @@ class Recipe
         return $this->id;
     }
 
-    public function getCreationDate(): ?\DateTimeInterface
+    public function getCreationDate(): ?string
     {
         return $this->creationDate;
     }
 
-    public function setCreationDate(\DateTimeInterface $creationDate): self
+    public function setCreationDate(?string $creationDate): self
     {
         $this->creationDate = $creationDate;
 

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,6 +15,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  *  @ApiResource(
+ *      subresourceOperations = {
+ *          "ingredients_get_subresource" = {"path" = "/users/{id}/ingredients"},
+ *          "recipes_get_subresource" = {"path" = "/users/{id}/recipes"},
+ *          "ads_get_subresource" = {"path" = "/users/{id}/ads"},
+ *          "bookmarks_get_subresource" = {"path" = "/users/{id}/bookmarks"}
+ *      },
  *      normalizationContext = {"groups"= { "users_read" }}
  * )
  * @UniqueEntity("username", message="Nom d'utilisateur déjà existant.")
@@ -31,7 +38,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotNull(message="Email manquant.")
+     * @Assert\NotBlank(message="Email manquant.")
      * @Assert\Email(message="Format d'email invalide.")
      * @Groups({ "users_read" })
      */
@@ -109,24 +116,28 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Ingredient", mappedBy="user")
+     * @ApiSubresource
      */
     private $ingredient;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Ad", mappedBy="user", orphanRemoval=true)
      * @Groups({ "users_read" })
+     * @ApiSubresource
      */
     private $ad;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="user")
      * @Groups({ "users_read" })
+     * @ApiSubresource
      */
     private $recipe;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Recipe")
      * @Groups({ "users_read" })
+     * @ApiSubresource
      */
     private $bookmark;
 
@@ -264,7 +275,7 @@ class User implements UserInterface
         return $this->registrationDate;
     }
 
-    public function setRegistrationDate(string $registrationDate): self
+    public function setRegistrationDate(?string $registrationDate): self
     {
         $this->registrationDate = $registrationDate;
 
