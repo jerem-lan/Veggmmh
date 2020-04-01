@@ -10,7 +10,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdRepository")
  *  @ApiResource(
- *      normalizationContext = {"groups"= { "ads_read" }}
+ *      subresourceOperations = {
+ *          "api_users_ingredients_get_subresource" = {
+ *              normalization_context = {"groups"= {"ads_subresource"}}
+ *          }
+ *      },
+ *      normalizationContext = {"groups"= {"ads_read"}}
  * )
  */
 class Ad
@@ -19,14 +24,14 @@ class Ad
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({ "ads_read" })
+     * @Groups({ "ads_read", "ads_subresource" })
      */
     private $id;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Date de création de l'annonce manquante.")
-     * @Groups({ "ads_read" })
+     * @Groups({ "ads_read", "ads_subresource" })
      */
     private $creationDate;
 
@@ -38,7 +43,7 @@ class Ad
      *                  max = 55,
      *                  minMessage = "Le titre de l'annonce doit contenir 5 caractères minimum.",
      *                  maxMessage = "Le titre de l'annonce doit contenir 55 caractères maximum.")
-     * @Groups({ "ads_read" })
+     * @Groups({ "ads_read", "ads_subresource" })
      */
     private $title;
 
@@ -50,7 +55,7 @@ class Ad
      *                  max = 4000,
      *                  minMessage = "La description de l'annonce doit contenir 15 caractères minimum.",
      *                  maxMessage = "La description de l'annonce doit contenir 4000 caractères maximum.")
-     * @Groups({ "ads_read" })
+     * @Groups({ "ads_read", "ads_subresource" })
      */
     private $content;
 
@@ -62,20 +67,21 @@ class Ad
      *                  max = 5,
      *                  exactMessage = "Le code postal doit contenir 5 caractères.")
      * @Assert\Type(type="numeric")
-     * @Groups({ "ads_read" })
+     * @Groups({ "ads_read", "ads_subresource" })
      */
     private $postcode;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank(message="Date de modification de l'annonce manquante.")
-     * @Groups({ "ads_read" })
+     * @Groups({ "ads_read", "ads_subresource" })
      */
     private $modificationDate;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="ad")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({ "ads_read" })
      */
     private $user;
 
