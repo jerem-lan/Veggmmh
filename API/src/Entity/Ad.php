@@ -73,7 +73,6 @@ class Ad
 
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank(message="Date de modification de l'annonce manquante.")
      * @Groups({ "ads_read", "ads_subresource" })
      */
     private $modificationDate;
