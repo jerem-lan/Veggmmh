@@ -1,20 +1,20 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment, useState } from 'react'
 import ProfilCartouche from './ProfilCartouche'
 import Header from './Header'
 import AlertMessage from './AlertMessage'
 import FeatureBlock from './FeatureBlock'
 import featureBlocksData from '../BDD/featureBlocksData'
 import AuthApi from '../services/authApi';
+import UserApi from '../services/userApi';
 
 class DashboardPage extends Component {
-
+   
     state = { 
-        postcode: '',
-        email: '',
-        username: '',
-        password: '',
-        alertMessage: "Format de mot de passe incorrect",
-        featureBlocksData: featureBlocksData
+        user: []
+    }
+
+    componentDidMount() {
+        UserApi.getUserInfo()
     }
     
 
@@ -25,7 +25,7 @@ class DashboardPage extends Component {
     }
 
     render() {
-        const username = this.props.match.params.username
+        const username = this.state.user.firstname + " " + this.state.user.lastname
         // const { featureBlocksData }  = this.state
         if ( AuthApi.setup() ) {     
             return (
@@ -42,9 +42,9 @@ class DashboardPage extends Component {
                             <p className='title--category'>Modifier mes informations</p>
                         </div>
                         <form className='form'>
-                            <input name='postcode' value={this.state.postcode} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder={this.state.postcode}  pattern="[0-9]{5}" required/>
-                            <input name='email' value={this.state.email} onChange={this.handleChange} className="subscriptionInput" type="email" placeholder={this.state.email} required/>
-                            <input name='username' value={this.state.username} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder={this.state.username} pattern='[A-Za-z-]{1,}' required/>
+                            <input name='postcode' value={this.state.user.postcode} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder={this.state.user.postcode}  pattern="[0-9]{5}" required/>
+                            <input name='email' value={this.state.user.email} onChange={this.handleChange} className="subscriptionInput" type="email" placeholder={this.state.user.email} required/>
+                            <input name='username' value={this.state.user.username} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder={this.state.user.username} pattern='[A-Za-z-]{1,}' required/>
                             <input name='password' value="" className="subscriptionInput" type="password" placeholder="Nouveau mot de passe" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" />
                             <input name='password' value="" className="subscriptionInput" type="password" placeholder="Confirmer le mot de passe" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" />
                             <AlertMessage message={this.state.alertMessage}/>
