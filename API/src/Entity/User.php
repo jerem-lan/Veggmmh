@@ -31,7 +31,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotNull(message="Email manquant.")
+     * @Assert\NotBlank(message="Email manquant.")
      * @Assert\Email(message="Format d'email invalide.")
      * @Groups({ "users_read" })
      */
