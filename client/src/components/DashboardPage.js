@@ -4,17 +4,19 @@ import Header from './Header'
 import AlertMessage from './AlertMessage'
 import FeatureBlock from './FeatureBlock'
 import featureBlocksData from '../BDD/featureBlocksData'
+import AuthApi from '../services/authApi';
 
 class DashboardPage extends Component {
 
     state = { 
-        postcode: '59370',
-        email: 'johndoe@gmail.com',
-        username: 'Dodoe',
-        password: '1234',
+        postcode: '',
+        email: '',
+        username: '',
+        password: '',
         alertMessage: "Format de mot de passe incorrect",
         featureBlocksData: featureBlocksData
     }
+    
 
     //Récupere les informations tapées dans le formulaire
     handleChange = (event) => {
@@ -24,9 +26,10 @@ class DashboardPage extends Component {
 
     render() {
         const username = this.props.match.params.username
-        const { featureBlocksData }  = this.state
-        return (
-            <Fragment>
+        // const { featureBlocksData }  = this.state
+        if ( AuthApi.setup() ) {     
+            return (
+                <Fragment>
                 <Header/>
                 <div className="container container--dashboard">
                     <div className="profilContainer">
@@ -60,8 +63,25 @@ class DashboardPage extends Component {
                     </div>
                 </div>
             </Fragment>
-        );
-    }
+                )}
+            return (
+                <Fragment>
+                    <Header/>
+                    <div className="container container--dashboard">
+                    <div className="featureBlocks">
+                    {
+                        Object.keys(featureBlocksData)
+                            .map(key => <FeatureBlock
+                                key={key}
+                                id={key} 
+                                featureBlocksData={featureBlocksData}/>)
+                    }
+                    </div>
+                    </div>
+                </Fragment>
+            )
+        }
+       
 }
 
 export default DashboardPage;

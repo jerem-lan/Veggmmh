@@ -20,8 +20,8 @@ const Root = () => (
             <Route exact path='/' component={IndexPage} />
             <Route path='/login' component={LoginPage} />
             <Route path='/register' component={RegistrationPage} />
-            <Route path='/dashboard/:username' component={DashboardPage} />
-            <Route path='/mon-espace/:username' component={DashboardFavPage} />
+            <Route path='/dashboard/' component={DashboardPage} />
+            <Route path='/mon-espace/' component={DashboardFavPage} />
             <Route component={NotFound} />
         </Switch>
     </Router>
