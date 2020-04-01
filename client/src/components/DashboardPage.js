@@ -5,7 +5,8 @@ import AlertMessage from './AlertMessage'
 import FeatureBlock from './FeatureBlock'
 import featureBlocksData from '../BDD/featureBlocksData'
 import AuthApi from '../services/authApi';
-import UserApi from '../services/userApi';
+import Axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 class DashboardPage extends Component {
    
@@ -14,7 +15,16 @@ class DashboardPage extends Component {
     }
 
     componentDidMount() {
-        UserApi.getUserInfo()
+        const token = window.localStorage.getItem("authToken")
+        const  decoded = jwtDecode(token)
+        const id = decoded.id
+        
+        Axios
+            .get("http://127.0.0.1:8000/api/users/"+id)
+            .then(res => {
+                const user = res.data;
+                this.setState({ user });
+            }) 
     }
     
 
