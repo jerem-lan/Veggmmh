@@ -4,10 +4,19 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdRepository")
- * @ApiResource()
+ *  @ApiResource(
+ *      subresourceOperations = {
+ *          "api_users_ingredients_get_subresource" = {
+ *              normalization_context = {"groups"= {"ads_subresource"}}
+ *          }
+ *      },
+ *      normalizationContext = {"groups"= {"ads_read"}}
+ * )
  */
 class Ad
 {
@@ -15,37 +24,64 @@ class Ad
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({ "ads_read", "ads_subresource" })
      */
     private $id;
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Date de création de l'annonce manquante.")
+     * @Groups({ "ads_read", "ads_subresource" })
      */
     private $creationDate;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Titre de l'annonce manquant.")
+     * @Assert\Length(
+     *                  min = 5,
+     *                  max = 55,
+     *                  minMessage = "Le titre de l'annonce doit contenir 5 caractères minimum.",
+     *                  maxMessage = "Le titre de l'annonce doit contenir 55 caractères maximum.")
+     * @Groups({ "ads_read", "ads_subresource" })
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Description de l'annonce manquante.")
+     * @Assert\Length(
+     *                  min = 15,
+     *                  max = 4000,
+     *                  minMessage = "La description de l'annonce doit contenir 15 caractères minimum.",
+     *                  maxMessage = "La description de l'annonce doit contenir 4000 caractères maximum.")
+     * @Groups({ "ads_read", "ads_subresource" })
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Code postal manquant.")
+     * @Assert\Length(
+     *                  min = 5,
+     *                  max = 5,
+     *                  exactMessage = "Le code postal doit contenir 5 caractères.")
+     * @Assert\Type(type="numeric")
+     * @Groups({ "ads_read", "ads_subresource" })
      */
     private $postcode;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @Assert\NotBlank(message="Date de modification de l'annonce manquante.")
+     * @Groups({ "ads_read", "ads_subresource" })
      */
     private $modificationDate;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="ad")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({ "ads_read" })
      */
     private $user;
 
