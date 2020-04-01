@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\AdRepository")
  *  @ApiResource(
  *      subresourceOperations = {
- *          "api_users_ingredients_get_subresource" = {
- *              normalization_context = {"groups"= {"ads_subresource"}}
+ *          "api_users_ads_get_subresource" = {
+ *              "normalization_context" = {"groups"= {"ads_subresource"}}
  *          }
  *      },
  *      normalizationContext = {"groups"= {"ads_read"}}

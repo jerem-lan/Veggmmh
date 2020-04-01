@@ -39,13 +39,13 @@ class Ingredient
     private $name;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @Groups({ "ingredients_subresource"})
      */
     private $startSeason;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @Groups({ "ingredients_subresource"})
      */
     private $endSeason;
@@ -90,24 +90,24 @@ class Ingredient
         return $this;
     }
 
-    public function getStartSeason(): ?\DateTimeInterface
+    public function getStartSeason(): ?string
     {
         return $this->startSeason;
     }
 
-    public function setStartSeason(?\DateTimeInterface $startSeason): self
+    public function setStartSeason(?string $startSeason): self
     {
         $this->startSeason = $startSeason;
 
         return $this;
     }
 
-    public function getEndSeason(): ?\DateTimeInterface
+    public function getEndSeason(): ?string
     {
         return $this->endSeason;
     }
 
-    public function setEndSeason(?\DateTimeInterface $endSeason): self
+    public function setEndSeason(?string $endSeason): self
     {
         $this->endSeason = $endSeason;
 
