@@ -15,6 +15,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  *  @ApiResource(
+ *      collectionOperations={"GET", "POST"},
+ *      itemOperations={"GET", "PUT", "DELETE"},
  *      subresourceOperations = {
  *          "ingredients_get_subresource" = {"path" = "/users/{id}/ingredients"},
  *          "recipes_get_subresource" = {"path" = "/users/{id}/recipes"},
@@ -23,8 +25,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      },
  *      normalizationContext = {"groups"= { "users_read" }}
  * )
- * @UniqueEntity("username", message="Nom d'utilisateur déjà existant.")
- * @UniqueEntity("email", message="Adresse mail déjà existante.")
+ * @UniqueEntity("username", message="Le nom d'utilisateur est déjà existant")
+ * @UniqueEntity("email", message="L'adresse mail est déjà existante")
  */
 class User implements UserInterface
 {
@@ -38,8 +40,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank(message="Email manquant.")
-     * @Assert\Email(message="Format d'email invalide.")
+     * @Assert\NotBlank(message="L'adresse mail est obligatoire")
+     * @Assert\Email(message="Le format d'adresse mail est invalide.")
      * @Groups({ "users_read" })
      */
     private $email;
@@ -52,56 +54,56 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Mot de passe manquant.")
+     * @Assert\NotBlank(message="Le mot de passe est obligatoire")
      * @Assert\Length(
      *                  min = 8,
-     *                  minMessage = "Le mot de passe doit contenir 8 caractères minimum.")
+     *                  minMessage = "Le mot de passe doit contenir 8 caractères minimum")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="nom d'utilisateur manquant.")
+     * @Assert\NotBlank(message="Le nom d'utilisateur est obligatoire")
      * @Assert\Length(
      *                  min = 3,
      *                  max = 20,
-     *                  minMessage = "Le nom d'utilisateur doit contenir 3 caractères minimum.",
-     *                  maxMessage = "Le nom d'utilisateur doit contenir 20 caractères maximum.")
+     *                  minMessage = "Le nom d'utilisateur doit contenir 3 caractères minimum",
+     *                  maxMessage = "Le nom d'utilisateur doit contenir 20 caractères maximum")
      * @Groups({ "users_read", "recipe_read" })
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="prénom manquant.")
+     * @Assert\NotBlank(message="Le prénom est obligatoire")
      * @Assert\Length(
      *                  min = 2,
      *                  max = 20,
-     *                  minMessage = "Le prénom doit contenir 2 caractères minimum.",
-     *                  maxMessage = "Le prénom doit contenir 20 caractères maximum.")
+     *                  minMessage = "Le prénom doit contenir 2 caractères minimum",
+     *                  maxMessage = "Le prénom doit contenir 20 caractères maximum")
      * @Groups({ "users_read" })
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="nom manquant.")
+     * @Assert\NotBlank(message="Le nom est obligatoire")
      * @Assert\Length(
      *                  min = 2,
      *                  max = 20,
-     *                  minMessage = "Le nom doit contenir 2 caractères minimum.",
-     *                  maxMessage = "Le nom doit contenir 20 caractères maximum.")
+     *                  minMessage = "Le nom doit contenir 2 caractères minimum",
+     *                  maxMessage = "Le nom doit contenir 20 caractères maximum")
      * @Groups({ "users_read" })
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="code postal manquant.")
+     * @Assert\NotBlank(message="Le code postal est obligatoire")
      * @Assert\Length(
      *                  min = 5,
      *                  max = 5,
-     *                  exactMessage = "Le code postal doit contenir 5 caractères.")
+     *                  exactMessage = "Le code postal doit contenir 5 caractères")
      * @Assert\Type(type="numeric")
      * @Groups({ "users_read" })
      */
@@ -109,7 +111,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Date d'inscription manquante.")
+     * @Assert\NotBlank(message="La date d'inscription est obligatoire")
      * @Groups({ "users_read" })
      */
     private $registrationDate;

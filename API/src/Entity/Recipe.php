@@ -33,7 +33,7 @@ class Recipe
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Date de creation manquante.")
+     * @Assert\NotBlank(message="La date de creation est obligatoire")
      * @Groups({"recipes_subresource", "recipe_read"})
      */
     private $creationDate;
@@ -47,15 +47,15 @@ class Recipe
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="le type de la recette est obligatoire")
-     * @Assert\Choice(choices={"Apero","Entree","Plat", "Dessert"}, message="le statut doit être Apero, Entree, Plat ou Dessert")
+     * @Assert\NotBlank(message="Le type de la recette est obligatoire")
+     * @Assert\Choice(choices={"Apero","Entree","Plat","Dessert"}, message="Le type de plat doit être Apero, Entree, Plat ou Dessert")
      * @Groups({"recipes_subresource", "recipe_read"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Le nombre de personne est obligatoire")
+     * @Assert\NotBlank(message="Le nombre de personnes est obligatoire")
      * @Groups({"recipes_subresource", "recipe_read"})
      */
     private $nbServings;
@@ -73,8 +73,8 @@ class Recipe
      * @Assert\Length(
      *                  min = 15,
      *                  max = 4000,
-     *                  minMessage = "La description de la recette doit contenir 15 caractères minimum.",
-     *                  maxMessage = "La description de la recette doit contenir 4000 caractères maximum.")
+     *                  minMessage = "La description de la recette doit contenir 15 caractères minimum",
+     *                  maxMessage = "La description de la recette doit contenir 4000 caractères maximum")
      * @Groups({"recipes_subresource", "recipe_read"})
      */
     private $steps;
@@ -84,8 +84,8 @@ class Recipe
      * @Assert\Length(
      *                  min = 15,
      *                  max = 4000,
-     *                  minMessage = "Le commentaire doit contenir 15 caractères minimum.",
-     *                  maxMessage = "Le commentaire doit contenir 4000 caractères maximum.")
+     *                  minMessage = "Le commentaire doit contenir 15 caractères minimum",
+     *                  maxMessage = "Le commentaire doit contenir 4000 caractères maximum")
      * @Groups({"recipes_subresource", "recipe_read"})
      */
     private $notes;
@@ -96,15 +96,15 @@ class Recipe
      *  @Assert\Length(
      *                  min = 5,
      *                  max = 55,
-     *                  minMessage = "Le titre de la recette doit contenir 5 caractères minimum.",
-     *                  maxMessage = "Le titre de la recette doit contenir 55 caractères maximum.")
+     *                  minMessage = "Le titre de la recette doit contenir 5 caractères minimum",
+     *                  maxMessage = "Le titre de la recette doit contenir 55 caractères maximum")
      * @Groups({"recipes_subresource", "recipe_read"})
      */
     private $recipeTitle;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Assert\Type(type="numeric", message="La note doit être numerique !")
+     * @Assert\Type(type="numeric", message="La note doit être numerique")
      * @Groups({"recipes_subresource", "recipe_read"})
      */
     private $rating;

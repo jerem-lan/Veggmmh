@@ -6,10 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdRepository")
  *  @ApiResource(
+ *      collectionOperations={"GET", "POST"},
+ *      itemOperations={"GET", "PUT", "DELETE"},
  *      subresourceOperations = {
  *          "api_users_ads_get_subresource" = {
  *              "normalization_context" = {"groups"= {"ads_subresource"}}
@@ -30,42 +33,42 @@ class Ad
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Date de création de l'annonce manquante.")
+     * @Assert\NotBlank(message="La date de création de l'annonce est obligatoire")
      * @Groups({ "ads_read", "ads_subresource" })
      */
     private $creationDate;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Titre de l'annonce manquant.")
+     * @Assert\NotBlank(message="Le titre de l'annonce est obligatoire")
      * @Assert\Length(
      *                  min = 5,
      *                  max = 55,
-     *                  minMessage = "Le titre de l'annonce doit contenir 5 caractères minimum.",
-     *                  maxMessage = "Le titre de l'annonce doit contenir 55 caractères maximum.")
+     *                  minMessage = "Le titre de l'annonce doit contenir 5 caractères minimum",
+     *                  maxMessage = "Le titre de l'annonce doit contenir 55 caractères maximum")
      * @Groups({ "ads_read", "ads_subresource" })
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank(message="Description de l'annonce manquante.")
+     * @Assert\NotBlank(message="La description de l'annonce est obligatoire")
      * @Assert\Length(
      *                  min = 15,
      *                  max = 4000,
-     *                  minMessage = "La description de l'annonce doit contenir 15 caractères minimum.",
-     *                  maxMessage = "La description de l'annonce doit contenir 4000 caractères maximum.")
+     *                  minMessage = "La description de l'annonce doit contenir 15 caractères minimum",
+     *                  maxMessage = "La description de l'annonce doit contenir 4000 caractères maximum")
      * @Groups({ "ads_read", "ads_subresource" })
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Code postal manquant.")
+     * @Assert\NotBlank(message="Le code postal est obligatoire")
      * @Assert\Length(
      *                  min = 5,
      *                  max = 5,
-     *                  exactMessage = "Le code postal doit contenir 5 caractères.")
+     *                  exactMessage = "Le code postal doit contenir exactement 5 caractères")
      * @Assert\Type(type="numeric")
      * @Groups({ "ads_read", "ads_subresource" })
      */
