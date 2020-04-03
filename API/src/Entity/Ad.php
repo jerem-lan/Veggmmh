@@ -69,7 +69,7 @@ class Ad
      *                  min = 5,
      *                  max = 5,
      *                  exactMessage = "Le code postal doit contenir exactement 5 caractères")
-     * @Assert\Type(type="numeric")
+     * @Assert\Type(type="string")
      * @Groups({ "ads_read", "ads_subresource" })
      */
     private $postcode;

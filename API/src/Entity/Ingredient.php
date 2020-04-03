@@ -11,8 +11,15 @@ use Doctrine\Common\Collections\Collection;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\IngredientRepository")
  * @ApiResource(
- *      collectionOperations={"GET", "POST"},
- *      itemOperations={"GET", "PUT", "DELETE"},
+ *      collectionOperations={
+ *          "GET",
+ *          "POST" = {"path" = "admin/ingredients"}
+ *      },
+ *      itemOperations={
+ *          "GET",
+ *          "PUT" = {"path" = "admin/ingredients/{id}"},
+ *          "DELETE" = {"path" = "admin/ingredients/{id}"}
+ *      },
  *      subresourceOperations = {
  *          "api_users_ingredients_get_subresource" = {
  *              "normalization_context" = { "groups" = {"ingredients_subresource"}}
@@ -27,39 +34,39 @@ class Ingredient
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"ingredients_read, ingredients_subresource"})
+     * @Groups({"ingredients_read", "ingredients_subresource"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="La famille de l'ingrédient est obligatoire")
-     * @Groups({"ingredients_read, ingredients_subresource"})
+     * @Groups({"ingredients_read", "ingredients_subresource"})
      */
     private $family;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le nom de l'ingrédient est obligatoire")
-     * @Groups({"ingredients_read, ingredients_subresource"})
+     * @Groups({"ingredients_read", "ingredients_subresource"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @Groups({"ingredients_read, ingredients_subresource"})
+     * @Groups({"ingredients_read", "ingredients_subresource"})
      */
     private $startSeason;
 
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @Groups({"ingredients_read, ingredients_subresource"})
+     * @Groups({"ingredients_read", "ingredients_subresource"})
      */
     private $endSeason;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"ingredients_read, ingredients_subresource"})
+     * @Groups({"ingredients_read", "ingredients_subresource"})
      */
     private $conservation;
 

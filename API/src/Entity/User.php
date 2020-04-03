@@ -15,8 +15,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  *  @ApiResource(
- *      collectionOperations={"GET", "POST"},
- *      itemOperations={"GET", "PUT", "DELETE"},
+ *      collectionOperations={
+ *          "GET"={"path" = "/admin/users"}, 
+ *          "POST"
+ *      },
+ *      itemOperations={
+ *          "GET", 
+ *          "PUT", 
+ *          "DELETE" = {"path" = "/admin/users/{id}"}
+ * },
  *      subresourceOperations = {
  *          "ingredients_get_subresource" = {"path" = "/users/{id}/ingredients"},
  *          "recipes_get_subresource" = {"path" = "/users/{id}/recipes"},
@@ -48,6 +55,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"users_read"})
      */
     private $roles = [];
 
