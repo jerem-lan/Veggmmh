@@ -19,9 +19,11 @@ class PasswordEncoderSubscriber implements EventSubscriberInterface {
             $this->encoder = $encoder;
         }
 
+        
         public static function getSubscribedEvents()
         {
             return [
+                
                 KernelEvents::VIEW=> ['encodePassword', EventPriorities::PRE_WRITE]
             ];
         }
@@ -32,7 +34,7 @@ class PasswordEncoderSubscriber implements EventSubscriberInterface {
                         
             $method = $event->getRequest()->getMethod();
             
-            if ($user instanceof User && $method === "POST") {
+            if ($user instanceof User && ($method === "POST" || $method === "PUT")) {
                 $hash = $this->encoder->encodePassword($user, $user->getPassword());
                 
                 $user->setPassword($hash);

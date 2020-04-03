@@ -32,7 +32,7 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({ "users_read" })
+     * @Groups({ "users_read", "recipe_read" })
      */
     private $id;
 
@@ -67,7 +67,7 @@ class User implements UserInterface
      *                  max = 20,
      *                  minMessage = "Le nom d'utilisateur doit contenir 3 caractères minimum.",
      *                  maxMessage = "Le nom d'utilisateur doit contenir 20 caractères maximum.")
-     * @Groups({ "users_read" })
+     * @Groups({ "users_read", "recipe_read" })
      */
     private $username;
 
