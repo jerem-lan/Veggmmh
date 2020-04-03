@@ -55,7 +55,7 @@ class DashboardPage extends Component {
         const decoded = jwtDecode(token)
         const id = decoded.id
 
-        Axios({
+        axios({
             method: 'put',
             url: "http://127.0.0.1:8000/api/users/"+id,
             data: {
@@ -74,7 +74,7 @@ class DashboardPage extends Component {
             const decoded = jwtDecode(token)
             const id = decoded.id
 
-            Axios({
+            axios({
                 method: 'put',
                 url: "http://127.0.0.1:8000/api/users/"+id,
                 data: {
@@ -102,7 +102,7 @@ class DashboardPage extends Component {
                 <div className="container container--dashboard">
                     <div className="profilContainer">
                         <ProfilCartouche username={username}/>
-                        <div className="edit--personnalInfos">
+                        <div className="edit--prsonnalInfos">
                         <div className="title">
                             <svg className="icon--title" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M11.5 5L7 9 2.5 5" stroke="#444" strokeWidth="1.5" strokeLinecap="round"/>

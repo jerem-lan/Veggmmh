@@ -48,7 +48,7 @@ class LoginPage extends Component {
                                 className={"subscriptionInput" + (this.state.error && " is-invalid")}
                                 type="text" 
                                 placeholder="Nom d'utilisateur" 
-                                pattern='[A-Za-z-]{1,}' 
+                                //pattern='[A-Za-z-]{1,}' 
                                 required/>
 
                             <input 
