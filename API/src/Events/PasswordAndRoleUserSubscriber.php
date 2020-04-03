@@ -9,7 +9,7 @@ use ApiPlatform\Core\EventListener\EventPriorities;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class PasswordEncoderSubscriber implements EventSubscriberInterface {
+class PasswordAndRoleUserSubscriber implements EventSubscriberInterface {
 
         /** @var  UserPasswordEncoderInterface */
         private $encoder;
@@ -24,11 +24,11 @@ class PasswordEncoderSubscriber implements EventSubscriberInterface {
         {
             return [
                 
-                KernelEvents::VIEW=> ['encodePassword', EventPriorities::PRE_WRITE]
+                KernelEvents::VIEW=> ['setAttributesForUser', EventPriorities::PRE_WRITE]
             ];
         }
 
-        public function encodePassword(ViewEvent $event){
+        public function setAttributesForUser(ViewEvent $event){
             
             $user = $event->getControllerResult();
                         
@@ -36,11 +36,14 @@ class PasswordEncoderSubscriber implements EventSubscriberInterface {
             
             if ($user instanceof User && ($method === "POST" || $method === "PUT")) {
                 $hash = $this->encoder->encodePassword($user, $user->getPassword());
-                
+
                 $user->setPassword($hash);
             }
-        }
-        
-    }
+            if ($user instanceof User && $method === "POST") {
+                $role = $user->getRoles();
 
+                $user->setRoles($role);
+            }
+        } 
+    }
 ?>

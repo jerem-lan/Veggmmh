@@ -15,11 +15,11 @@
         public static function getSubscribedEvents()
         {
             return [
-                KernelEvents::VIEW => ['setRegistrationDateForUser', EventPriorities::PRE_VALIDATE]
+                KernelEvents::VIEW => ['setRegistrationDate', EventPriorities::PRE_VALIDATE]
             ];
         }
 
-        public function setRegistrationDateForUser(ViewEvent $event){
+        public function setRegistrationDate(ViewEvent $event){
             
             $data = $event->getControllerResult();
             $method = $event->getRequest()->getMethod();
