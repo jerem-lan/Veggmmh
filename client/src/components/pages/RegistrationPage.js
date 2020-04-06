@@ -31,8 +31,6 @@ class RegistrationPage extends Component {
             username: this.state.username,
             password: this.state.password
         };
-
-
         axios
             .post('http://localhost:8000/api/users', user)
             .then((res) => {
