@@ -79,6 +79,7 @@ class Ingredient
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"ingredients_read", "ingredients_subresource"})
      */
     private $icon;
 
