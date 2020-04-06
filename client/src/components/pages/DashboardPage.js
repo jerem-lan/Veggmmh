@@ -1,12 +1,15 @@
 import React, { Component, Fragment } from 'react'
-import ProfilCartouche from './ProfilCartouche'
-import Header from './Header'
-import AlertMessage from './AlertMessage'
-import FeatureBlock from './FeatureBlock'
-import featureBlocksData from '../BDD/featureBlocksData'
-import AuthApi from '../services/authApi';
+
+import ProfilCartouche from '../ProfilCartouche'
+import Header from '../Header'
+import AlertMessage from '../AlertMessage'
+import FeatureBlock from '../FeatureBlock'
+import featureBlocksData from '../../data/featureBlocksData'
+
+import AuthApi from '../../services/authApi';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+
 import { Redirect } from 'react-router-dom'
 
 
@@ -49,7 +52,7 @@ class DashboardPage extends Component {
         this.setState({ [name]: value })
     }
 
-    changeInfo = (event) => {
+    changePersonnalInfo = (event) => {
         event.preventDefault()
         const token = window.localStorage.getItem("authToken")
         const decoded = jwtDecode(token)
@@ -67,7 +70,7 @@ class DashboardPage extends Component {
         .then(() => this.setState({ redirect: false }));
     }
 
-    changeMdp = (event) => {
+    changePassword = (event) => {
         event.preventDefault()
         if(this.state.password === this.state.confirmPassword) {
             const token = window.localStorage.getItem("authToken")
@@ -88,6 +91,9 @@ class DashboardPage extends Component {
             return this.setState({ error: "Les mots de passe ne sont pas identiques. Veuillez recommencer" });
         }
     }
+    handleLogout = () => {
+        AuthApi.logout();
+    } 
 
     render() {
         const username = this.state.firstname + " " + this.state.lastname
@@ -98,8 +104,9 @@ class DashboardPage extends Component {
             }     
             return (
                 <Fragment>
-                <Header/>
-                <div className="container container--dashboard">
+                    <Header handleLogout={this.handleLogout} />
+                    <div className="container container--dashboard">
+                
                     <div className="profilContainer">
                         <ProfilCartouche username={username}/>
                         <div className="edit--prsonnalInfos">
@@ -114,7 +121,7 @@ class DashboardPage extends Component {
                             <input name='email' value={this.state.email} onChange={this.handleChange} className="subscriptionInput" type="email" placeholder={this.state.email} required/>
                             <input name='username' value={this.state.username} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder={this.state.username} pattern='[A-Za-z-]{1,}' required/>
                             
-                            <button className="btn" type="submit" onClick={this.changeInfo}>Valider les changements</button>
+                            <button className="btn" type="submit" onClick={this.changePersonnalInfo}>Valider les changements</button>
                             
                             <input name='password' value={this.state.password} onChange={this.handleChange} className="subscriptionInput" type="password" placeholder="Nouveau mot de passe" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" />
                             <input name='confirmPassword' value={this.state.confirmPassword} onChange={this.handleChange} className="subscriptionInput" type="password" placeholder="Confirmer le mot de passe" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" />
@@ -123,39 +130,42 @@ class DashboardPage extends Component {
                             {this.state.error && <p className="invalid-feedback">{this.state.error}</p>}
 
                             
-                            <button className="btn" type="submit" onClick={this.changeMdp}>Modifier le mot de passe</button>
+                            <button className="btn" type="submit" onClick={this.changePassword}>Modifier le mot de passe</button>
                         </form>
                     </div>
                     </div>
+                    
                     <div className="featureBlocks">
-                    {
-                        Object.keys(featureBlocksData)
-                            .map(key => <FeatureBlock
-                                key={key}
-                                id={key} 
-                                featureBlocksData={featureBlocksData}/>)
-                    }
+                        <div className="featureBlock"><p className="title">Mon espace</p></div>
+                        {
+                            Object.keys(featureBlocksData)
+                                .map(key => <FeatureBlock
+                                    key={key}
+                                    id={key} 
+                                    featureBlocksData={featureBlocksData}/>)
+                        }
                     </div>
                 </div>
-            </Fragment>
-                )}
-            return (
-                <Fragment>
-                    <Header/>
-                    <div className="container container--dashboard">
-                        <div className="featureBlocks">
-                            {
-                                Object.keys(featureBlocksData)
-                                    .map(key => <FeatureBlock
-                                        key={key}
-                                        id={key} 
-                                        featureBlocksData={featureBlocksData}/>)
-                            }
-                        </div>
-                    </div>
                 </Fragment>
             )
         }
+        return (
+            <Fragment>
+                <Header/>
+                <div className="container container--dashboard">
+                    <div className="featureBlocks">
+                        {
+                            Object.keys(featureBlocksData)
+                                .map(key => <FeatureBlock
+                                    key={key}
+                                    id={key} 
+                                    featureBlocksData={featureBlocksData}/>)
+                        }
+                    </div>
+                </div>
+            </Fragment>
+        )
+    }
        
 }
 

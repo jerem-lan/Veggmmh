@@ -1,7 +1,6 @@
 import React from 'react';
 
 const FeatureBlock = ({id: key, featureBlocksData}) => {
-    console.log(featureBlocksData[key])
     const featureBlockData = featureBlocksData[key]
 
     const requireIcon = chemin => {

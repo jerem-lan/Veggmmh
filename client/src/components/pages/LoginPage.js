@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom'
-import AuthApi from '../services/authApi';
+import AuthApi from '../../services/authApi';
 
-import Header from './Header'
+import Header from '../Header'
 
 class LoginPage extends Component {
 
@@ -19,11 +19,8 @@ class LoginPage extends Component {
             this.setState ({ validation: await AuthApi.authenticate(this.state) });
         } catch  {
             this.setState({ error: "Aucun compte ne possède cette adresse ou alors les informations ne correspondent pas" });
-        }
-            
+        }      
     };
-
-
     //Récupere les informations tapées dans le formulaire
     handleChange = (event) => {
         const { name, value } = event.target

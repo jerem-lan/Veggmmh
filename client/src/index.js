@@ -1,18 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+// STYLE
 import './styles/App.css';
-
-import IndexPage from './components/IndexPage'
-import LoginPage from './components/LoginPage'
-import RegistrationPage from './components/RegistrationPage'
-import DashboardPage from './components/DashboardPage';
-import DashboardFavPage from './components/DashboardFavPage';
-import NotFound from './components/NotFound'
-
-import * as serviceWorker from './serviceWorker';
-
+// PAGES COMPONENTS
+import IndexPage from './components/pages/IndexPage'
+import LoginPage from './components/pages/LoginPage'
+import RegistrationPage from './components/pages/RegistrationPage'
+import DashboardPage from './components/pages/DashboardPage';
+import DashboardFavPage from './components/pages/DashboardFavPage';
+import CalendarPage from './components/pages/CalendarPage';
+import NotFound from './components/pages/NotFound'
+// ROUTES
 import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+//
+//import AuthApi from '../../services/authApi';
+import * as serviceWorker from './serviceWorker';
 
 const Root = () => (
     <Router>
@@ -22,6 +24,7 @@ const Root = () => (
             <Route path='/register' component={RegistrationPage} />
             <Route path='/dashboard/' component={DashboardPage} />
             <Route path='/mon-espace/' component={DashboardFavPage} />
+            <Route path='/calendrier-des-saisons/' component={CalendarPage} />
             <Route component={NotFound} />
         </Switch>
     </Router>

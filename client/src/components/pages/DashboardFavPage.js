@@ -1,10 +1,10 @@
 import React, {Component, Fragment} from 'react'
-import Header from './Header'
-import FavRecipes from './FavRecipes'
-import MyRecipes from './MyRecipes'
-import MyAds from './MyAds'
+import Header from '../Header'
+import FavRecipes from '../FavRecipes'
+import MyRecipes from '../MyRecipes'
+import MyAds from '../MyAds'
 
-import { recipes, adverts } from '../BDD/recipesData'
+import { recipes, adverts } from '../../data/recipesData'
 
 
 class DashboardFavPage extends Component {
