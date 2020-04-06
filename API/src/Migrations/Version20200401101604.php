@@ -26,8 +26,8 @@ final class Version20200401101604 extends AbstractMigration
         $this->addSql('ALTER TABLE ingredient CHANGE user_id user_id INT DEFAULT NULL, CHANGE start_season start_season VARCHAR(255) DEFAULT NULL, CHANGE end_season end_season VARCHAR(255) DEFAULT NULL');
         $this->addSql('ALTER TABLE recipe CHANGE user_id user_id INT DEFAULT NULL, CHANGE rating rating DOUBLE PRECISION DEFAULT NULL');
         $this->addSql('ALTER TABLE user CHANGE roles roles JSON NOT NULL');
-        $this->addSql('ALTER TABLE user_recipe ADD CONSTRAINT FK_BFDAAA0AA76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE user_recipe ADD CONSTRAINT FK_BFDAAA0A59D8A214 FOREIGN KEY (recipe_id) REFERENCES recipe (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE user_recipe ADD CONSTRAINT IDX_BFDAAA0AA76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE user_recipe ADD CONSTRAINT IDX_BFDAAA0A59D8A214 FOREIGN KEY (recipe_id) REFERENCES recipe (id) ON DELETE CASCADE');
     }
 
     public function down(Schema $schema) : void
@@ -39,7 +39,7 @@ final class Version20200401101604 extends AbstractMigration
         $this->addSql('ALTER TABLE ingredient CHANGE user_id user_id INT DEFAULT NULL, CHANGE start_season start_season VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`, CHANGE end_season end_season VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`');
         $this->addSql('ALTER TABLE recipe CHANGE user_id user_id INT DEFAULT NULL, CHANGE rating rating DOUBLE PRECISION DEFAULT \'NULL\'');
         $this->addSql('ALTER TABLE user CHANGE roles roles LONGTEXT CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_bin`');
-        $this->addSql('ALTER TABLE user_recipe DROP FOREIGN KEY FK_BFDAAA0AA76ED395');
-        $this->addSql('ALTER TABLE user_recipe DROP FOREIGN KEY FK_BFDAAA0A59D8A214');
+        $this->addSql('ALTER TABLE user_recipe DROP FOREIGN KEY IDX_BFDAAA0AA76ED395');
+        $this->addSql('ALTER TABLE user_recipe DROP FOREIGN KEY IDX_BFDAAA0A59D8A214');
     }
 }
