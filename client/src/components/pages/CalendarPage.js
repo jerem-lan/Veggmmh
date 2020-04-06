@@ -4,6 +4,10 @@ import Header from '../Header'
 
 import FruitVegBlock from '../FruitVegBlock'
 
+import AuthApi from '../../services/authApi';
+
+
+
 
 class CalendarPage extends Component {
    
@@ -12,7 +16,7 @@ class CalendarPage extends Component {
     }
 
     componentDidMount() {
-        axios.get("http://127.0.0.1:8000/api/admin/ingredients?page=4")
+        axios.get("http://127.0.0.1:8000/api/ingredients")
             .then(res => res.data["hydra:member"])
             .then((data) => {
                 //retourne un nouveau tableau contenant tous les éléments du tableau d'ingrédients qui ont légumes ou fruits comme family
@@ -25,16 +29,21 @@ class CalendarPage extends Component {
                     if(a.name > b.name) { return 1; }
                     return 0;
                 })
+                console.log(fruitsAndVeggies)
                 this.setState({ fruitsAndVeggies: fruitsAndVeggies })
             })
             .catch(error => console.log(error.response))
     }
 
+    handleLogout = () => {
+        AuthApi.logout();
+    } 
+
 
     render() {
         return (
             <Fragment>
-                <Header/>
+                <Header handleLogout={this.handleLogout}/>
                 <div>
                     <input type="text"/>
                     {

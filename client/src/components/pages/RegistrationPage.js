@@ -31,9 +31,6 @@ class RegistrationPage extends Component {
             username: this.state.username,
             password: this.state.password
         };
-
-        console.log(user)
-
         axios
             .post('http://localhost:8000/api/users', user)
             .then((res) => {
@@ -64,7 +61,7 @@ class RegistrationPage extends Component {
                 <div className="Content">
                     <form className='form' onSubmit={this.handleSubmit}>
                         <input name='lastname' value={this.state.lastname} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder="Nom" /*pattern="[A-Z][a-z]"*/ required/>
-                        <input name='firstname' v alue={this.state.firstname} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder="Prénom" /*pattern='[A-Za-z-]{1,}'*/ required/>
+                        <input name='firstname' value={this.state.firstname} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder="Prénom" /*pattern='[A-Za-z-]{1,}'*/ required/>
                         <input name='postcode' value={this.state.postcode} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder="Code postal" pattern="[0-9]{5}" required/>
                         <input name='email' value={this.state.email} onChange={this.handleChange} className="subscriptionInput inputBottomMargin" type="email" placeholder="Adresse mail" required/>
                         <input name='username' value={this.state.username} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder="Nom d'utilisateur" pattern='[A-Za-z-]{1,}' required/>
