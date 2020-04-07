@@ -8,8 +8,10 @@ import IndexPage from './components/pages/IndexPage'
 import LoginPage from './components/pages/LoginPage'
 import RegistrationPage from './components/pages/RegistrationPage'
 import DashboardPage from './components/pages/DashboardPage';
-import DashboardFavPage from './components/pages/DashboardFavPage';
+import MySpacePage from './components/pages/MySpacePage';
 import CalendarPage from './components/pages/CalendarPage';
+import AddAdPage from './components/pages/AddAdPage';
+import ListAdPage from './components/pages/ListAdPage';
 import NotFound from './components/pages/NotFound'
 // ROUTES
 import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
@@ -17,12 +19,13 @@ import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import AuthApi from './services/authApi';
 import * as serviceWorker from './serviceWorker';
 
+
 AuthApi.setup()
 
 const Root = () => {
 
     const [isConnected, setIsConnected] = useState(AuthApi.isAuthenticated());
-    
+
     return (
         <Router>
             <Header isConnected={isConnected} onLogout={setIsConnected} />
@@ -33,8 +36,14 @@ const Root = () => {
                     />
                     <Route path='/register' component={RegistrationPage} />
                     <Route path='/dashboard/' component={DashboardPage} />
-                    <Route path='/mon-espace/' component={DashboardFavPage} />
-                    <Route path='/calendrier-des-saisons/' component={CalendarPage} />
+                    <Route path='/mon-espace' component={MySpacePage} />
+                    <Route path='/calendrier-des-saisons' component={CalendarPage} />
+                    <Route  path='/ajouter-annonce' 
+                            render={(props) => <AddAdPage isConnected={isConnected}/>} 
+                    />
+                    <Route  path='/liste-annonces' 
+                            render={(props) => <ListAdPage isConnected={isConnected}/>} 
+                    />
                     <Route component={NotFound} />
                 </Switch>
         </Router>

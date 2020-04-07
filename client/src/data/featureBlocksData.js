@@ -8,7 +8,7 @@ const featureBlocksData = {
     featureBlock2: {
       title: 'Déposer une annonce',
       icon: 'add-ad.svg',
-      route: '/register',
+      route: '/ajouter-annonce',
     },
     featureBlock3: {
       title: 'Trouver une recette',
@@ -23,12 +23,12 @@ const featureBlocksData = {
     featureBlock5: {
       title: 'Aliments de saison',
       icon: 'food-calendar.svg',
-      route: '/register',
+      route: '/calendrier-des-saisons',
     },
     featureBlock6: {
       title: 'Trocs & dons',
       icon: 'ads.svg',
-      route: '/register',
+      route: '/liste-annonces',
     }
 }
   

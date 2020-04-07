@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 
-import Header from '../Header'
+
 
 class AddAdPage extends Component {
     state = {
@@ -46,7 +46,6 @@ class AddAdPage extends Component {
     render() {
         return (
             <Fragment>
-                <Header/>
                 <div className="Content">
                     <form
                         className='form'

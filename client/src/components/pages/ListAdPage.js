@@ -40,7 +40,6 @@ class ListAdPage extends Component {
     render() {
         return (
            <Fragment>
-               <Header />
                { this.state.ads.map(ad =>
                 <list-item key={ad.id}> 
                     <h2>{ad.title}</h2>
