@@ -6,7 +6,7 @@ import MyAds from '../MyAds'
 import { recipes, adverts } from '../../data/recipesData'
 
 
-class DashboardFavPage extends Component {
+class MySpacePage extends Component {
   state = {
     recipes: recipes,
     adverts: adverts
@@ -29,4 +29,4 @@ class DashboardFavPage extends Component {
 }
 
 
-export default DashboardFavPage;
+export default MySpacePage;
