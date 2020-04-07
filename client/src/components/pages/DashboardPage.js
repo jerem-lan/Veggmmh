@@ -91,6 +91,7 @@ class DashboardPage extends Component {
             return this.setState({ error: "Les mots de passe ne sont pas identiques. Veuillez recommencer" });
         }
     }
+
     handleLogout = () => {
         AuthApi.logout();
     } 
