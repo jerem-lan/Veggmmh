@@ -6,9 +6,6 @@ import FruitVegBlock from '../FruitVegBlock'
 
 import AuthApi from '../../services/authApi';
 
-
-
-
 class CalendarPage extends Component {
    
     state = {
@@ -52,6 +49,7 @@ class CalendarPage extends Component {
                                 id={ingredient.id}
                                 family={ingredient.family}
                                 name={ingredient.name}
+                                icon={ingredient.icon}
                             />)
                     }
                 </div>

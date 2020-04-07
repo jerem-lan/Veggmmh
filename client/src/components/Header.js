@@ -18,7 +18,7 @@ const Header = ({handleLogout}) => {
                     <NavLink to="/" >
                         <button onClick={handleLogout}>
                             <svg className='icon--header' viewBox='0 0 30 30' fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="15" cy="15" r="15" fill="#AADAC9"/><path d="M19.2 10.8l-8.77 8.77M10.8 10.8l8.49 8.49" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="15" cy="15" r="15" fill="#AADAC9"/><path d="M19.2 10.8l-8.77 8.77M10.8 10.8l8.49 8.49" stroke="#fff" strokeWidth="2" strokeLinecap="round"/>
                             </svg>
                         </button>
                     </NavLink>

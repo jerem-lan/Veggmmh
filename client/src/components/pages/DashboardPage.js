@@ -62,9 +62,9 @@ class DashboardPage extends Component {
             method: 'put',
             url: "http://127.0.0.1:8000/api/users/"+id,
             data: {
-              postcode : this.state.postcode,
+              postcode: this.state.postcode,
               email: this.state.email,
-              username : this.state.username
+              username: this.state.username
             }
         }).then(() => this.setState({ redirect: true }))
         .then(() => this.setState({ redirect: false }));
@@ -81,7 +81,7 @@ class DashboardPage extends Component {
                 method: 'put',
                 url: "http://127.0.0.1:8000/api/users/"+id,
                 data: {
-                password : this.state.password
+                    password : this.state.password
                 }
             }).then(() => this.setState({ redirect: true }))
             .then(() => this.setState({ redirect: false }));
