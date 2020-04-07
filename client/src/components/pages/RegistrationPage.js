@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 
-import Header from '../Header'
 
 class RegistrationPage extends Component {
 
@@ -56,7 +55,6 @@ class RegistrationPage extends Component {
     render() {
         return (
             <Fragment>
-                <Header/>
                 <div className="Content">
                     <form className='form' onSubmit={this.handleSubmit}>
                         <input name='lastname' value={this.state.lastname} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder="Nom" /*pattern="[A-Z][a-z]"*/ required/>

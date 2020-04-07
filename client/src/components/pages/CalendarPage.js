@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import axios from "axios";
-import Header from '../Header'
 
 import FruitVegBlock from '../FruitVegBlock'
 
@@ -43,7 +42,6 @@ class CalendarPage extends Component {
     render() {
         return (
             <Fragment>
-                <Header handleLogout={this.handleLogout}/>
                 <div>
                     <input type="text"/>
                     {

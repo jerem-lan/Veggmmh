@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
 import ProfilCartouche from '../ProfilCartouche'
-import Header from '../Header'
 import AlertMessage from '../AlertMessage'
 import FeatureBlock from '../FeatureBlock'
 import featureBlocksData from '../../data/featureBlocksData'
@@ -92,9 +91,7 @@ class DashboardPage extends Component {
         }
     }
 
-    handleLogout = () => {
-        AuthApi.logout();
-    } 
+    
 
     render() {
         const username = this.state.firstname + " " + this.state.lastname
@@ -105,7 +102,7 @@ class DashboardPage extends Component {
             }     
             return (
                 <Fragment>
-                    <Header handleLogout={this.handleLogout} />
+                    
                     <div className="container container--dashboard">
                 
                     <div className="profilContainer">
@@ -152,7 +149,6 @@ class DashboardPage extends Component {
         }
         return (
             <Fragment>
-                <Header/>
                 <div className="container container--dashboard">
                     <div className="featureBlocks">
                         {

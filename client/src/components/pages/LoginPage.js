@@ -2,10 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom'
 import AuthApi from '../../services/authApi';
 
-import Header from '../Header'
 
 class LoginPage extends Component {
-
+    //Props : onLogin
     state= { 
         username: '',
         password: '',
@@ -17,6 +16,7 @@ class LoginPage extends Component {
         event.preventDefault() //evite le rechargement de page
         try {
             this.setState ({ validation: await AuthApi.authenticate(this.state) });
+            this.props.onLogin(true)
         } catch  {
             this.setState({ error: "Aucun compte ne possède cette adresse ou alors les informations ne correspondent pas" });
         }      
@@ -35,7 +35,6 @@ class LoginPage extends Component {
         // Sinon on rend le formulaire
         return (
             <Fragment>
-                <Header/>
                 <div className="Content">
                         <form className='form' onSubmit={this.goToApp} >
                             <input 

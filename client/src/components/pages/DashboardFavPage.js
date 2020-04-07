@@ -1,5 +1,4 @@
 import React, {Component, Fragment} from 'react'
-import Header from '../Header'
 import FavRecipes from '../FavRecipes'
 import MyRecipes from '../MyRecipes'
 import MyAds from '../MyAds'
@@ -16,7 +15,6 @@ class DashboardFavPage extends Component {
     const { recipes } = this.state
     return (
         <Fragment>
-            <Header/>
             <div className="container">
                 <FavRecipes 
                     recipes={recipes} />
