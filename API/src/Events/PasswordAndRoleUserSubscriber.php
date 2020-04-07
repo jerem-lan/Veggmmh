@@ -34,7 +34,7 @@ class PasswordAndRoleUserSubscriber implements EventSubscriberInterface {
                         
             $method = $event->getRequest()->getMethod();
             
-            if ($user instanceof User && ($method === "POST" || $method === "PUT")) {
+            if ($user instanceof User && $method === "POST") {
                 $hash = $this->encoder->encodePassword($user, $user->getPassword());
 
                 $user->setPassword($hash);
