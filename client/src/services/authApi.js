@@ -39,8 +39,25 @@ function setup(){
     }
 }
 
+function isAuthenticated() {
+    //voit si on a un token
+    const token = window.localStorage.getItem("authToken");
+    //si le token est encore valide
+    if (token) {
+        const { exp: expiration} = jwtDecode(token);
+        //donne le token à axios
+        if (expiration * 1000 > new Date().getTime()) {
+            setAxiosToken(token);
+            return true;
+        } 
+        return false 
+    } 
+    return false 
+}
+
 export default {
     authenticate,
     setup,
-    logout
+    logout,
+    isAuthenticated
 };

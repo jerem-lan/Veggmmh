@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 
-import Header from '../Header'
 
 class RegistrationPage extends Component {
 
@@ -35,13 +34,12 @@ class RegistrationPage extends Component {
             .post('http://localhost:8000/api/users', user)
             .then((res) => {
                 //On traite la suite une fois la réponse obtenue 
-                console.log(res.data);
-                console.log(res.status);
-                console.log(res.statusText);
+                if (res.status === 201) {
+                    window.location = "/login"
+                }
             })
             .catch((error) => {
             //On traite ici les erreurs éventuellement survenues
-            console.log(error);
             });
 
         this.setState({
@@ -57,7 +55,6 @@ class RegistrationPage extends Component {
     render() {
         return (
             <Fragment>
-                <Header/>
                 <div className="Content">
                     <form className='form' onSubmit={this.handleSubmit}>
                         <input name='lastname' value={this.state.lastname} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder="Nom" /*pattern="[A-Z][a-z]"*/ required/>
