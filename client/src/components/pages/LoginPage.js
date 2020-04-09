@@ -30,7 +30,7 @@ class LoginPage extends Component {
     render() {
         // Redirige vers la bonne url
         if (this.state.validation) {
-            return <Redirect push to={`/dashboard/${this.state.username}`} />
+            return <Redirect push to={`/dashboard`} />
         }
         // Sinon on rend le formulaire
         return (

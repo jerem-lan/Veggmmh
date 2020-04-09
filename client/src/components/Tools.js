@@ -14,7 +14,6 @@ const Tools = () => {
 					<path d="M17.9933 6.49329L6.00034 18.5" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
 					<path d="M5.99316 6.49329L17.6059 18.1061" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
 				</svg>
-
 			</button>
 		</div>
 	)

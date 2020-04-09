@@ -2,26 +2,37 @@ import React, {Component, Fragment} from 'react'
 import FavRecipes from '../FavRecipes'
 import MyRecipes from '../MyRecipes'
 import MyAds from '../MyAds'
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
-import { recipes, adverts } from '../../data/recipesData'
 
 
 class MySpacePage extends Component {
   state = {
-    recipes: recipes,
-    adverts: adverts
+    favRecipes: []
   }
+
+  // componentDidMount() {
+  //   const token = window.localStorage.getItem("authToken")
+  //   const decoded = jwtDecode(token)
+  //   const id = decoded.id
+
+  //   axios
+  //     .get("http://localhost:8000/api/users/"+id+"/bookmarks/")
+  //     .then(res => {
+  //             const favRecipes = res.data['hydra:member'];
+  //             console.log(favRecipes)
+  //             this.setState({ favRecipes })
+  //           })
+      
+  // }
+
   render () {
-    const { recipes } = this.state
+
     return (
         <Fragment>
             <div className="container">
-                <FavRecipes 
-                    recipes={recipes} />
-                <MyRecipes 
-                    recipes={recipes} />
-                <MyAds 
-                    recipes={recipes} />
+              <FavRecipes />
             </div>
         </Fragment>
     );
