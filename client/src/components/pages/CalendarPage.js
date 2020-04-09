@@ -8,7 +8,9 @@ import AuthApi from '../../services/authApi';
 class CalendarPage extends Component {
    
     state = {
-        fruitsAndVeggies: []
+        fruitsAndVeggies: [],
+        itemSelection: []
+
     }
 
     componentDidMount() {
@@ -25,24 +27,45 @@ class CalendarPage extends Component {
                     if(a.name > b.name) { return 1; }
                     return 0;
                 })
-                console.log(fruitsAndVeggies)
                 this.setState({ fruitsAndVeggies: fruitsAndVeggies })
             })
             .catch(error => console.log(error.response))
     }
 
-    handleLogout = () => {
-        AuthApi.logout();
-    } 
-
+    // recherche par mois
+    handleMonth = (event) => {
+        const selectedMonth = event.target.value
+        const itemSelection = this.state.fruitsAndVeggies.filter(item => 
+           item.season.includes(selectedMonth)
+        )
+        this.setState({ itemSelection })
+    }
 
     render() {
         return (
             <Fragment>
                 <div>
-                    <input type="text"/>
+                    <div className="title--category">Rechercher par aliment</div>  
+                    <input name='search' value={this.state.item} onChange={this.handleChange} className="searchBar" type="text" placeholder="tomate"/>
+
+                    <div className="title--category">Rechercher par mois</div>
+                    <select size="1" onChange={this.handleMonth}>
+                        <option defaultValue >choississez</option>
+                        <option>janvier</option>
+                        <option>février</option>
+                        <option>mars</option>
+                        <option>avril</option>
+                        <option>mai</option>
+                        <option>juin</option>
+                        <option>juillet</option>
+                        <option>août</option>
+                        <option>septembre</option>
+                        <option>octobre</option>
+                        <option>novembre</option>
+                        <option>décembre</option>
+                    </select>
                     {
-                        this.state.fruitsAndVeggies.map((ingredient) => 
+                        this.state.itemSelection.map((ingredient) => 
                             <FruitVegBlock
                                 id={ingredient.id}
                                 family={ingredient.family}
