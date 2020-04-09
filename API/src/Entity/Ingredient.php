@@ -53,16 +53,10 @@ class Ingredient
     private $name;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @Groups({"ingredients_read", "ingredients_subresource"})
      */
-    private $startSeason;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @Groups({"ingredients_read", "ingredients_subresource"})
-     */
-    private $endSeason;
+    private $season = [];
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -112,26 +106,14 @@ class Ingredient
         return $this;
     }
 
-    public function getStartSeason(): ?string
+    public function getSeason(): ?array
     {
-        return $this->startSeason;
+        return $this->season;
     }
 
-    public function setStartSeason(?string $startSeason): self
+    public function setSeason(?array $season): self
     {
-        $this->startSeason = $startSeason;
-
-        return $this;
-    }
-
-    public function getEndSeason(): ?string
-    {
-        return $this->endSeason;
-    }
-
-    public function setEndSeason(?string $endSeason): self
-    {
-        $this->endSeason = $endSeason;
+        $this->season = $season;
 
         return $this;
     }

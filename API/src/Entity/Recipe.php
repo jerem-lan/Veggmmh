@@ -39,11 +39,11 @@ class Recipe
     private $creationDate;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="json")
      * @Assert\NotBlank(message="Les ingredients sont obligatoires")
      * @Groups({"recipes_subresource", "recipe_read"})
      */
-    private $ingredients;
+    private $ingredients = [];
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -68,7 +68,7 @@ class Recipe
     private $preparationTime;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="json")
      * @Assert\NotBlank(message="La description de la recette est obligatoire")
      * @Assert\Length(
      *                  min = 15,
@@ -77,7 +77,7 @@ class Recipe
      *                  maxMessage = "La description de la recette doit contenir 4000 caractères maximum")
      * @Groups({"recipes_subresource", "recipe_read"})
      */
-    private $steps;
+    private $steps = [];
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -133,12 +133,12 @@ class Recipe
         return $this;
     }
 
-    public function getIngredients(): ?string
+    public function getIngredients(): ?array
     {
         return $this->ingredients;
     }
 
-    public function setIngredients(string $ingredients): self
+    public function setIngredients(array $ingredients): self
     {
         $this->ingredients = $ingredients;
 
@@ -181,12 +181,12 @@ class Recipe
         return $this;
     }
 
-    public function getSteps(): ?string
+    public function getSteps(): ?array
     {
         return $this->steps;
     }
 
-    public function setSteps(string $steps): self
+    public function setSteps(array $steps): self
     {
         $this->steps = $steps;
 
