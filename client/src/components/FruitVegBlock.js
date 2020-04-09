@@ -3,22 +3,22 @@ import React from 'react';
 const FruitVegBlock = (
     {id,
     family,
-    name}
+    name,
+    icon}
     ) => {
 
-    // const requireIcon = chemin => {
-    //     try {
-    //         return require(`../icons/ingredients/${chemin}`)
-    //     } catch (err) {
-    //         return require(`../icons/ingredients/default.svg`)
-    //     }
-    // }
-
-    const classname = "fruitBlock " + family
+    const classname = "fruitVegBlock " + family
+    const requireIcon = icon => {
+        try {
+            return require(`../icons/ingredients/${icon}`)
+        } catch (err) {
+            return require(`../icons/ingredients/defaut-boissons.svg`)
+        }
+    }
 
     return (
         <div className={classname}>
-            {/* <img className="icon" src={requireIcon(featureBlockData.icon)} alt={featureBlockData.title}/> */}
+            <img className="icon" src={requireIcon(icon)} alt={name}/>
             <p className="name">{name}</p>
         </div>
     );
