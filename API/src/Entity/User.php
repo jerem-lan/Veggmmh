@@ -118,7 +118,7 @@ class User implements UserInterface
     private $postcode;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="La date d'inscription est obligatoire")
      * @Groups({ "users_read" })
      */

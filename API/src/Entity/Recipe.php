@@ -32,7 +32,7 @@ class Recipe
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="La date de creation est obligatoire")
      * @Groups({"recipes_subresource", "recipe_read"})
      */

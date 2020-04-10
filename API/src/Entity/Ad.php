@@ -32,7 +32,7 @@ class Ad
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="La date de création de l'annonce est obligatoire")
      * @Groups({ "ads_read", "ads_subresource" })
      */
@@ -75,7 +75,7 @@ class Ad
     private $postcode;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({ "ads_read", "ads_subresource" })
      */
     private $modificationDate;
