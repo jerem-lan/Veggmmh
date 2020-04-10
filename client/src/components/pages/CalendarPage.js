@@ -1,18 +1,18 @@
 import React, { Component, Fragment } from 'react'
 import axios from "axios";
-
+// COMPONENTS
 import FruitVegBlock from '../FruitVegBlock'
-
-import AuthApi from '../../services/authApi';
 
 class CalendarPage extends Component {
    
     state = {
-        fruitsAndVeggies: [],
-        itemSelection: []
-
+        fruitsAndVeggies: [], // tous les fruits/légumes récupérés depuis l'API
+        itemSelection: [], // les fruits/legumes trouvés après recherche par mois de disponibilité
+        itemSelectionDeux: [], // les fruits/legumes trouvés après recherche par saisie de nom
+        search: '' // le mot que l'on saisi dans l'input pour chercher un item
     }
 
+    // recupère les fruits/légumes dans Ingredient issu des données de l'API
     componentDidMount() {
         axios.get("http://127.0.0.1:8000/api/ingredients")
             .then(res => res.data["hydra:member"])
@@ -32,11 +32,20 @@ class CalendarPage extends Component {
             .catch(error => console.log(error.response))
     }
 
-    // recherche par mois
+    // recherche item par son nom
+    handleChange = (event) => {
+        this.setState({ search: event.target.value })
+        const itemSelectionDeux = this.state.fruitsAndVeggies.filter(item => 
+            item.name.includes(this.state.search)
+        )
+        this.setState({ itemSelectionDeux })
+    }
+
+    // recherche items par mois
     handleMonth = (event) => {
         const selectedMonth = event.target.value
         const itemSelection = this.state.fruitsAndVeggies.filter(item => 
-           item.season.includes(selectedMonth)
+           item.season.includes(selectedMonth) //contient les items qui ont dans "season", le mois qui a été sélectionné
         )
         this.setState({ itemSelection })
     }
@@ -45,8 +54,17 @@ class CalendarPage extends Component {
         return (
             <Fragment>
                 <div>
-                    <div className="title--category">Rechercher par aliment</div>  
-                    <input name='search' value={this.state.item} onChange={this.handleChange} className="searchBar" type="text" placeholder="tomate"/>
+                    <div className="title--category">Rechercher par aliment</div>
+                    <input type='text' onChange={this.handleChange} value={this.state.search}/>
+                    {
+                        this.state.itemSelectionDeux.map((ingredient) => 
+                            <FruitVegBlock
+                                id={ingredient.id}
+                                family={ingredient.family}
+                                name={ingredient.name}
+                                icon={ingredient.icon}
+                            />)
+                    }
 
                     <div className="title--category">Rechercher par mois</div>
                     <select size="1" onChange={this.handleMonth}>

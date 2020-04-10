@@ -10,12 +10,13 @@ import RegistrationPage from './components/pages/RegistrationPage'
 import DashboardPage from './components/pages/DashboardPage';
 import MySpacePage from './components/pages/MySpacePage';
 import CalendarPage from './components/pages/CalendarPage';
+import SeasonalItemCardPage from './components/pages/SeasonalItemCardPage';
 import AddAdPage from './components/pages/AddAdPage';
 import ListAdPage from './components/pages/ListAdPage';
 import NotFound from './components/pages/NotFound'
 // ROUTES
 import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-//
+// AUTHENTIFICATION API 
 import AuthApi from './services/authApi';
 import * as serviceWorker from './serviceWorker';
 
@@ -38,6 +39,7 @@ const Root = () => {
                     <Route path='/dashboard/' component={DashboardPage} />
                     <Route path='/mon-espace' component={MySpacePage} />
                     <Route path='/calendrier-des-saisons' component={CalendarPage} />
+                    <Route path='/:name' component={SeasonalItemCardPage} />
                     <Route  path='/ajouter-annonce' 
                             render={(props) => <AddAdPage isConnected={isConnected}/>} 
                     />

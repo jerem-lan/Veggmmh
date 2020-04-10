@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const FruitVegBlock = (
     {id,
@@ -17,10 +18,12 @@ const FruitVegBlock = (
     }
 
     return (
-        <div className={classname}>
-            <img className="icon" src={requireIcon(icon)} alt={name}/>
-            <p className="name">{name}</p>
-        </div>
+        <NavLink to={`/${name}`}>
+            <div className={classname}>
+                <img className="icon" src={requireIcon(icon)} alt={name}/>
+                <p className="name">{name}</p>
+            </div>
+        </NavLink>
     );
 };
 
