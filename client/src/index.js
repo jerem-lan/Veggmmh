@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+// AUTHENTIFICATION API 
+import AuthApi from './services/authApi';
 // STYLE
 import './styles/App.css';
 // PAGES COMPONENTS
@@ -16,10 +18,7 @@ import ListAdPage from './components/pages/ListAdPage';
 import NotFound from './components/pages/NotFound'
 // ROUTES
 import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-// AUTHENTIFICATION API 
-import AuthApi from './services/authApi';
 import * as serviceWorker from './serviceWorker';
-
 
 AuthApi.setup()
 
@@ -38,14 +37,15 @@ const Root = () => {
                     <Route path='/register' component={RegistrationPage} />
                     <Route path='/dashboard/' component={DashboardPage} />
                     <Route path='/mon-espace' component={MySpacePage} />
-                    <Route path='/calendrier-des-saisons' component={CalendarPage} />
-                    <Route path='/:name' component={SeasonalItemCardPage} />
                     <Route  path='/ajouter-annonce' 
                             render={(props) => <AddAdPage isConnected={isConnected}/>} 
                     />
                     <Route  path='/liste-annonces' 
                             render={(props) => <ListAdPage isConnected={isConnected}/>} 
                     />
+                    <Route path='/calendrier-des-saisons' component={CalendarPage} />
+                    <Route path='/:name' component={SeasonalItemCardPage} />
+
                     <Route component={NotFound} />
                 </Switch>
         </Router>

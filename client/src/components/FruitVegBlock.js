@@ -1,14 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const FruitVegBlock = (
-    {id,
-    family,
-    name,
-    icon}
-    ) => {
+const FruitVegBlock = ( {id, family, name, icon, season} ) => {
 
-    const classname = "fruitVegBlock " + family
     const requireIcon = icon => {
         try {
             return require(`../icons/ingredients/${icon}`)
@@ -16,14 +10,22 @@ const FruitVegBlock = (
             return require(`../icons/ingredients/defaut-boissons.svg`)
         }
     }
+    const classname = "fruitVegBlock " + family
 
     return (
-        <NavLink to={`/${name}`}>
-            <div className={classname}>
+        <div className={classname}>
+            <NavLink to={{
+                pathname: `/${name}`,
+                props: {
+                    name: {name},
+                    icon: {icon},
+                    season: {season}
+                }
+            }}>
                 <img className="icon" src={requireIcon(icon)} alt={name}/>
-                <p className="name">{name}</p>
-            </div>
-        </NavLink>
+                <span>{name}</span>
+            </NavLink>
+        </div>
     );
 };
 

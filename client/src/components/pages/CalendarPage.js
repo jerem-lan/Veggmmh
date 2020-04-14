@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import axios from "axios";
 // COMPONENTS
 import FruitVegBlock from '../FruitVegBlock'
@@ -38,7 +38,7 @@ class CalendarPage extends Component {
         const itemSelectionDeux = this.state.fruitsAndVeggies.filter(item => 
             item.name.includes(this.state.search)
         )
-        this.setState({ itemSelectionDeux })
+        this.setState({ itemSelectionDeux }) 
     }
 
     // recherche items par mois
@@ -52,10 +52,10 @@ class CalendarPage extends Component {
 
     render() {
         return (
-            <Fragment>
-                <div>
-                    <div className="title--category">Rechercher par aliment</div>
-                    <input type='text' onChange={this.handleChange} value={this.state.search}/>
+            <div className="container">
+                <div className="title--category">Rechercher par aliment</div>
+                <input className="input--search" type='text' onChange={this.handleChange} value={this.state.search} placeholder="tomate"/>
+                <div className="fruitVegBlocks">
                     {
                         this.state.itemSelectionDeux.map((ingredient) => 
                             <FruitVegBlock
@@ -63,25 +63,28 @@ class CalendarPage extends Component {
                                 family={ingredient.family}
                                 name={ingredient.name}
                                 icon={ingredient.icon}
+                                season={ingredient.season}
                             />)
                     }
+                </div>
 
-                    <div className="title--category">Rechercher par mois</div>
-                    <select size="1" onChange={this.handleMonth}>
-                        <option defaultValue >choississez</option>
-                        <option>janvier</option>
-                        <option>février</option>
-                        <option>mars</option>
-                        <option>avril</option>
-                        <option>mai</option>
-                        <option>juin</option>
-                        <option>juillet</option>
-                        <option>août</option>
-                        <option>septembre</option>
-                        <option>octobre</option>
-                        <option>novembre</option>
-                        <option>décembre</option>
-                    </select>
+                <div className="title--category">Rechercher par mois</div>
+                <select size="1" onChange={this.handleMonth}>
+                    <option defaultValue >choississez</option>
+                    <option>janvier</option>
+                    <option>février</option>
+                    <option>mars</option>
+                    <option>avril</option>
+                    <option>mai</option>
+                    <option>juin</option>
+                    <option>juillet</option>
+                    <option>août</option>
+                    <option>septembre</option>
+                    <option>octobre</option>
+                    <option>novembre</option>
+                    <option>décembre</option>
+                </select>
+                <div className="fruitVegBlocks">
                     {
                         this.state.itemSelection.map((ingredient) => 
                             <FruitVegBlock
@@ -89,10 +92,11 @@ class CalendarPage extends Component {
                                 family={ingredient.family}
                                 name={ingredient.name}
                                 icon={ingredient.icon}
+                                season={ingredient.season}
                             />)
                     }
                 </div>
-            </Fragment>
+            </div>
         )
     }    
 }
