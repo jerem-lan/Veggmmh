@@ -24,16 +24,12 @@ import * as serviceWorker from './serviceWorker';
 AuthApi.setup()
 
 const PrivateRoute = ({path, isAuthenticated, component}) => {
-    return isAuthenticated ? (<Route path={path} component={component} />
-        ) : (
-        <Redirect to="/login" />
-        )
+    return isAuthenticated ? (<Route path={path} component={component} />) : (<Redirect to="/login" />)
 }
 
 const Root = () => {
 
     const [isConnected, setIsConnected] = useState(AuthApi.isAuthenticated());
-
     const HeaderWithRouter = withRouter(Header);
 
     return (
@@ -76,7 +72,6 @@ const Root = () => {
                     />
                     <Route path='/calendrier-des-saisons' component={CalendarPage} />
                     <Route path='/:name' component={SeasonalItemCardPage} />
-
                     <Route component={NotFound} />
                 </Switch>
         </Router>
