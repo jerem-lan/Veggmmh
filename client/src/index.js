@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import AuthApi from './services/authApi';
 // STYLE
 import './styles/App.css';
+import 'react-toastify/dist/ReactToastify.css';
 // PAGES COMPONENTS
 import Header from './components/Header'
 import IndexPage from './components/pages/IndexPage'
@@ -20,6 +21,7 @@ import NotFound from './components/pages/NotFound'
 import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom'
 //
 import * as serviceWorker from './serviceWorker';
+import { ToastContainer, toast } from 'react-toastify';
 
 AuthApi.setup()
 
@@ -79,7 +81,11 @@ const Root = () => {
 
                     <Route component={NotFound} />
                 </Switch>
+                <ToastContainer 
+                    position= {toast.POSITION.BOTTOM_CENTER}
+                    autoClose= {2000} />
         </Router>
+        
     )
 }
   

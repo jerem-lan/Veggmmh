@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import AlertMessage from '../AlertMessage';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 
@@ -49,6 +50,7 @@ class RegistrationPage extends Component {
             this.setState({
                 errors: ""
             })
+            toast.info("Bienvenue parmis nous !!")
             this.props.history.replace('/login')
         } catch(error) {
             const {violations} = error.response.data
@@ -60,7 +62,8 @@ class RegistrationPage extends Component {
                 );     
                 this.setState({
                     errors: apiErrors
-                })    
+                })
+                toast.error("Des erreurs dans votre formulaire !!")    
             } 
                 
             };   

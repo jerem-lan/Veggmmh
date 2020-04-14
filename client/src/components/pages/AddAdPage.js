@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 
@@ -40,6 +41,7 @@ class AddAdPage extends Component {
                 content: '',
                 postcode: ''
             })
+            toast.info("Votre annonce a été créée avec success")
             this.props.history.replace("/liste-annonces");
     }
 

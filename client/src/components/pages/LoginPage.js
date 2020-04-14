@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AuthApi from '../../services/authApi';
+import { toast } from 'react-toastify';
 
 
 class LoginPage extends Component {
@@ -16,9 +17,11 @@ class LoginPage extends Component {
         try {
             this.setState ({ validation: await AuthApi.authenticate(this.state) });
             this.props.onLogin(true)
+            toast.success("Vous êtes désormais connecté !!")
             this.props.history.replace("/dashboard") 
         } catch  {
             this.setState({ error: "Identifiants incorrects." });
+            toast.error("Une erreur est survenue");
         }      
     };
     //Récupere les informations tapées dans le formulaire

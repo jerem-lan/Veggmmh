@@ -6,6 +6,7 @@ import MyAds from '../MyAds'
 
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import { toast } from 'react-toastify';
 
 
 const MySpacePage = () => {
@@ -114,13 +115,13 @@ const MySpacePage = () => {
 
 		setRecipes(Recipes.filter(recipe => recipe.id !== id))
 
-		axios
+		try {axios
 		.delete("http://localhost:8000/api/recipes/"+id, config)
-		.then(response => console.log("ok pour MyRecipe"))
-		.catch(error => {
+		toast.info("Votre recette a bien été supprimée !!")
+    } catch(error) {
 			setRecipes(OriginalRecipes);
 			console.log(error.response);
-		})
+		}
   }
   
   //Fonction qui permet la suppression d'une annonce, passé en props au composant inférieur : MyAds
@@ -135,13 +136,13 @@ const MySpacePage = () => {
 
 		setAds(Ads.filter(ad => ad.id !== id))
 
-		axios
+		try {axios
 		.delete("http://localhost:8000/api/ads/"+id, config)
-		.then(response => console.log("ok pour Ads"))
-		.catch(error => {
+		toast.info("Votre annonce a bien été supprimée !!");
+    }catch(error) {
 			setAds(OriginalAds);
 			console.log(error.response);
-		})
+		}
 	}
 
     return (
