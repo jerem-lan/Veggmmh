@@ -47,8 +47,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank(message="L'adresse mail est obligatoire")
      * @Assert\Email(message="Le format d'adresse mail est invalide.")
+     * @Assert\NotBlank(message="L'adresse mail est obligatoire")
      * @Groups({ "users_read" })
      */
     private $email;
@@ -62,57 +62,58 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Le mot de passe est obligatoire")
      * @Assert\Length(
      *                  min = 8,
      *                  minMessage = "Le mot de passe doit contenir 8 caractères minimum")
+     * @Assert\NotBlank(message="Le mot de passe est obligatoire")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Le nom d'utilisateur est obligatoire")
      * @Assert\Length(
      *                  min = 3,
      *                  max = 20,
      *                  minMessage = "Le nom d'utilisateur doit contenir 3 caractères minimum",
      *                  maxMessage = "Le nom d'utilisateur doit contenir 20 caractères maximum")
+     * @Assert\NotBlank(message="Le nom d'utilisateur est obligatoire")
      * @Groups({ "users_read", "recipe_read", "ads_read" })
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Le prénom est obligatoire")
      * @Assert\Length(
      *                  min = 2,
      *                  max = 20,
      *                  minMessage = "Le prénom doit contenir 2 caractères minimum",
      *                  maxMessage = "Le prénom doit contenir 20 caractères maximum")
+     * @Assert\NotBlank(message="Le prénom est obligatoire")
      * @Groups({ "users_read" })
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Le nom est obligatoire")
      * @Assert\Length(
      *                  min = 2,
      *                  max = 20,
      *                  minMessage = "Le nom doit contenir 2 caractères minimum",
      *                  maxMessage = "Le nom doit contenir 20 caractères maximum")
+     * @Assert\NotBlank(message="Le nom est obligatoire")
      * @Groups({ "users_read" })
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Le code postal est obligatoire")
+     * 
      * @Assert\Length(
      *                  min = 5,
      *                  max = 5,
      *                  exactMessage = "Le code postal doit contenir 5 caractères")
-     * @Assert\Type(type="numeric")
+     * @Assert\Type(type="numeric", ,message="le code postale doit contenir des chiffres")
+     * @Assert\NotBlank(message="Le code postal est obligatoire")
      * @Groups({ "users_read" })
      */
     private $postcode;
