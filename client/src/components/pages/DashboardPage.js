@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
 import ProfilCartouche from '../ProfilCartouche'
-import AlertMessage from '../AlertMessage'
 import FeatureBlock from '../FeatureBlock'
 import featureBlocksData from '../../data/featureBlocksData'
 

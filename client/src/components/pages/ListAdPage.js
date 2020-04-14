@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import Header from '../Header'
 import Axios from 'axios';
 
 
@@ -25,14 +24,15 @@ class ListAdPage extends Component {
             headers: { Authorization: `Bearer ${token}` }
         };
         //on enleve l'annonce de la page
+        let original = this.state.ads
         let ads = this.state.ads.filter(ad => {return ad.id !== id})
         this.setState({ ads: ads })
         //on supprime l'annonce dans la BDD
-        Axios.delete("http://127.0.0.1:8000/api/ads/" + id, config)
+        Axios.delete("http://127.0.0.1:8000/api/ad/" + id, config)
         
             .then(response => console.log('ok'))
             .catch(error => {
-                this.setState( this.state.ads );
+                this.setState({ ads: original });
                  console.log(error.response);
             });
     }

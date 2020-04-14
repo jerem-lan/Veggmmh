@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import { Redirect } from 'react-router-dom'
 import AuthApi from '../../services/authApi';
 
 
@@ -17,6 +16,7 @@ class LoginPage extends Component {
         try {
             this.setState ({ validation: await AuthApi.authenticate(this.state) });
             this.props.onLogin(true)
+            this.props.history.replace("/dashboard") 
         } catch  {
             this.setState({ error: "Aucun compte ne possède cette adresse ou alors les informations ne correspondent pas" });
         }      
@@ -28,11 +28,6 @@ class LoginPage extends Component {
     }
 
     render() {
-        // Redirige vers la bonne url
-        if (this.state.validation) {
-            return <Redirect push to={`/dashboard/${this.state.username}`} />
-        }
-        // Sinon on rend le formulaire
         return (
             <Fragment>
                 <div className="Content">

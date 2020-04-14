@@ -35,7 +35,11 @@ function setup(){
         if (expiration * 1000 > new Date().getTime()) {
             setAxiosToken(token);
             return true;
-        } 
+        } else {
+            logout();
+        }
+    } else {
+        logout();
     }
 }
 

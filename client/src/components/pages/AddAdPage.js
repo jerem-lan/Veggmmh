@@ -40,7 +40,7 @@ class AddAdPage extends Component {
                 content: '',
                 postcode: ''
             })
-            
+            this.props.history.replace("/liste-annonces");
     }
 
     render() {

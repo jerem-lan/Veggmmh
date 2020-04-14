@@ -14,7 +14,7 @@ import AddAdPage from './components/pages/AddAdPage';
 import ListAdPage from './components/pages/ListAdPage';
 import NotFound from './components/pages/NotFound'
 // ROUTES
-import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom'
 //
 import AuthApi from './services/authApi';
 import * as serviceWorker from './serviceWorker';
@@ -22,27 +22,56 @@ import * as serviceWorker from './serviceWorker';
 
 AuthApi.setup()
 
+const PrivateRoute = ({path, isAuthenticated, component}) => {
+    return isAuthenticated ? (<Route path={path} component={component} />
+        ) : (
+        <Redirect to="/login" />
+        )
+}
+
 const Root = () => {
 
     const [isConnected, setIsConnected] = useState(AuthApi.isAuthenticated());
 
+    const HeaderWithRouter = withRouter(Header);
+
     return (
         <Router>
-            <Header isConnected={isConnected} onLogout={setIsConnected} />
+            <HeaderWithRouter isConnected={isConnected} onLogout={setIsConnected} />
                 <Switch>
                     <Route exact path='/' component={IndexPage} />
                     <Route  path='/login'
-                            render={(props) => <LoginPage onLogin={setIsConnected}/>} 
+                            render={(props) => 
+                            <LoginPage 
+                                onLogin={setIsConnected}
+                                {...props}
+                            />} 
                     />
-                    <Route path='/register' component={RegistrationPage} />
-                    <Route path='/dashboard/' component={DashboardPage} />
-                    <Route path='/mon-espace' component={MySpacePage} />
-                    <Route path='/calendrier-des-saisons' component={CalendarPage} />
-                    <Route  path='/ajouter-annonce' 
-                            render={(props) => <AddAdPage isConnected={isConnected}/>} 
+                    <Route 
+                        path='/register' 
+                        component={RegistrationPage} 
                     />
-                    <Route  path='/liste-annonces' 
-                            render={(props) => <ListAdPage isConnected={isConnected}/>} 
+                    <Route
+                        path='/dashboard'
+                        component={DashboardPage} 
+                    />
+                    <PrivateRoute 
+                        path='/mon-espace' 
+                        isAuthenticated={isConnected}
+                        component={MySpacePage} 
+                    />
+                    <Route 
+                        path='/calendrier-des-saisons'
+                        component={CalendarPage} 
+                    />
+                    <PrivateRoute
+                        path="/ajouter-annonce"
+                        isAuthenticated={isConnected}
+                        component={AddAdPage}
+                    />
+                    <Route
+                        path="/liste-annonces"
+                        component={ListAdPage}
                     />
                     <Route component={NotFound} />
                 </Switch>
