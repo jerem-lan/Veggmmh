@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+// AUTHENTIFICATION API 
+import AuthApi from './services/authApi';
 // STYLE
 import './styles/App.css';
 // PAGES COMPONENTS
@@ -10,6 +12,7 @@ import RegistrationPage from './components/pages/RegistrationPage'
 import DashboardPage from './components/pages/DashboardPage';
 import MySpacePage from './components/pages/MySpacePage';
 import CalendarPage from './components/pages/CalendarPage';
+import SeasonalItemCardPage from './components/pages/SeasonalItemCardPage';
 import AddAdPage from './components/pages/AddAdPage';
 import ListAdPage from './components/pages/ListAdPage';
 import NotFound from './components/pages/NotFound'
@@ -18,7 +21,6 @@ import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'rea
 //
 import AuthApi from './services/authApi';
 import * as serviceWorker from './serviceWorker';
-
 
 AuthApi.setup()
 
@@ -73,6 +75,9 @@ const Root = () => {
                         path="/liste-annonces"
                         component={ListAdPage}
                     />
+                    <Route path='/calendrier-des-saisons' component={CalendarPage} />
+                    <Route path='/:name' component={SeasonalItemCardPage} />
+
                     <Route component={NotFound} />
                 </Switch>
         </Router>

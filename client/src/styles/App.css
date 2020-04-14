@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
 
 /* ----------------------------
-	Base
+	General
 ---------------------------- */
 * {
   -webkit-font-smoothing : none;
@@ -30,23 +30,105 @@ h1,h2,h3,h4,h5,h6 {
   margin: 0;
   padding: 0;
 }
+a,
+a:link,
+a:visited,
+a:focus,
+a:hover,
+a:active {
+  color: #444;
+  text-decoration: none;
+}
 input::placeholder {
   opacity: 1;
+  font-family: 'Quicksand', sans-serif;
+}
+input:focus,
+select:focus {
+    outline: none;
+}
+.alert--error {
+  display: flex;
+  align-items: center;
+  color: #E94C4C;
+}
+.alert--error p {
+  display: inline-block;
+}
+.alert--error > svg {
+  margin-right: 7px;
+  vertical-align: middle;
+}
+.icon--error {
+  width: 13px;
+  height: 14px;
+}
+.container {
+  width: 1000px;
+}
+.container--index,
+.container--registration,
+.container--login {
+  max-width: 360px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 20px;
 }
 
 /* ----------------------------
-Connexion
+Header
 ---------------------------- */
+header {
+  background-color: #56B693;
+  display: flex;
+  width: 100%;
+  height: 60px;
+  justify-content: center;
+}
+.header {
+  display: flex;
+  width: 1000px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+}
+.header--title {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.5em;  
+  font-weight: 400;
+  color: #FCFBF7;
+}
+.icon--header{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
 
+/* ----------------------------
+Index Page
+---------------------------- */
+.medium--text {
+  font-size: 1.28em;
+  font-weight: 500; 
+}
+.regular--text {
+  font-size: 1em;
+  font-weight: 400; 
+}
+.btn--visit {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 26 19' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 9.81H24M24 9.81L16.19 2M24 9.81L16.19 17.62' stroke='%233E81EA' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
+  width: 26px;
+  height: 19px;
+}
+
+/* ----------------------------
+Login Page
+---------------------------- */
 .form {
   display: flex;
   flex-direction: column;
   justify-content: flex-end; 
   align-content: center;
-}
-input:focus,
-select:focus {
-    outline: none;
 }
 .subscriptionInput {
   margin: 15px 0;
@@ -63,19 +145,6 @@ select:focus {
 }
 .subscriptionInput::placeholder {
     color: #444;
-}
-
-.alert--error {
-  display: flex;
-  align-items: center;
-  color: #E94C4C;
-}
-.alert--error > svg {
-  margin-right: 7px;
-  vertical-align: middle;
-}
-.alert--error p {
-  display: inline-block;
 }
 .btn--group {
   display: flex;
@@ -105,91 +174,89 @@ select:focus {
   color: #009688;
   margin-left: 15px;
 }
-
 .btn--fav {
   margin-right: 15px;
 }
-/* ----------------------------
-Index
----------------------------- */
-.medium--text {
-  font-size: 1.28em;
-  font-weight: 500; 
-}
-.regular--text {
-  font-size: 1em;
-  font-weight: 400; 
+.psswrdForgotten {
+  color: #56B693;
+  font-size: .875em;
 }
 
 /* ----------------------------
-Dashboard
+Dashboard Page
 ---------------------------- */
-.container {
-  width: 1000px;
-  background-color: #FCFBF7;
-}
 .container--dashboard {
-  display: flex;
-  padding-top: 15px;
+  max-width: 600px;
 }
-.cartouche--profil {
+.profilCartouche {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 .text--welcome {
+  margin-left: 15px;
   display: flex;
   flex-direction: column;
-  font-size: 1.156em;
-  font-weight: 500;
-  margin: 0 auto 0 15px
+  font-weight: 600;
+  text-transform: capitalize;
 }
 .text--welcome span {
   font-weight: 400;
 }
-.title {
-  display: flex;
-  align-items: center;
+.icon--avatar {
+  width: 46px;
+  height: 46px;
 }
-.title--category {
-  font-size: 1em;
-  font-weight: 500;
-}
-.icon--title {
-  width: 14px;
-  height: 14px;
-}
-.profilContainer {
-  width: 50%;
-  margin-bottom: 20px;
-}
-.featureBlocks {
-  display: flex;
-  flex-wrap: wrap;
-  width: 50%;
-  justify-content: flex-end;
-  padding-left: 15px;
-}
-
-.featureBlock {
-  border: 1px solid #AADAC9;
-  border-radius: 10px;
-  padding: 15px;
+.profilNav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 200px;
-  margin: 0 0 15px 15px;
+}
+.featureBlocks {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.featureBlocks > .featureBlock:nth-child(-n+2) {
+  background-color: rgba(170,218,201, .2);
+}
+.featureBlock {
+  transition: .2s;
+  flex: 1 0 40%;
+  font-size: 1em;
+  border: 1px solid #AADAC9;
+  border-radius: 10px;
+  padding: 15px;
+}
+.featureBlock:hover {
+  transform: scale(1.05);
+  background: rgba(170,218,201, .1);
+}
+.featureBlock:nth-child(odd) {
+  margin: 0 15px 15px 0;
+}
+.featureBlock:nth-child(even) {
+  margin: 0 0 15px 0;
+}
+.featureBlock a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 .featureBlock .icon {
   margin-bottom: 15px;
 }
-.featureBlock .title {
-  font-size: 1em;
-  font-weight: 500;
-  text-align: center;
-  max-width: 120px;
+.featureBlock span {
+  max-width: 100px;
 }
+.featureBlock--mySpace {
+  width: 100%;
+  margin: 0!important;
+}
+/* ----------------------------
+MySpace Page
+---------------------------- */
 .edit--prsonnalInfos {
   position: relative;
   margin-top: 15px;
@@ -205,12 +272,10 @@ Dashboard
   width    : 0;
   height   : 0;
   z-index  : 2;
-  
   border-left   : 7px solid transparent;
   border-right  : 7px solid transparent;
   border-bottom : 7px solid #FCFBF7;
 }
-/*#FCFBF7*/
 .edit--prsonnalInfos:after {
   content: '';
   position : absolute;
@@ -219,90 +284,9 @@ Dashboard
   width    : 0;
   height   : 0;
   z-index  : 1;
-  
   border-left   : 8.7px solid transparent;
   border-right  : 8.7px solid transparent;
   border-bottom : 8.7px solid #AADAC9;
-}
-/* ----------------------------
-Header
----------------------------- */
-header {
-  display: flex;
-  align-items: center;
-  background-color: #56B693;
-  height: 60px;
-  width: 100%;
-  justify-content: center;
-}
-.header {
-  width: 1000px;
-  display: flex;
-  justify-content: center;
-}
-.header--title {
-  font-family: 'Pacifico', cursive;
-  font-size: 1.5em;  
-  font-weight: 400;
-  color: #FCFBF7;
-  text-align: center;
-}
-.icon--header{
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-/* ----------------------------
-Link
----------------------------- */
-
-a {
-  outline: none;
-  text-decoration: underline;
-  font-weight: 600;
-}
-a:link {
-  color: #444;
-}
-a:visited {
-  color: #444;
-}
-a:focus {
-  color: #444;
-}
-a:hover {    
-  color: #56B693;
-}
-a:active {
-  color: #444;
-}
-.icon--avatar {
-  width: 46px;
-  height: 46px;
-}
-.icon--edit {
-  width: 26px;
-  height: 25px;
-}
-.icon--error {
-  width: 13px;
-  height: 14px;
-}
-.psswrdForgotten {
-  color: #56B693;
-  font-size: .875em;
-}
-/* ----------------------------
-Recettes
----------------------------- */
-.Content {
-  width: 360px;
-  background-color: #FCFBF7;
-  /* border: 1px solid black; */
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  padding: 20px;
 }
 .Section {
   padding: 1px;
@@ -349,10 +333,74 @@ Recettes
 }
 .CardTitle {
   max-width: 220px;
+  font-weight : 500;
 }
 
 /* ----------------------------
-	NotFound
+Calendar Page
+---------------------------- */
+.input--search {
+  padding: 7px  15px;
+  font-size: 1em;
+  padding-right: 30px;
+  border: 1px solid #444;
+  border-radius: 25px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 15 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 14L9.644 9.645' stroke='%23333' stroke-width='1.556' stroke-linecap='round'/%3E%3Cpath d='M10.422 5.678c0 2.716-2.169 4.9-4.822 4.9S.778 8.394.778 5.678c0-2.717 2.169-4.9 4.822-4.9s4.822 2.183 4.822 4.9z' stroke='%23333' stroke-width='1.556'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 95% 50%;
+  background-size: 15px 15px;
+}
+.fruitVegBlocks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.fruitVegBlock {
+  max-width: 150px;
+  min-width: 150px;
+  margin: 0 15px 15px 0;
+  transition: .2s;
+  flex: 1 0 21%;
+  font-size: 1em;
+  border-radius: 10px;
+  padding: 15px;
+}
+.fruitVegBlock:hover {
+  transform: scale(1.05);
+}
+.fruits {
+  border: 1px solid #F18585;
+}
+.légumes {
+  border: 1px solid #DFE178;
+}
+.fruits:hover {
+  background: rgba(241,133,133, .1);
+}
+.légumes:hover {
+  background: rgba(223,225,120, .1);
+}
+.fruitVegBlock a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.fruitVegBlock .icon {
+  margin-bottom: 15px;
+}
+.fruitVegBlock span {
+  max-width: 100px;
+}
+/* ----------------------------
+A bouger
+---------------------------- */
+.icon--edit {
+  width: 26px;
+  height: 25px;
+}
+/* ----------------------------
+	NotFound Page
 ---------------------------- */
 .notFound {
 	display: flex;
@@ -364,41 +412,38 @@ Recettes
 }
 
 
-@media screen and (max-width: 1200px) {
-  .container {
-    width: auto;
-    align-items: center;
-  }
-  .container--dashboard {
-    flex-direction: column;
-  }
-  .featureBlocks {
-    justify-content: space-around;
-    padding: 0;
-  }
-  .featureBlock {
-    width: 45%;
-    margin: 0 0 15px 0;
-  }
-}
+/* ----------------------------
+	Media Queries
+---------------------------- */
 
-@media screen and (max-width: 760px) {
-  body {
-    font-size: 12px;
-  }
+@media screen and (max-width: 1000px) {
   .container {
-    padding: 20px;
-  }
-  .featureBlocks,
-  .profilContainer {
+    max-width: inherit;
     width: 100%;
+    padding: 15px;
+  }
+  .container--index,
+  .container--registration,
+  .container--login {
+    width: 360px;
+  }
+  .fruitVegBlocks {
+    justify-content: center;
   }
 }
-
-
-.fruits {
-  color: red;
+@media screen and (max-width: 650px) {
+  .container--dashboard {
+    max-width: inherit;
+    width: 100%;
+    padding: 15px;
+  }
 }
-.légumes {
-  color: blue;
+@media screen and (max-width: 360px) {
+  .container--index,
+  .container--registration,
+  .container--login {
+    max-width: inherit;
+    width: 100%;
+    padding: 15px;
+  }
 }

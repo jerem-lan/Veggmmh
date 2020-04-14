@@ -1,18 +1,18 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 
 import ProfilCartouche from '../ProfilCartouche'
 import FeatureBlock from '../FeatureBlock'
 import featureBlocksData from '../../data/featureBlocksData'
 
-import AuthApi from '../../services/authApi';
-import axios from 'axios';
+import authApi from '../../services/authApi';
 import jwtDecode from 'jwt-decode';
+import axios from 'axios';
 
-import { Redirect } from 'react-router-dom'
+import { Redirect, NavLink } from 'react-router-dom';
 
 
 class DashboardPage extends Component {
-   
+
     state = { 
             username : "",
             firstname : "",
@@ -24,12 +24,11 @@ class DashboardPage extends Component {
             redirect : false,
             error : ""
     }
-
+    
     componentDidMount() {
         const token = window.localStorage.getItem("authToken")
         const decoded = jwtDecode(token)
-        const id = decoded.id
-        
+        const id = decoded.id     
         axios
             .get("http://127.0.0.1:8000/api/users/"+id)
             .then(res => {
@@ -44,25 +43,24 @@ class DashboardPage extends Component {
             })
     }
     
-    //Récupere les informations tapées dans le formulaire
+    //Récupere les informations tapées dans le formulaire de Modification des infos
     handleChange = (event) => {
         const { name, value } = event.target
         this.setState({ [name]: value })
     }
 
     changePersonnalInfo = (event) => {
+        // Prevent button click from submitting form
         event.preventDefault()
         const token = window.localStorage.getItem("authToken")
         const decoded = jwtDecode(token)
         const id = decoded.id
-
         axios({
             method: 'put',
             url: "http://127.0.0.1:8000/api/users/"+id,
             data: {
               postcode : this.state.postcode,
-              email: this.state.email,
-              username : this.state.username
+              email: this.state.email            
             }
         }).then(() => this.setState({ redirect: true }))
         .then(() => this.setState({ redirect: false }));
@@ -70,85 +68,57 @@ class DashboardPage extends Component {
 
     changePassword = (event) => {
         event.preventDefault()
-        if(this.state.password === this.state.confirmPassword) {
-            const token = window.localStorage.getItem("authToken")
-            const decoded = jwtDecode(token)
-            const id = decoded.id
-
-            axios({
-                method: 'put',
-                url: "http://127.0.0.1:8000/api/users/"+id,
-                data: {
-                password : this.state.password
-                }
-            }).then(() => this.setState({ redirect: true }))
-            .then(() => this.setState({ redirect: false }));
-
-        this.setState({password : "", confirmPassword : ""})
-        } else {
-            return this.setState({ error: "Les mots de passe ne sont pas identiques. Veuillez recommencer" });
-        }
+        if(this.state.password !== "" && this.state.confirmPassword !== "") {
+            if(this.state.password === this.state.confirmPassword) {
+                const token = window.localStorage.getItem("authToken")
+                const decoded = jwtDecode(token)
+                const id = decoded.id
+                axios({
+                    method: 'put',
+                    url: "http://127.0.0.1:8000/api/users/"+id,
+                    data: {
+                    password : this.state.password
+                    }
+                })
+                this.setState({password : "", confirmPassword : ""})
+            } else {
+                return this.setState({ error: "Les mots de passe ne sont pas identiques OU ne sont pas renseignés. Veuillez recommencer" });
+            }
+        } 
     }
-
     
-
     render() {
         const username = this.state.firstname + " " + this.state.lastname
-        // const { featureBlocksData }  = this.state
-        if ( AuthApi.setup() ) {
+        //Si connecté, affiche : 
+        if ( authApi.setup() ) {
             if(this.state.redirect) {
-                return <Redirect push to={`/dashboard/${this.state.username}`} />
-            }     
+                return <Redirect push to={`/dashboard`} />
+            }    
             return (
-                <Fragment>
-                    
-                    <div className="container container--dashboard">
-                
-                    <div className="profilContainer">
-                        <ProfilCartouche username={username}/>
-                        <div className="edit--prsonnalInfos">
-                        <div className="title">
-                            <svg className="icon--title" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M11.5 5L7 9 2.5 5" stroke="#444" strokeWidth="1.5" strokeLinecap="round"/>
-                            </svg>
-                            <p className='title--category'>Modifier mes informations</p>
+                <div className="container container--dashboard">
+                    <ProfilCartouche username={username}/>
+                    <div className="profilNav">
+                        <h2 className="featureBlock featureBlock--mySpace">
+                            <NavLink to="/mon-espace">Mon espace</NavLink>
+                        </h2>
+                        <div className="featureBlocks">
+                            {
+                                Object.keys(featureBlocksData)
+                                    .map(key => <FeatureBlock
+                                        key={key}
+                                        id={key} 
+                                        featureBlocksData={featureBlocksData}/>)
+                            }
                         </div>
-                        <form className='form'>
-                            <input name='postcode' value={this.state.postcode} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder={this.state.postcode}  pattern="[0-9]{5}" required/>
-                            <input name='email' value={this.state.email} onChange={this.handleChange} className="subscriptionInput" type="email" placeholder={this.state.email} required/>
-                            <input name='username' value={this.state.username} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder={this.state.username} pattern='[A-Za-z-]{1,}' required/>
-                            
-                            <button className="btn" type="submit" onClick={this.changePersonnalInfo}>Valider les changements</button>
-                            
-                            <input name='password' value={this.state.password} onChange={this.handleChange} className="subscriptionInput" type="password" placeholder="Nouveau mot de passe" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" />
-                            <input name='confirmPassword' value={this.state.confirmPassword} onChange={this.handleChange} className="subscriptionInput" type="password" placeholder="Confirmer le mot de passe" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" />
-                            
-                            
-                            {this.state.error && <p className="invalid-feedback">{this.state.error}</p>}
-
-                            
-                            <button className="btn" type="submit" onClick={this.changePassword}>Modifier le mot de passe</button>
-                        </form>
-                    </div>
-                    </div>
-                    
-                    <div className="featureBlocks">
-                        <div className="featureBlock"><p className="title">Mon espace</p></div>
-                        {
-                            Object.keys(featureBlocksData)
-                                .map(key => <FeatureBlock
-                                    key={key}
-                                    id={key} 
-                                    featureBlocksData={featureBlocksData}/>)
-                        }
                     </div>
                 </div>
-                </Fragment>
             )
         }
+        //Sinon, affiche : 
         return (
-            <Fragment>
-                <div className="container container--dashboard">
+            <div className="container container--dashboard">
+                <ProfilCartouche username="jeune pousse !"/>
+                <div className="profilNav">
                     <div className="featureBlocks">
                         {
                             Object.keys(featureBlocksData)
@@ -159,7 +129,7 @@ class DashboardPage extends Component {
                         }
                     </div>
                 </div>
-            </Fragment>
+            </div>
         )
     }
        
