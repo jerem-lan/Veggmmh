@@ -2,12 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import AuthApi from '../services/authApi';
 
-<<<<<<< HEAD
 
 const Header = ({isConnected, onLogout, history}) => {
-=======
-const Header = ({isConnected, onLogout}) => {
->>>>>>> e05b2d3a4cb7ff5c3b96189af0d89a2a38165e44
 
     const handleLogout = () => {
         AuthApi.logout();
