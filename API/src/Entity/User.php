@@ -112,7 +112,7 @@ class User implements UserInterface
      *                  min = 5,
      *                  max = 5,
      *                  exactMessage = "Le code postal doit contenir 5 caractères")
-     * @Assert\Type(type="numeric", ,message="le code postale doit contenir des chiffres")
+     * @Assert\Type(type="numeric", message="le code postal doit contenir des chiffres")
      * @Assert\NotBlank(message="Le code postal est obligatoire")
      * @Groups({ "users_read" })
      */
