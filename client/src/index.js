@@ -19,7 +19,6 @@ import NotFound from './components/pages/NotFound'
 // ROUTES
 import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom'
 //
-import AuthApi from './services/authApi';
 import * as serviceWorker from './serviceWorker';
 
 AuthApi.setup()

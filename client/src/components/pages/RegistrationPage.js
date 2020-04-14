@@ -68,7 +68,7 @@ class RegistrationPage extends Component {
 
     render() { 
         return (
-            <Fragment>
+            
                 <div className="Content">
                     <form className='form' onSubmit={this.handleSubmit}>
                         <input 
@@ -133,7 +133,7 @@ class RegistrationPage extends Component {
                         
                     </form>
                 </div>
-            </Fragment>
+          
         );
     }
 }
