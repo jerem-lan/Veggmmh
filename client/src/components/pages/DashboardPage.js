@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import ProfilCartouche from '../ProfilCartouche'
 import FeatureBlock from '../FeatureBlock'
-import featureBlocksData from '../../data/featureBlocksDataConnected'
+import featureBlocksData from '../../data/featureBlocksData'
 
 import authApi from '../../services/authApi';
 import jwtDecode from 'jwt-decode';
