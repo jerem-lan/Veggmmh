@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Axios from 'axios';
 
 
@@ -39,7 +39,7 @@ class ListAdPage extends Component {
   
     render() {
         return (
-           <Fragment>
+           <div className="container">
                { this.state.ads.map(ad =>
                 <list-item key={ad.id}> 
                     <h2>{ad.title}</h2>
@@ -48,7 +48,7 @@ class ListAdPage extends Component {
                     <button className="btn" type="submit">repondre</button>
                     <button className="btn" onClick={() => this.handleDelete(ad.id)}>supprimer</button>
                 </list-item>)}
-           </Fragment>
+           </div>
         )
     }
 }

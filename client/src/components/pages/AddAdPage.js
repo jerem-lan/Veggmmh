@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 
 
@@ -45,50 +45,48 @@ class AddAdPage extends Component {
 
     render() {
         return (
-            <Fragment>
-                <div className="Content">
-                    <form
-                        className='form'
-                        onSubmit= {this.handleSubmit}>
-                        <label>
-                            <h3>Titre de l'annonce</h3>
+            <div className="container">
+                <form
+                    className='form'
+                    onSubmit= {this.handleSubmit}>
+                    <label>
+                        <h3>Titre de l'annonce</h3>
 
-                            <input
-                                name='title'
-                                value={this.state.title}
-                                onChange={this.handleChange}
-                                type="text"
-                                required >
-                            </input>
+                        <input
+                            name='title'
+                            value={this.state.title}
+                            onChange={this.handleChange}
+                            type="text"
+                            required >
+                        </input>
 
-                            <h3>Description de l'annonce</h3>
+                        <h3>Description de l'annonce</h3>
 
-                            <textarea
-                                name='content'
-                                value={this.state.content}
-                                onChange={this.handleChange}
-                                type="text"
-                                rows="10" 
-                                cols="40"
-                                required
-                            />
+                        <textarea
+                            name='content'
+                            value={this.state.content}
+                            onChange={this.handleChange}
+                            type="text"
+                            rows="10" 
+                            cols="40"
+                            required
+                        />
 
-                            <h3>Localisation</h3>
+                        <h3>Localisation</h3>
 
-                            <input
-                                name='postcode'
-                                value={this.state.postcode}
-                                onChange={this.handleChange}
-                                type="text"
-                                required >
-                            </input>
-                        </label>
-                        <button className="btn" type='submit' >
-                            Envoyer!
-                        </button>
-                    </form>
-                </div>
-            </Fragment>
+                        <input
+                            name='postcode'
+                            value={this.state.postcode}
+                            onChange={this.handleChange}
+                            type="text"
+                            required >
+                        </input>
+                    </label>
+                    <button className="btn" type='submit' >
+                        Envoyer!
+                    </button>
+                </form>
+            </div>
         );
     }
 }
