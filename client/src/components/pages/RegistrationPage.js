@@ -72,7 +72,7 @@ class RegistrationPage extends Component {
     render() { 
         return (
             
-                <div className="Content">
+                <div className="container container--registration">
                     <form className='form' onSubmit={this.handleSubmit}>
                         <input 
                             name='lastname' 

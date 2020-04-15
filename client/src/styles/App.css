@@ -217,9 +217,9 @@ Dashboard Page
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.featureBlocks > .featureBlock:nth-child(-n+2) {
+/* .featureBlocks > .featureBlock:nth-child(-n+2) {
   background-color: rgba(170,218,201, .2);
-}
+} */
 .featureBlock {
   transition: .2s;
   flex: 1 0 40%;

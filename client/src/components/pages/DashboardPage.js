@@ -26,21 +26,23 @@ class DashboardPage extends Component {
     }
     
     componentDidMount() {
-        const token = window.localStorage.getItem("authToken")
-        const decoded = jwtDecode(token)
-        const id = decoded.id     
-        axios
-            .get("http://127.0.0.1:8000/api/users/"+id)
-            .then(res => {
-                const user = res.data;
-                this.setState({ 
-                    firstname : user.firstname,
-                    lastname : user.lastname,
-                    username : user.username,
-                    postcode : user.postcode,
-                    email : user.email
-                });
-            })
+        if ( authApi.isAuthenticated() ) {   
+            const token = window.localStorage.getItem("authToken")
+            const decoded = jwtDecode(token)
+            const id = decoded.id     
+            axios
+                .get("http://127.0.0.1:8000/api/users/"+id)
+                .then(res => {
+                    const user = res.data;
+                    this.setState({ 
+                        firstname : user.firstname,
+                        lastname : user.lastname,
+                        username : user.username,
+                        postcode : user.postcode,
+                        email : user.email
+                    });
+                })
+        }
     }
     
     //Récupere les informations tapées dans le formulaire de Modification des infos
@@ -82,7 +84,7 @@ class DashboardPage extends Component {
                 })
                 this.setState({password : "", confirmPassword : ""})
             } else {
-                return this.setState({ error: "Les mots de passe ne sont pas identiques OU ne sont pas renseignés. Veuillez recommencer" });
+                return this.setState({ error: "Mots de passe manquants ou non-similaires." });
             }
         } 
     }
@@ -90,30 +92,25 @@ class DashboardPage extends Component {
     render() {
         const username = this.state.firstname + " " + this.state.lastname
         //Si connecté, affiche : 
-        if ( authApi.setup() ) {
-            if(this.state.redirect) {
-                return <Redirect push to={`/dashboard`} />
-            }    
+        if ( authApi.isAuthenticated() ) {   
             return (
                 <div className="container container--dashboard">
                     <ProfilCartouche username={username}/>
                     <div className="profilNav">
-                        <h2 className="featureBlock featureBlock--mySpace">
-                            <NavLink to="/mon-espace">Mon espace</NavLink>
-                        </h2>
                         <div className="featureBlocks">
                             {
                                 Object.keys(featureBlocksData)
                                     .map(key => <FeatureBlock
-                                        key={key}
-                                        id={key} 
-                                        featureBlocksData={featureBlocksData}/>)
+                                                key={key}
+                                                id={key} 
+                                                featureBlocksData={featureBlocksData}/>)
                             }
                         </div>
                     </div>
                 </div>
             )
         }
+        
         //Sinon, affiche : 
         return (
             <div className="container container--dashboard">
@@ -122,10 +119,11 @@ class DashboardPage extends Component {
                     <div className="featureBlocks">
                         {
                             Object.keys(featureBlocksData)
-                                .map(key => <FeatureBlock
-                                    key={key}
-                                    id={key} 
-                                    featureBlocksData={featureBlocksData}/>)
+                                .filter(key => featureBlocksData[key].isAnonym === true )
+                                .map((key) => <FeatureBlock
+                                                key={key}
+                                                id={key} 
+                                                featureBlocksData={featureBlocksData}/>)
                         }
                     </div>
                 </div>
