@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 
 import ProfilCartouche from '../ProfilCartouche'
 import FeatureBlock from '../FeatureBlock'
-import featureBlocksDataConnected from '../../data/featureBlocksDataConnected'
-import featureBlocksDataAnonymous from '../../data/featureBlocksDataAnonymous'
+import featureBlocksData from '../../data/featureBlocksDataConnected'
 
 import authApi from '../../services/authApi';
 import jwtDecode from 'jwt-decode';
@@ -27,7 +26,7 @@ class DashboardPage extends Component {
     }
     
     componentDidMount() {
-        if(authApi.isAuthenticated()) {
+        if ( authApi.isAuthenticated() ) {   
             const token = window.localStorage.getItem("authToken")
             const decoded = jwtDecode(token)
             const id = decoded.id     
@@ -85,7 +84,7 @@ class DashboardPage extends Component {
                 })
                 this.setState({password : "", confirmPassword : ""})
             } else {
-                return this.setState({ error: "Les mots de passe ne sont pas identiques OU ne sont pas renseignés. Veuillez recommencer" });
+                return this.setState({ error: "Mots de passe manquants ou non-similaires." });
             }
         } 
     }
@@ -93,27 +92,25 @@ class DashboardPage extends Component {
     render() {
         const username = this.state.firstname + " " + this.state.lastname
         //Si connecté, affiche : 
-        if ( authApi.isAuthenticated() ) {
-            if(this.state.redirect) {
-                return <Redirect push to={`/dashboard`} />
-            }    
+        if ( authApi.isAuthenticated() ) {   
             return (
                 <div className="container container--dashboard">
                     <ProfilCartouche username={username}/>
                     <div className="profilNav">
                         <div className="featureBlocks">
                             {
-                                Object.keys(featureBlocksDataConnected)
+                                Object.keys(featureBlocksData)
                                     .map(key => <FeatureBlock
-                                        key={key}
-                                        id={key} 
-                                        featureBlocksData={featureBlocksDataConnected}/>)
+                                                key={key}
+                                                id={key} 
+                                                featureBlocksData={featureBlocksData}/>)
                             }
                         </div>
                     </div>
                 </div>
             )
         }
+        
         //Sinon, affiche : 
         return (
             <div className="container container--dashboard">
@@ -121,11 +118,12 @@ class DashboardPage extends Component {
                 <div className="profilNav">
                     <div className="featureBlocks">
                         {
-                            Object.keys(featureBlocksDataAnonymous)
-                                .map(key => <FeatureBlock
-                                    key={key}
-                                    id={key} 
-                                    featureBlocksData={featureBlocksDataAnonymous}/>)
+                            Object.keys(featureBlocksData)
+                                .filter(key => featureBlocksData[key].isAnonym === true )
+                                .map((key) => <FeatureBlock
+                                                key={key}
+                                                id={key} 
+                                                featureBlocksData={featureBlocksData}/>)
                         }
                     </div>
                 </div>

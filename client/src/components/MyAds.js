@@ -16,7 +16,13 @@ const MyAds = ({ Ads, handleDeleteAds }) => {
 				Mes annonces
 			</h2>
 			<div className="SectionContent">
-				<DisplayMyAds Ads={Ads} handleDeleteAds={handleDeleteAds} />
+			{ Ads.map(ad =>
+				<DisplayMyAds
+					id={ad.id}
+					key={ad.id}
+					title={ad.title}
+					handleDeleteAds={handleDeleteAds} />
+			)}
 			</div>
 		</div>
 	)
