@@ -54,7 +54,7 @@ class CalendarPage extends Component {
         return (
             <div className="container">
                 <div className="title--category">Rechercher par aliment</div>
-                <input className="input--search" type='text' onChange={this.handleChange} value={this.state.search} placeholder="tomate"/>
+                <input className="input--search" type='text' onChange={this.handleChange} value={this.state.search} placeholder="Ex: Cynthia"/>
                 <div className="fruitVegBlocks">
                     {
                         this.state.itemSelectionDeux.map((ingredient) => 

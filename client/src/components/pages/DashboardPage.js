@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 
 import ProfilCartouche from '../ProfilCartouche'
 import FeatureBlock from '../FeatureBlock'
-import featureBlocksData from '../../data/featureBlocksData'
+import featureBlocksDataConnected from '../../data/featureBlocksDataConnected'
+import featureBlocksDataAnonymous from '../../data/featureBlocksDataAnonymous'
 
 import authApi from '../../services/authApi';
 import jwtDecode from 'jwt-decode';
@@ -26,21 +27,23 @@ class DashboardPage extends Component {
     }
     
     componentDidMount() {
-        const token = window.localStorage.getItem("authToken")
-        const decoded = jwtDecode(token)
-        const id = decoded.id     
-        axios
-            .get("http://127.0.0.1:8000/api/users/"+id)
-            .then(res => {
-                const user = res.data;
-                this.setState({ 
-                    firstname : user.firstname,
-                    lastname : user.lastname,
-                    username : user.username,
-                    postcode : user.postcode,
-                    email : user.email
-                });
-            })
+        if(authApi.isAuthenticated()) {
+            const token = window.localStorage.getItem("authToken")
+            const decoded = jwtDecode(token)
+            const id = decoded.id     
+            axios
+                .get("http://127.0.0.1:8000/api/users/"+id)
+                .then(res => {
+                    const user = res.data;
+                    this.setState({ 
+                        firstname : user.firstname,
+                        lastname : user.lastname,
+                        username : user.username,
+                        postcode : user.postcode,
+                        email : user.email
+                    });
+                })
+        }
     }
     
     //Récupere les informations tapées dans le formulaire de Modification des infos
@@ -90,7 +93,7 @@ class DashboardPage extends Component {
     render() {
         const username = this.state.firstname + " " + this.state.lastname
         //Si connecté, affiche : 
-        if ( authApi.setup() ) {
+        if ( authApi.isAuthenticated() ) {
             if(this.state.redirect) {
                 return <Redirect push to={`/dashboard`} />
             }    
@@ -98,16 +101,13 @@ class DashboardPage extends Component {
                 <div className="container container--dashboard">
                     <ProfilCartouche username={username}/>
                     <div className="profilNav">
-                        <h2 className="featureBlock featureBlock--mySpace">
-                            <NavLink to="/mon-espace">Mon espace</NavLink>
-                        </h2>
                         <div className="featureBlocks">
                             {
-                                Object.keys(featureBlocksData)
+                                Object.keys(featureBlocksDataConnected)
                                     .map(key => <FeatureBlock
                                         key={key}
                                         id={key} 
-                                        featureBlocksData={featureBlocksData}/>)
+                                        featureBlocksData={featureBlocksDataConnected}/>)
                             }
                         </div>
                     </div>
@@ -121,11 +121,11 @@ class DashboardPage extends Component {
                 <div className="profilNav">
                     <div className="featureBlocks">
                         {
-                            Object.keys(featureBlocksData)
+                            Object.keys(featureBlocksDataAnonymous)
                                 .map(key => <FeatureBlock
                                     key={key}
                                     id={key} 
-                                    featureBlocksData={featureBlocksData}/>)
+                                    featureBlocksData={featureBlocksDataAnonymous}/>)
                         }
                     </div>
                 </div>

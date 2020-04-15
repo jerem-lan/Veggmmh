@@ -10,11 +10,13 @@ import IndexPage from './components/pages/IndexPage'
 import LoginPage from './components/pages/LoginPage'
 import RegistrationPage from './components/pages/RegistrationPage'
 import DashboardPage from './components/pages/DashboardPage';
-import MySpacePage from './components/pages/MySpacePage';
 import CalendarPage from './components/pages/CalendarPage';
 import SeasonalItemCardPage from './components/pages/SeasonalItemCardPage';
 import AddAdPage from './components/pages/AddAdPage';
 import ListAdPage from './components/pages/ListAdPage';
+import MyRecipesPage from './components/pages/MyRecipesPage';
+import MyFavRecipesPage from './components/pages/MyFavRecipesPage';
+import MyAdsPage from './components/pages/MyAdsPage';
 import NotFound from './components/pages/NotFound'
 // ROUTES
 import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom'
@@ -52,11 +54,6 @@ const Root = () => {
                         path='/dashboard'
                         component={DashboardPage} 
                     />
-                    <PrivateRoute 
-                        path='/mon-espace' 
-                        isAuthenticated={isConnected}
-                        component={MySpacePage} 
-                    />
                     <Route 
                         path='/calendrier-des-saisons'
                         component={CalendarPage} 
@@ -70,6 +67,9 @@ const Root = () => {
                         path="/liste-annonces"
                         component={ListAdPage}
                     />
+                    <Route path="/mes-recettes" component={MyRecipesPage} />
+                    <Route path="/mes-recettes-favorites" component={MyFavRecipesPage} />
+                    <Route path="/mes-annonces" component={MyAdsPage} />
                     <Route path='/calendrier-des-saisons' component={CalendarPage} />
                     <Route path='/:name' component={SeasonalItemCardPage} />
                     <Route component={NotFound} />
