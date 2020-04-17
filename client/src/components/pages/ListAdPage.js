@@ -13,11 +13,9 @@ class ListAdPage extends Component {
                 const ads = res.data['hydra:member'];
                 this.setState({ ads });
              })
-            
     }
 
     handleDelete(id){
-
         const token = window.localStorage.getItem("authToken")
         //on le met dans un header
         const config = {
@@ -29,7 +27,6 @@ class ListAdPage extends Component {
         this.setState({ ads: ads })
         //on supprime l'annonce dans la BDD
         Axios.delete("http://127.0.0.1:8000/api/ad/" + id, config)
-        
             .then(response => console.log('ok'))
             .catch(error => {
                 this.setState({ ads: original });
