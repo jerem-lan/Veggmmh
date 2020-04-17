@@ -29,7 +29,9 @@ import { ToastContainer, toast } from 'react-toastify';
 AuthApi.setup()
 
 const PrivateRoute = ({path, isAuthenticated, component}) => {
-    return isAuthenticated ? (<Route path={path} component={component} />) : (<Redirect to="/login" />)
+    return isAuthenticated ? (<Route path={path} component={component} />) :
+    (toast.info("connectez vous !!"), 
+    <Redirect to="/login" />)
 }
 
 const Root = () => {
@@ -41,7 +43,10 @@ const Root = () => {
         <Router>
             <HeaderWithRouter isConnected={isConnected} onLogout={setIsConnected} />
                 <Switch>
-                    <Route exact path='/' component={IndexPage} />
+                    <Route 
+                        exact path='/' 
+                        component={IndexPage} 
+                    />
                     <Route  path='/login'
                             render={(props) => 
                             <LoginPage 
@@ -61,21 +66,45 @@ const Root = () => {
                         path='/calendrier-des-saisons'
                         component={CalendarPage} 
                     />
-                    <PrivateRoute
-                        path="/ajouter-annonce"
-                        isAuthenticated={isConnected}
-                        component={AddAdPage}
+                    <Route 
+                        path='/calendrier-des-saisons' 
+                        component={CalendarPage} 
                     />
                     <Route
                         path="/liste-annonces"
                         component={ListAdPage}
                     />
-                    <Route path="/mes-recettes" component={MyRecipesPage} />
-                    <Route path="/ajouter-recette" component={AddRecipePage} />
-                    <Route path="/mes-recettes-favorites" component={MyFavRecipesPage} />
-                    <Route path="/mes-annonces" component={MyAdsPage} />
-                    <Route path='/calendrier-des-saisons' component={CalendarPage} />
-                    <Route path='/:name' component={SeasonalItemCardPage} />
+                    <PrivateRoute
+                        path="/ajouter-annonce"
+                        isAuthenticated={isConnected}
+                        component={AddAdPage}
+                    />
+                    
+                    <PrivateRoute 
+                        path="/mes-recettes" 
+                        isAuthenticated={isConnected}
+                        component={MyRecipesPage} 
+                    />
+                    <PrivateRoute 
+                        path="/mes-recettes-favorites" 
+                        isAuthenticated={isConnected}
+                        component={MyFavRecipesPage} 
+                    />
+                    <PrivateRoute 
+                        path="/mes-annonces" 
+                        isAuthenticated={isConnected}
+                        component={MyAdsPage} 
+                    />
+                    <PrivateRoute 
+                        path="/ajouter-recette"
+                        isAuthenticated={isConnected} 
+                        component={AddRecipePage} 
+                    />
+                    
+                    <Route 
+                        path='/:name' 
+                        component={SeasonalItemCardPage} 
+                    />
                     <Route component={NotFound} />
                 </Switch>
                 <ToastContainer 

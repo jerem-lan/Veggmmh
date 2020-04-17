@@ -15,7 +15,7 @@ class RegistrationPage extends Component {
         email: '',
         username: '',
         password: '',
-        errors: '' 
+        errors: ''
     }
 
     //Récupere les informations tapées dans le formulaire
@@ -50,7 +50,7 @@ class RegistrationPage extends Component {
             this.setState({
                 errors: ""
             })
-            toast.info("Bienvenue parmis nous !!")
+            toast.info("🌱 Bienvenue jeune pousse ! 🌱")
             this.props.history.replace('/login')
         } catch(error) {
             const {violations} = error.response.data

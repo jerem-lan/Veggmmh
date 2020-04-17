@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from "axios";
 // COMPONENTS
 import FruitVegBlock from '../FruitVegBlock'
+import IngredientLoader from '../../loaders/IngredientsLoader';
 
 class CalendarPage extends Component {
    
@@ -9,12 +10,13 @@ class CalendarPage extends Component {
         fruitsAndVeggies: [], // tous les fruits/légumes récupérés depuis l'API
         itemSelection: [], // les fruits/legumes trouvés après recherche par mois de disponibilité
         itemSelectionDeux: [], // les fruits/legumes trouvés après recherche par saisie de nom
-        search: '' // le mot que l'on saisi dans l'input pour chercher un item
+        search: '', // le mot que l'on saisi dans l'input pour chercher un item
+        loading: true
     }
 
     // recupère les fruits/légumes dans Ingredient issu des données de l'API
     componentDidMount() {
-        axios.get("http://127.0.0.1:8000/api/ingredients")
+        try { axios.get("http://127.0.0.1:8000/api/ingredients")
             .then(res => res.data["hydra:member"])
             .then((data) => {
                 //retourne un nouveau tableau contenant tous les éléments du tableau d'ingrédients qui ont légumes ou fruits comme family
@@ -27,9 +29,12 @@ class CalendarPage extends Component {
                     if(a.name > b.name) { return 1; }
                     return 0;
                 })
-                this.setState({ fruitsAndVeggies: fruitsAndVeggies })
+                this.setState({ 
+                    fruitsAndVeggies: fruitsAndVeggies,
+                    loading: false
+                })
             })
-            .catch(error => console.log(error.response))
+        }catch(error) { console.log(error.response)}
     }
 
     // recherche item par son nom
@@ -51,8 +56,10 @@ class CalendarPage extends Component {
     }
 
     render() {
+        const loading = this.state.loading
         return (
             <div className="container">
+                
                 <div className="title--category">Rechercher par aliment</div>
                 <input className="input--search" type='text' onChange={this.handleChange} value={this.state.search} placeholder="tomate"/>
                 <div className="fruitVegBlocks">
@@ -84,10 +91,12 @@ class CalendarPage extends Component {
                     <option>novembre</option>
                     <option>décembre</option>
                 </select>
-                <div className="fruitVegBlocks">
+                <div className="fruitVegBlocks" >
+                {loading && <IngredientLoader /> }
                     {
-                        this.state.itemSelection.map((ingredient) => 
+                        !loading && this.state.itemSelection.map((ingredient) => 
                             <FruitVegBlock
+                                key={ingredient.id}
                                 id={ingredient.id}
                                 family={ingredient.family}
                                 name={ingredient.name}

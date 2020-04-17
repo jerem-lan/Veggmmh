@@ -7,6 +7,7 @@ import featureBlocksData from '../../data/featureBlocksData'
 import authApi from '../../services/authApi';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
+import DashBoardLoader from '../../loaders/DashBoardLoader';
 
 class DashboardPage extends Component {
 
@@ -18,7 +19,9 @@ class DashboardPage extends Component {
             email : "",
             password : "",
             confirmPassword : "",
-            error : ""
+            redirect : false,
+            error : "",
+            loading: true
     }
     
     componentDidMount() {
@@ -35,13 +38,18 @@ class DashboardPage extends Component {
                         lastname : user.lastname,
                         username : user.username,
                         postcode : user.postcode,
-                        email : user.email
+                        email : user.email,
+                        loading: false
                     });
+
                 })
+        } else {
+            this.setState({ loading: false })
+            
         }
     }
     
-    //Récupere les informations tapées dans le formulaire de Modification des infos
+    // Récupere les informations tapées dans le formulaire de Modification des infos
     handleChange = (event) => {
         const { name, value } = event.target
         this.setState({ [name]: value })
@@ -89,11 +97,13 @@ class DashboardPage extends Component {
     }
     
     render() {
+        
         const username = this.state.firstname + " " + this.state.lastname
-        //Si connecté, affiche : 
-        if ( authApi.isAuthenticated() ) {   
-            return (
-                <div className="container container--dashboard">
+        let loading = this.state.loading 
+        return (   
+            <div className="container container--dashboard"> 
+                {loading && <DashBoardLoader />}      
+                {!loading && authApi.isAuthenticated()  && <>
                     <ProfilCartouche username={username}/>
                     <div className="edit--prsonnalInfos">
                         <div className="title">
@@ -121,14 +131,8 @@ class DashboardPage extends Component {
                                                 featureBlocksData={featureBlocksData}/>)
                             }
                         </div>
-                    </div>
-                </div>
-            )
-        }
-        
-        //Sinon, affiche : 
-        return (
-            <div className="container container--dashboard">
+                        </div> </>}
+               {!loading && !authApi.isAuthenticated() && <>
                 <ProfilCartouche username="jeune pousse !"/>
                 <div className="profilNav">
                     <div className="featureBlocks">
@@ -141,7 +145,8 @@ class DashboardPage extends Component {
                                                 featureBlocksData={featureBlocksData}/>)
                         }
                     </div>
-                </div>
+                </div> 
+            </>}
             </div>
         )
     }

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
-
+import AlertMessage from '../AlertMessage';
 
 class AddAdPage extends Component {
     state = {
         title: '',
         content: '',
-        postcode: ''
+        postcode: '',
+        errors: ''
     }
 
     handleChange = event => {
@@ -16,7 +16,7 @@ class AddAdPage extends Component {
         this.setState({ [name]: value })
     }
 
-    handleSubmit = event => {
+    handleSubmit = async event => {
         event.preventDefault()
         //on recupère le token
         const token = window.localStorage.getItem("authToken")
@@ -30,7 +30,7 @@ class AddAdPage extends Component {
             postcode: this.state.postcode
         };
         //on donne le header et les données à axios
-        axios.post( 
+        try { await axios.post( 
             'http://localhost:8000/api/ads',
             ad,
             config
@@ -41,8 +41,22 @@ class AddAdPage extends Component {
                 content: '',
                 postcode: ''
             })
-            toast.info("Votre annonce a été créée avec success")
+            toast.info("👌 Votre annonce a été créée avec succès")
             this.props.history.replace("/liste-annonces");
+        }catch (error) {
+            const {violations} = error.response.data
+            if(violations){
+                const apiErrors = {};
+                violations.map(violation => 
+                    apiErrors[violation.propertyPath] = violation.message
+                    
+                );     
+                this.setState({
+                    errors: apiErrors
+                })
+                toast.error("Des erreurs dans votre formulaire !!")    
+            } 
+        }
     }
 
     render() {
@@ -59,9 +73,10 @@ class AddAdPage extends Component {
                             value={this.state.title}
                             onChange={this.handleChange}
                             type="text"
-                            required >
+                            required
+                        >
                         </input>
-
+                        {this.state.errors.title ? <AlertMessage message = { this.state.errors.title }  /> : ""}
                         <h3>Description de l'annonce</h3>
 
                         <textarea
@@ -73,7 +88,7 @@ class AddAdPage extends Component {
                             cols="40"
                             required
                         />
-
+                        {this.state.errors.content ? <AlertMessage message = { this.state.errors.content }  /> : ""}
                         <h3>Localisation</h3>
 
                         <input
@@ -81,8 +96,10 @@ class AddAdPage extends Component {
                             value={this.state.postcode}
                             onChange={this.handleChange}
                             type="text"
-                            required >
+                            required
+                        >
                         </input>
+                        {this.state.errors.postcode ? <AlertMessage message = { this.state.errors.postcode }  /> : ""}
                     </label>
                     <button className="btn" type='submit' >
                         Envoyer!
