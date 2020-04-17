@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import ListLoader from '../../loaders/ListLoader';
 
 
 class ListAdPage extends Component {
     state = {
-        ads: []
+        ads: [],
+        loading: true
     }
 
     componentDidMount() {
         Axios.get('http://localhost:8000/api/ads')
              .then(res => {
                 const ads = res.data['hydra:member'];
-                this.setState({ ads });
+                this.setState({ ads, loading: false });
              })
             
     }
@@ -28,7 +30,7 @@ class ListAdPage extends Component {
         let ads = this.state.ads.filter(ad => {return ad.id !== id})
         this.setState({ ads: ads })
         //on supprime l'annonce dans la BDD
-        Axios.delete("http://127.0.0.1:8000/api/ad/" + id, config)
+        Axios.delete("http://127.0.0.1:8000/api/ads/" + id, config)
         
             .then(response => console.log('ok'))
             .catch(error => {
@@ -37,10 +39,11 @@ class ListAdPage extends Component {
             });
     }
   
-    render() {
+    render() { 
         return (
            <div className="container">
-               { this.state.ads.map(ad =>
+               {this.state.loading && <ListLoader /> }
+               { !this.state.loading && this.state.ads.map(ad =>
                 <list-item key={ad.id}> 
                     <h2>{ad.title}</h2>
                     <p>{ad.content}</p>
@@ -48,7 +51,9 @@ class ListAdPage extends Component {
                     <button className="btn" type="submit">repondre</button>
                     <button className="btn" onClick={() => this.handleDelete(ad.id)}>supprimer</button>
                 </list-item>)}
+                
            </div>
+           
         )
     }
 }

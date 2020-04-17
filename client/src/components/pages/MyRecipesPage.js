@@ -4,11 +4,13 @@ import MyRecipes from '../MyRecipes'
 
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import ListLoader from '../../loaders/ListLoader';
 
 
 const MyRecipesPage = () => {
   // Un state pour chaque ressource avec la fonction qui permet de modifier le state
   const [Recipes, setRecipes] = useState([]);
+  const [Loading, setLoading] = useState(true)
 
   useEffect(() => {
     // Récupération du token et de l'id de l'utilisateur actuellement connecté
@@ -21,6 +23,7 @@ const MyRecipesPage = () => {
       .get("http://localhost:8000/api/users/"+id+"/recipes/")
       .then(res => {
         const data = res.data['hydra:member'];
+        setLoading(false)
         setRecipes(data)
       });
   }, [])
@@ -47,10 +50,12 @@ const MyRecipesPage = () => {
     }
 
     return (
+        
         <Fragment>
-          <div className="container">
+          {Loading && <ListLoader />} 
+          {!Loading && <div className="container">
             <MyRecipes Recipes={Recipes} handleDeleteRecipe={handleDeleteRecipe}/>
-          </div>
+          </div>}
         </Fragment>
     );
 }

@@ -4,11 +4,13 @@ import MyAds from '../MyAds'
 
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import ListLoader from '../../loaders/ListLoader';
 
 
 const MyAdsPage = () => {
   // Un state pour chaque ressource avec la fonction qui permet de modifier le state
   const [Ads, setAds] = useState([]);
+  const [Loading, setLoading] = useState(true)
   // const [users, setUsers] = useState([]);
 
 	useEffect(() => {
@@ -22,6 +24,7 @@ const MyAdsPage = () => {
       .get("http://localhost:8000/api/users/"+id+"/ads/")
       .then(res => {
         const data = res.data['hydra:member'];
+        setLoading(false)
         setAds(data)
       });
   }, [])
@@ -49,9 +52,10 @@ const MyAdsPage = () => {
 
     return (
         <Fragment>
-          <div className="container">
+          {Loading && <ListLoader />} 
+          {!Loading && <div className="container">
             <MyAds Ads={Ads} handleDeleteAds={handleDeleteAds} />
-          </div>
+          </div>}
         </Fragment>
     );
   }

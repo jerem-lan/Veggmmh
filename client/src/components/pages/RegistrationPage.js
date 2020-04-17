@@ -15,7 +15,7 @@ class RegistrationPage extends Component {
         email: '',
         username: '',
         password: '',
-        errors: '' 
+        errors: ''
     }
 
     //Récupere les informations tapées dans le formulaire
