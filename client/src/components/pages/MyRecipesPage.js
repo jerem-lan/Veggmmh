@@ -54,7 +54,6 @@ const MyRecipesPage = () => {
     }
 
     return (
-<<<<<<< HEAD
         
         <Fragment>
           {Loading && <ListLoader />} 
@@ -62,11 +61,6 @@ const MyRecipesPage = () => {
             <MyRecipes Recipes={Recipes} handleDeleteRecipe={handleDeleteRecipe}/>
           </div>}
         </Fragment>
-=======
-          <div className="container">
-            <MyRecipes Recipes={Recipes} handleDeleteRecipe={handleDeleteRecipe}/>
-          </div>
->>>>>>> deb121514f7e1f4195c97b410265efd1708e92e4
     );
 }
 
