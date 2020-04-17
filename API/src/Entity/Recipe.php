@@ -32,7 +32,7 @@ class Recipe
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
      * @Assert\NotBlank(message="La date de creation est obligatoire")
      * @Groups({"recipes_subresource", "recipe_read"})
      */
@@ -70,14 +70,16 @@ class Recipe
     /**
      * @ORM\Column(type="json")
      * @Assert\NotBlank(message="La description de la recette est obligatoire")
-     * @Assert\Length(
-     *                  min = 15,
-     *                  max = 4000,
-     *                  minMessage = "La description de la recette doit contenir 15 caractères minimum",
-     *                  maxMessage = "La description de la recette doit contenir 4000 caractères maximum")
      * @Groups({"recipes_subresource", "recipe_read"})
      */
     private $steps = [];
+
+    /**
+     * @ORM\Column(type="json")
+     * @Assert\NotBlank(message="La quantité des ingrédients est obligatoire")
+     * @Groups({"recipes_subresource", "recipe_read"})
+     */
+    private $quantity = [];
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -189,6 +191,18 @@ class Recipe
     public function setSteps(array $steps): self
     {
         $this->steps = $steps;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?array
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(array $quantity): self
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }
