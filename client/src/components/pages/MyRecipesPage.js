@@ -4,6 +4,7 @@ import MyRecipes from '../MyRecipes'
 
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import { toast } from 'react-toastify';
 
 
 const MyRecipesPage = () => {
@@ -39,10 +40,13 @@ const MyRecipesPage = () => {
 
       axios
       .delete("http://localhost:8000/api/recipes/"+id, config)
-      .then(response => console.log("ok pour MyRecipe"))
+      .then(response => 
+          toast.info("👌 Votre recette a été supprimée avec succès")
+          )
       .catch(error => {
         setRecipes(OriginalRecipes);
         console.log(error.response);
+        toast.error("😞 Oups, quelque chose s'est mal passé")
       })
     }
 

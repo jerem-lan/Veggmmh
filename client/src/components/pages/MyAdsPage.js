@@ -4,6 +4,7 @@ import MyAds from '../MyAds'
 
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import { toast } from 'react-toastify';
 
 
 const MyAdsPage = () => {
@@ -40,10 +41,13 @@ const MyAdsPage = () => {
 
 		axios
 		.delete("http://localhost:8000/api/ads/"+id, config)
-		.then(response => console.log("ok pour Ads"))
+    .then(response => 
+          toast.info("👌 Votre annonce a été supprimée avec succès")
+          )
 		.catch(error => {
 			setAds(OriginalAds);
-			console.log(error.response);
+      console.log(error.response);
+      toast.error("😞 Oups, quelque chose s'est mal passé")
 		})
 	}
 

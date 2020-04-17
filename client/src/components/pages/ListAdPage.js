@@ -13,7 +13,6 @@ class ListAdPage extends Component {
                 const ads = res.data['hydra:member'];
                 this.setState({ ads });
              })
-            
     }
 
     handleDelete(id){
@@ -28,7 +27,7 @@ class ListAdPage extends Component {
         let ads = this.state.ads.filter(ad => {return ad.id !== id})
         this.setState({ ads: ads })
         //on supprime l'annonce dans la BDD
-        Axios.delete("http://127.0.0.1:8000/api/ad/" + id, config)
+        Axios.delete("http://127.0.0.1:8000/api/ads/" + id, config)
         
             .then(response => console.log('ok'))
             .catch(error => {

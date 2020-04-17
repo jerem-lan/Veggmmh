@@ -9,7 +9,7 @@ const Header = ({isConnected, onLogout, history}) => {
     const handleLogout = () => {
         AuthApi.logout();
         onLogout(false);
-        toast.info("vous êtes désormais déconnecté")
+        toast.info("👋 Au revoir jeune pousse !")
         history.push("/");
     } 
 
