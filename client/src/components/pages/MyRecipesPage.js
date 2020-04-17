@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import MyRecipes from '../MyRecipes'
 
@@ -51,11 +51,9 @@ const MyRecipesPage = () => {
     }
 
     return (
-        <Fragment>
           <div className="container">
             <MyRecipes Recipes={Recipes} handleDeleteRecipe={handleDeleteRecipe}/>
           </div>
-        </Fragment>
     );
 }
 

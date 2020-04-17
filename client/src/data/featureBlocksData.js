@@ -3,7 +3,7 @@ const featureBlocksDataConnected = {
     featureBlock1: {
       title: 'Publier une recette',
       icon: 'add-recipe.svg',
-      route: '/register',
+      route: '/ajouter-recette',
       isAnonym: false,
     },
     featureBlock2: {

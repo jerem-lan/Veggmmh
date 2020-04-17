@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import AuthApi from '../services/authApi';
 import { toast } from 'react-toastify';
 
-
 const Header = ({isConnected, onLogout, history}) => {
 
     const handleLogout = () => {

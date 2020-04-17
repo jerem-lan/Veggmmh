@@ -16,7 +16,6 @@ class ListAdPage extends Component {
     }
 
     handleDelete(id){
-
         const token = window.localStorage.getItem("authToken")
         //on le met dans un header
         const config = {
