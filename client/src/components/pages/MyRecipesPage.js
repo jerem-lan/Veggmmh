@@ -55,12 +55,12 @@ const MyRecipesPage = () => {
 
     return (
         
-        <Fragment>
+        <>
           {Loading && <ListLoader />} 
           {!Loading && <div className="container">
             <MyRecipes Recipes={Recipes} handleDeleteRecipe={handleDeleteRecipe}/>
           </div>}
-        </Fragment>
+        </>
     );
 }
 
