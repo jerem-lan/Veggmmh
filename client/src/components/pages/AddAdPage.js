@@ -41,7 +41,7 @@ class AddAdPage extends Component {
                 content: '',
                 postcode: ''
             })
-            toast.info("Votre annonce a été créée avec success")
+            toast.info("👌 Votre annonce a été créée avec succès")
             this.props.history.replace("/liste-annonces");
         }catch (error) {
             const {violations} = error.response.data

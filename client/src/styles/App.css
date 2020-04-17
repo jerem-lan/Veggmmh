@@ -191,6 +191,11 @@ Dashboard Page
 .profilCartouche {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+.profilCartouche div {
+  display: flex;
+  align-items: center;
 }
 .text--welcome {
   margin-left: 15px;
@@ -205,6 +210,9 @@ Dashboard Page
 .icon--avatar {
   width: 46px;
   height: 46px;
+}
+.icon--edit {
+  flex: end;
 }
 .profilNav {
   display: flex;
@@ -258,11 +266,15 @@ Dashboard Page
 MySpace Page
 ---------------------------- */
 .edit--prsonnalInfos {
+  display: none;
   position: relative;
   margin-top: 15px;
   padding-bottom: 15px;
   border-top: 1px solid #AADAC9;
   border-bottom: 1px solid #AADAC9;
+}
+.edit--prsonnalInfos.active {
+  display: block;
 }
 .edit--prsonnalInfos:before {
   content: '';

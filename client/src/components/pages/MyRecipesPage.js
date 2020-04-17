@@ -1,10 +1,11 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import MyRecipes from '../MyRecipes'
 
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import ListLoader from '../../loaders/ListLoader';
+import { toast } from 'react-toastify';
 
 
 const MyRecipesPage = () => {
@@ -42,14 +43,18 @@ const MyRecipesPage = () => {
 
       axios
       .delete("http://localhost:8000/api/recipes/"+id, config)
-      .then(response => console.log("ok pour MyRecipe"))
+      .then(response => 
+          toast.info("👌 Votre recette a été supprimée avec succès")
+          )
       .catch(error => {
         setRecipes(OriginalRecipes);
         console.log(error.response);
+        toast.error("😞 Oups, quelque chose s'est mal passé")
       })
     }
 
     return (
+<<<<<<< HEAD
         
         <Fragment>
           {Loading && <ListLoader />} 
@@ -57,6 +62,11 @@ const MyRecipesPage = () => {
             <MyRecipes Recipes={Recipes} handleDeleteRecipe={handleDeleteRecipe}/>
           </div>}
         </Fragment>
+=======
+          <div className="container">
+            <MyRecipes Recipes={Recipes} handleDeleteRecipe={handleDeleteRecipe}/>
+          </div>
+>>>>>>> deb121514f7e1f4195c97b410265efd1708e92e4
     );
 }
 

@@ -15,11 +15,9 @@ class ListAdPage extends Component {
                 const ads = res.data['hydra:member'];
                 this.setState({ ads, loading: false });
              })
-            
     }
 
     handleDelete(id){
-
         const token = window.localStorage.getItem("authToken")
         //on le met dans un header
         const config = {

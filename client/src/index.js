@@ -16,6 +16,7 @@ import SeasonalItemCardPage from './components/pages/SeasonalItemCardPage';
 import AddAdPage from './components/pages/AddAdPage';
 import ListAdPage from './components/pages/ListAdPage';
 import MyRecipesPage from './components/pages/MyRecipesPage';
+import AddRecipePage from './components/pages/AddRecipePage';
 import MyFavRecipesPage from './components/pages/MyFavRecipesPage';
 import MyAdsPage from './components/pages/MyAdsPage';
 import NotFound from './components/pages/NotFound'
@@ -93,6 +94,11 @@ const Root = () => {
                         path="/mes-annonces" 
                         isAuthenticated={isConnected}
                         component={MyAdsPage} 
+                    />
+                    <PrivateRoute 
+                        path="/ajouter-recette"
+                        isAuthenticated={isConnected} 
+                        component={AddRecipePage} 
                     />
                     
                     <Route 
