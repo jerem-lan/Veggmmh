@@ -45,24 +45,21 @@ class AddRecipePage extends Component {
         this.setState({valueQ : ''})
     }
 
-    // handleValueQuantity = event => {
-    //     const value = event.target.value
-    //     return value
-    // }
-
-    // handleChangeQuantity = event => { 
-    //     const quantity = this.handleValueQuantity(event);
-    //     this.setState({quantity: [... this.state.quantity, quantity] })
-    // }
-
-    // handleChangeQuantity = (event) => {
-    //     const test = this.handleValueQuantity(event)
-    //     const qt = this.state.quantity
-    //     //this.setState({ quantity: [ test, this.handleValueQuantity(event)] })
-    //     this.setState({
-    //         quantity: [qt, test]
-    //       })
-    // }
+    handleSupIngredients = (event => {
+        event.preventDefault()
+        const ingredients = [...this.state.ingredientsSelect]
+        const indexI = ingredients.indexOf(event.target.value)
+        const quantity = [...this.state.quantity]
+        const indexQ = quantity.indexOf(event.target.value)
+        if (indexI !== -1) {
+            ingredients.splice(indexI, 1);
+            this.setState({ingredientsSelect: ingredients});
+          }
+        if (indexQ !== -1) {
+            quantity.splice(indexQ, 1);
+            this.setState({quantity: quantity});
+          }
+    })
 
     handleChangeSteps = event => {
         event.preventDefault()
@@ -104,15 +101,6 @@ class AddRecipePage extends Component {
           {suggestion.name}
         </div>
     );
-
-    //   onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) =>{
-    //     event.preventDefault()
-    //     const suggest = suggestionValue
-    //     this.setState(prevState => ({
-    //         ingredientsSelect: [...prevState.ingredientsSelect, suggest]
-    //       }))
-    //     this.setState({value : ''})
-    // };
 
     handleSubmit = async event => {
         event.preventDefault()
@@ -228,7 +216,9 @@ class AddRecipePage extends Component {
                                         key={item}>
                                         <p>{item}</p>
                                         {}
-                                        </list-item>)}
+                                        </list-item>)
+                                        }
+                                    <button className="btn" onClick={this.handleSupIngredients}>-</button>
                             </div>
                             <br />
                             <br />
