@@ -16,6 +16,7 @@ import SeasonalItemCardPage from './components/pages/SeasonalItemCardPage';
 import AddAdPage from './components/pages/AddAdPage';
 import ListAdPage from './components/pages/ListAdPage';
 import MyRecipesPage from './components/pages/MyRecipesPage';
+import AddRecipePage from './components/pages/AddRecipePage';
 import MyFavRecipesPage from './components/pages/MyFavRecipesPage';
 import MyAdsPage from './components/pages/MyAdsPage';
 import NotFound from './components/pages/NotFound'
@@ -70,6 +71,7 @@ const Root = () => {
                         component={ListAdPage}
                     />
                     <Route path="/mes-recettes" component={MyRecipesPage} />
+                    <Route path="/ajouter-recette" component={AddRecipePage} />
                     <Route path="/mes-recettes-favorites" component={MyFavRecipesPage} />
                     <Route path="/mes-annonces" component={MyAdsPage} />
                     <Route path='/calendrier-des-saisons' component={CalendarPage} />

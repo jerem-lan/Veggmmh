@@ -17,7 +17,7 @@ class LoginPage extends Component {
         try {
             this.setState ({ validation: await AuthApi.authenticate(this.state) });
             this.props.onLogin(true)
-            toast.success("Vous êtes désormais connecté !!")
+            toast.success("Vous êtes désormais connecté(e) !")
             this.props.history.replace("/dashboard") 
         } catch  {
             this.setState({ error: "Identifiants incorrects." });
