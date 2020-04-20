@@ -15,7 +15,7 @@ class RegistrationPage extends Component {
         email: '',
         username: '',
         password: '',
-        errors: ''
+        error: ''
     }
 
     //Récupere les informations tapées dans le formulaire
@@ -45,10 +45,7 @@ class RegistrationPage extends Component {
                 email: '',
                 username: '',
                 password: '',
-                errors: ''    
-            })
-            this.setState({
-                errors: ""
+                error: ''    
             })
             toast.info("🌱 Bienvenue jeune pousse ! 🌱")
             this.props.history.replace('/login')
@@ -57,16 +54,14 @@ class RegistrationPage extends Component {
             if(violations){
                 const apiErrors = {};
                 violations.map(violation => 
-                    apiErrors[violation.propertyPath] = violation.message
-                    
+                    apiErrors[violation.propertyPath] = violation.message  
                 );     
                 this.setState({
-                    errors: apiErrors
+                    error: apiErrors
                 })
-                toast.error("Des erreurs dans votre formulaire !!")    
-            } 
-                
-            };   
+                toast.error("Champs manquants requis.")    
+            }     
+        };   
     }
 
     render() { 
@@ -80,18 +75,22 @@ class RegistrationPage extends Component {
                             onChange={this.handleChange}
                             className="subscriptionInput" 
                             type="text" 
-                            placeholder="Nom" /*pattern="[A-Z][a-z]"*/ 
+                            placeholder="Nom" 
+                            /*pattern="[A-Z][a-z]"*/
+                            required 
                         />
-                         {this.state.errors.lastname ? <AlertMessage message = {this.state.errors.lastname}  /> : ""}
+                         {this.state.error.lastname ? <AlertMessage message = {this.state.error.lastname}  /> : ""}
                         <input 
                             name='firstname' 
                             value={this.state.firstname} 
                             onChange={this.handleChange} 
                             className="subscriptionInput" 
                             type="text" 
-                            placeholder="Prénom" /*pattern='[A-Za-z-]{1,}'*/ 
+                            placeholder="Prénom" 
+                            /*pattern='[A-Za-z-]{1,}'*/ 
+                            required
                         />
-                        {this.state.errors.firstname ? <AlertMessage message = { this.state.errors.firstname }  /> : ""}
+                        {this.state.error.firstname ? <AlertMessage message = { this.state.error.firstname }  /> : ""}
                         <input 
                             name='postcode' 
                             value={this.state.postcode} 
@@ -99,18 +98,20 @@ class RegistrationPage extends Component {
                             className="subscriptionInput" 
                             type="text" 
                             placeholder="Code postal" 
-                            // pattern="[0-9]{5}" 
+                            // pattern="[0-9]{5}"
+                            required
                         />
-                        {this.state.errors.postcode ? <AlertMessage message = { this.state.errors.postcode }  /> : ""}
+                        {this.state.error.postcode ? <AlertMessage message = { this.state.error.postcode }  /> : ""}
                         <input 
                             name='email' 
                             value={this.state.email} 
                             onChange={this.handleChange} 
                             className="subscriptionInput inputBottomMargin" 
                             type="email" 
-                            placeholder="Adresse mail" 
+                            placeholder="Adresse mail"
+                            required
                         />
-                        {this.state.errors.email ? <AlertMessage message = { this.state.errors.email }  /> : ""}
+                        {this.state.error.email ? <AlertMessage message = { this.state.error.email }  /> : ""}
                         <input 
                             name='username' 
                             value={this.state.username} 
@@ -119,20 +120,23 @@ class RegistrationPage extends Component {
                             type="text" 
                             placeholder="Nom d'utilisateur" 
                             pattern='[A-Za-z-]{1,}' 
+                            required
                         />
-                        {this.state.errors.username ? <AlertMessage message = { this.state.errors.username }  /> : ""}
+                        {this.state.error.username ? <AlertMessage message = { this.state.error.username }  /> : ""}
                         <input 
                             name='password' 
                             value={this.state.password} 
                             onChange={this.handleChange} 
                             className="subscriptionInput" 
                             type="password" 
-                            placeholder="Mot de passe" /*pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"*/ 
+                            placeholder="Mot de passe" 
+                            /*pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"*/ 
+                            required
                         />
-                        {this.state.errors.password ? <AlertMessage message = { this.state.errors.password }  /> : ""}
+                        {this.state.error.password ? <AlertMessage message = { this.state.error.password }  /> : ""}
                         
                             <button className="btn" type="submit" >créer un compte</button> 
-                            <Link to="/login" className="psswrdForgotten">j'ai déjà un compte</Link>
+                            <Link to="/login" className="psswrdForgotten">J'ai déjà un compte</Link>
                         
                     </form>
                 </div>

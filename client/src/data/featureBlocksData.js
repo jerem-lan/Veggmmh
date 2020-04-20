@@ -14,13 +14,13 @@ const featureBlocksDataConnected = {
     },
     featureBlock3: {
       title: 'Mes recettes',
-      icon: '',
+      icon: 'user-recipes.svg',
       route: '/mes-recettes',
       isAnonym: false,
     },
     featureBlock4: {
       title: 'Mes annonces',
-      icon: '',
+      icon: 'user-ads.svg',
       route: '/mes-annonces',
       isAnonym: false,
     },

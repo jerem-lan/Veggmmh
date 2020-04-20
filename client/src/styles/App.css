@@ -39,13 +39,20 @@ a:active {
   color: #444;
   text-decoration: none;
 }
-input::placeholder {
+input::placeholder,
+textarea::placeholder {
   opacity: 1;
   font-family: 'Quicksand', sans-serif;
 }
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
     outline: none;
+}
+input,
+select,
+textarea {
+  background-color: #FCFBF7;
 }
 .alert--error {
   display: flex;
@@ -73,7 +80,15 @@ select:focus {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   padding: 20px;
 }
-
+/* ----------------------------
+Footer
+---------------------------- */
+footer {
+  color: #56B693;
+  font-size: .875em;
+  position: absolute;
+  bottom: 0;
+}
 /* ----------------------------
 Header
 ---------------------------- */
@@ -91,17 +106,55 @@ header {
   align-items: center;
   padding: 0 15px;
 }
+.header--iconGroup {
+  display: flex;
+  align-items: center;
+}
 .header--title {
   font-family: 'Pacifico', cursive;
   font-size: 1.5em;  
   font-weight: 400;
   color: #FCFBF7;
+  margin-left: 10px;
 }
-.icon--header{
+.header--title a {
+  color: #FCFBF7;
+}
+.icon--header {
+  transition: .2s;
+  cursor: pointer;
   width: 30px;
   height: 30px;
   border-radius: 50%;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+.icon--logout {
+  margin-left: 10px;
+}
+.icon--header:hover {
+  transform: scale(1.10);
+}
+.btn--group {
+  display: flex;
+  justify-content: flex-end;
+}
+.btn {
+  transition: .2s;
+  cursor: pointer;
+  display: inline-block;
+  border: 1px solid #aadac9;
+  background-color: #aadac9;
+  color:white;
+  padding: 7px 15px;
+  text-align: center;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+  border-radius: 50px;
+  align-self: flex-end;  
+}
+.btn:hover {
+  transform: scale(1.05);
 }
 
 /* ----------------------------
@@ -116,9 +169,26 @@ Index Page
   font-weight: 400; 
 }
 .btn--visit {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 26 19' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 9.81H24M24 9.81L16.19 2M24 9.81L16.19 17.62' stroke='%233E81EA' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
-  width: 26px;
-  height: 19px;
+  background-color: #56B693;
+  transform: rotate(180deg);
+  font-size: 0;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  float: right;
+  -moz-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+.btn--visit:hover {
+  -moz-transform: rotate(540deg);
+  -webkit-transform: rotate(540deg);
+  -o-transform: rotate(540deg);
+  -ms-transform: rotate(540deg);
+  transform: rotate(540deg);
 }
 
 /* ----------------------------
@@ -146,28 +216,6 @@ Login Page
 .subscriptionInput::placeholder {
     color: #444;
 }
-.btn--group {
-  display: flex;
-  justify-content: flex-end;
-}
-.btn {
-  transition: .2s;
-  cursor: pointer;
-  display: inline-block;
-  border: 1px solid #aadac9;
-  background-color: #aadac9;
-  color:white;
-  padding: 7px 15px;
-  text-align: center;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 1em;
-  font-weight: 500;
-  border-radius: 50px;
-  align-self: flex-end;  
-}
-.btn:hover {
-  transform: scale(1.05);
-}
 .btn--subscription {
   border: 1px solid #009688;
   background-color: transparent;
@@ -178,10 +226,10 @@ Login Page
   margin-right: 15px;
 }
 .psswrdForgotten {
-  color: #56B693;
+  color: #56B693!important;
   font-size: .875em;
+  transform: translateY(-140%);
 }
-
 /* ----------------------------
 Dashboard Page
 ---------------------------- */
@@ -197,6 +245,44 @@ Dashboard Page
   display: flex;
   align-items: center;
 }
+.profilCartouche .edit {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  overflow: hidden;
+}
+.profilCartouche .edit p{
+  transition: .3s;
+  transform: translateX(110%);
+  margin-bottom: 2px;
+  margin-right: 10px; 
+  color: rgba(68,68,68, .3);
+}
+.icon--edit {
+  cursor: pointer;
+  transform-origin: center;
+  z-index: 1;
+  background-color: #FCFBF7;
+  -moz-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+.icon--edit.active + p{
+  transform: none;
+}
+.icon--edit.active {
+   -moz-transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+.icon--avatar {
+  width: 46px;
+  height: 46px;
+}
 .text--welcome {
   margin-left: 15px;
   display: flex;
@@ -207,12 +293,40 @@ Dashboard Page
 .text--welcome span {
   font-weight: 400;
 }
-.icon--avatar {
-  width: 46px;
-  height: 46px;
+.edit--prsonnalInfos {
+  display: none;
+  position: relative;
+  margin-top: 15px;
+  padding-bottom: 15px;
+  border-top: 1px solid #AADAC9;
+  border-bottom: 1px solid #AADAC9;
 }
-.icon--edit {
-  flex: end;
+.edit--prsonnalInfos.active {
+  display: block;
+}
+.edit--prsonnalInfos:before {
+  content: '';
+  position : absolute;
+  top      : -7px;
+  right     : 19.5px;
+  width    : 0;
+  height   : 0;
+  z-index  : 2;
+  border-left   : 7px solid transparent;
+  border-right  : 7px solid transparent;
+  border-bottom : 7px solid #FCFBF7;
+}
+.edit--prsonnalInfos:after {
+  content: '';
+  position : absolute;
+  right: 18px;
+  top: -8.7px;
+  width    : 0;
+  height   : 0;
+  z-index  : 1;
+  border-left   : 8.7px solid transparent;
+  border-right  : 8.7px solid transparent;
+  border-bottom : 8.7px solid #AADAC9;
 }
 .profilNav {
   display: flex;
@@ -263,50 +377,54 @@ Dashboard Page
   margin: 0!important;
 }
 /* ----------------------------
-MySpace Page
+React Autosuggest Style
 ---------------------------- */
-.edit--prsonnalInfos {
-  display: none;
-  position: relative;
-  margin-top: 15px;
-  padding-bottom: 15px;
-  border-top: 1px solid #AADAC9;
-  border-bottom: 1px solid #AADAC9;
+.react-autosuggest__input {
+  padding: 7px  15px;
+  font-size: 1em;
+  border: 1px solid #444;
+  border-radius: 25px;
+  padding-right: 30px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 15 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 14L9.644 9.645' stroke='%23333' stroke-width='1.556' stroke-linecap='round'/%3E%3Cpath d='M10.422 5.678c0 2.716-2.169 4.9-4.822 4.9S.778 8.394.778 5.678c0-2.717 2.169-4.9 4.822-4.9s4.822 2.183 4.822 4.9z' stroke='%23333' stroke-width='1.556'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 95% 50%;
+  background-size: 15px 15px;
 }
-.edit--prsonnalInfos.active {
-  display: block;
+.react-autosuggest__container--open {
+  width: 242px;
+  border: 1px solid black;
+  border-radius: 17px;
 }
-.edit--prsonnalInfos:before {
-  content: '';
-  position : absolute;
-  top      : -7px;
-  right     : 19.5px;
-  width    : 0;
-  height   : 0;
-  z-index  : 2;
-  border-left   : 7px solid transparent;
-  border-right  : 7px solid transparent;
-  border-bottom : 7px solid #FCFBF7;
+.react-autosuggest__container--open > 
+.react-autosuggest__input {
+  border: none;
+  border-bottom: 1px solid #E3E3E3;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
-.edit--prsonnalInfos:after {
-  content: '';
-  position : absolute;
-  right: 18px;
-  top: -8.7px;
-  width    : 0;
-  height   : 0;
-  z-index  : 1;
-  border-left   : 8.7px solid transparent;
-  border-right  : 8.7px solid transparent;
-  border-bottom : 8.7px solid #AADAC9;
+.react-autosuggest__suggestions-list {
+  list-style:none;
+  margin:0;
+  padding:0;
 }
+.react-autosuggest__suggestion{
+padding: 5px 0 5px 15px;
+}
+/* ----------------------------
+Add Recipe Page
+---------------------------- */
+.input--group {
+  display: flex;
+}
+/* ----------------------------
+Favorites Pages
+---------------------------- */
 .Section {
   padding: 1px;
 }
 .SectionTitle {
   cursor: pointer;
   margin-bottom: 15px;
-  font-size: 16px;
 }
 .SectionContent {
   transition: .2s;
@@ -351,12 +469,14 @@ MySpace Page
 /* ----------------------------
 Calendar Page
 ---------------------------- */
-.input--search {
+.input {
   padding: 7px  15px;
   font-size: 1em;
-  padding-right: 30px;
   border: 1px solid #444;
   border-radius: 25px;
+}
+.input--search {
+  padding-right: 30px;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 15 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 14L9.644 9.645' stroke='%23333' stroke-width='1.556' stroke-linecap='round'/%3E%3Cpath d='M10.422 5.678c0 2.716-2.169 4.9-4.822 4.9S.778 8.394.778 5.678c0-2.717 2.169-4.9 4.822-4.9s4.822 2.183 4.822 4.9z' stroke='%23333' stroke-width='1.556'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: 95% 50%;
@@ -450,6 +570,11 @@ A bouger
     padding: 15px;
   }
 }
+@media screen and (max-width: 550px) {
+  .btn--group {
+    flex-wrap: wrap;
+  }
+}
 @media screen and (max-width: 360px) {
   .container--index,
   .container--registration,
@@ -457,5 +582,8 @@ A bouger
     max-width: inherit;
     width: 100%;
     padding: 15px;
+  }
+  .header--title {
+    display:none;
   }
 }

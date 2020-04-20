@@ -6,10 +6,10 @@ import AuthApi from './services/authApi';
 import './styles/App.css';
 import 'react-toastify/dist/ReactToastify.css';
 // PAGES COMPONENTS
-import Header from './components/Header'
-import IndexPage from './components/pages/IndexPage'
-import LoginPage from './components/pages/LoginPage'
-import RegistrationPage from './components/pages/RegistrationPage'
+import Header from './components/Header';
+import IndexPage from './components/pages/IndexPage';
+import LoginPage from './components/pages/LoginPage';
+import RegistrationPage from './components/pages/RegistrationPage';
 import DashboardPage from './components/pages/DashboardPage';
 import CalendarPage from './components/pages/CalendarPage';
 import SeasonalItemCardPage from './components/pages/SeasonalItemCardPage';
@@ -19,7 +19,8 @@ import MyRecipesPage from './components/pages/MyRecipesPage';
 import AddRecipePage from './components/pages/AddRecipePage';
 import MyFavRecipesPage from './components/pages/MyFavRecipesPage';
 import MyAdsPage from './components/pages/MyAdsPage';
-import NotFound from './components/pages/NotFound'
+import NotFound from './components/pages/NotFound';
+// import Footer from './components/Footer';
 // ROUTES
 import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom'
 //
@@ -30,7 +31,7 @@ AuthApi.setup()
 
 const PrivateRoute = ({path, isAuthenticated, component}) => {
     return isAuthenticated ? (<Route path={path} component={component} />) :
-    (toast.info("connectez vous !!"), 
+    (toast.info("Tu as été déconnecté ⌛"), 
     <Redirect to="/login" />)
 }
 
@@ -38,6 +39,7 @@ const Root = () => {
 
     const [isConnected, setIsConnected] = useState(AuthApi.isAuthenticated());
     const HeaderWithRouter = withRouter(Header);
+    // const FooterWithRouter = withRouter(Footer);
 
     return (
         <Router>
@@ -110,6 +112,7 @@ const Root = () => {
                 <ToastContainer 
                     position= {toast.POSITION.BOTTOM_CENTER}
                     autoClose= {2000} />
+                {/* <FooterWithRouter/> */}
         </Router>
         
     )
