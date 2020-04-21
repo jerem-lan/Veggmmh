@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Axios from 'axios';
 import ListLoader from '../../loaders/AddLoader';
+import jwtDecode from 'jwt-decode';
 
 
 class ListAdPage extends Component {
@@ -38,20 +39,28 @@ class ListAdPage extends Component {
     }
   
     render() { 
+        //Récupération du role et de l'id de l'utilisateur connecté 
+        const decoded = jwtDecode(window.localStorage.getItem("authToken"))
+        const role = decoded.roles
+        const idUser = decoded.id
         return (
            <div className="container">
                {this.state.loading && <ListLoader /> }
-               { !this.state.loading && this.state.ads.map(ad =>
+               {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
+               { !this.state.loading && this.state.ads.reverse().map(ad =>
                 <list-item key={ad.id}> 
                     <h2>{ad.title}</h2>
+                    <p>Ajouté par : {ad.user.username} - Le {ad.creationDate}</p>
                     <p>{ad.content}</p>
                     <p>{ad.postcode}</p>
-                    <button className="btn" type="submit">repondre</button>
-                    <button className="btn" onClick={() => this.handleDelete(ad.id)}>supprimer</button>
+                    {/* Est-ce que l'id de l'utilisateur connecté est différent de celui qui a ajouté l'annonce? 
+                        Si oui : Affiche le bouton Répondre
+                     */}
+                    {idUser !== ad.user.id && <button className="btn" type="submit">repondre</button>}
+                    {/* Si le role de l'utilisateur est connecté est ADMIN, alors affiche le bouton supprimer */}
+                    {role[0] === "ROLE_ADMIN" && <button className="btn" onClick={() => this.handleDelete(ad.id)}>supprimer</button>}
                 </list-item>)}
-                
            </div>
-           
         )
     }
 }
