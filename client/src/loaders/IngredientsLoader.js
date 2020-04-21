@@ -11,22 +11,26 @@ const IngredientLoader = props => (
     foregroundColor= "#009688"
     {...props}
   >
-    <rect x="30" y="20" rx="8" ry="8" width="200" height="200" />
-    
-    
-    <rect x="250" y="20" rx="8" ry="8" width="200" height="200" />
-    
-    
-    <rect x="470" y="20" rx="8" ry="8" width="200" height="200" />
-    <rect x="690" y="20" rx="8" ry="8" width="200" height="200" />
-    <rect x="910" y="20" rx="8" ry="8" width="200" height="200" />
-    <rect x="1130" y="20" rx="8" ry="8" width="200" height="200" />
-    <rect x="30" y="340" rx="8" ry="8" width="200" height="200" />
-    <rect x="250" y="340" rx="8" ry="8" width="200" height="200" />
-    <rect x="470" y="340" rx="8" ry="8" width="200" height="200" />
-    <rect x="690" y="340" rx="8" ry="8" width="200" height="200" /> 
-    <rect x="910" y="340" rx="8" ry="8" width="200" height="200" />
-    <rect x="1130" y="340" rx="8" ry="8" width="200" height="200" />
+    <rect x="10" y="80" rx="8" ry="8" width="150" height="132" />
+    <rect x="170" y="80" rx="8" ry="8" width="150" height="132" />
+    <rect x="330" y="80" rx="8" ry="8" width="150" height="132" />
+    <rect x="490" y="80" rx="8" ry="8" width="150" height="132" />
+    <rect x="650" y="80" rx="8" ry="8" width="150" height="132" />
+    <rect x="810" y="80" rx="8" ry="8" width="150" height="132" />
+
+    <rect x="10" y="230" rx="8" ry="8" width="150" height="132" />
+    <rect x="170" y="230" rx="8" ry="8" width="150" height="132" />
+    <rect x="330" y="230" rx="8" ry="8" width="150" height="132" />
+    <rect x="490" y="230" rx="8" ry="8" width="150" height="132" /> 
+    <rect x="650" y="230" rx="8" ry="8" width="150" height="132" />
+    <rect x="810" y="230" rx="8" ry="8" width="150" height="132" />
+
+    <rect x="10" y="380" rx="8" ry="8" width="150" height="132" />
+    <rect x="170" y="380" rx="8" ry="8" width="150" height="132" />
+    <rect x="330" y="380" rx="8" ry="8" width="150" height="132" />
+    <rect x="490" y="380" rx="8" ry="8" width="150" height="132" /> 
+    <rect x="650" y="380" rx="8" ry="8" width="150" height="132" />
+    <rect x="810" y="380" rx="8" ry="8" width="150" height="132" />
     
   </ContentLoader>
 )

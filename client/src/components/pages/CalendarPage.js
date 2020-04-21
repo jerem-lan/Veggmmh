@@ -11,7 +11,7 @@ class CalendarPage extends Component {
         itemSelection: [], // les fruits/legumes trouvés après recherche par mois de disponibilité
         itemSelectionDeux: [], // les fruits/legumes trouvés après recherche par saisie de nom
         search: '', // le mot que l'on saisi dans l'input pour chercher un item
-        loading: true
+        loading: false
     }
 
     // recupère les fruits/légumes dans Ingredient issu des données de l'API
@@ -30,8 +30,7 @@ class CalendarPage extends Component {
                     return 0;
                 })
                 this.setState({ 
-                    fruitsAndVeggies: fruitsAndVeggies,
-                    loading: false
+                    fruitsAndVeggies: fruitsAndVeggies
                 })
             })
         }catch(error) { console.log(error.response)}
@@ -39,11 +38,11 @@ class CalendarPage extends Component {
 
     // recherche item par son nom
     handleChange = (event) => {
-        this.setState({ search: event.target.value })
+        this.setState({ search: event.target.value, loading: true })
         const itemSelectionDeux = this.state.fruitsAndVeggies.filter(item => 
             item.name.includes(this.state.search)
         )
-        this.setState({ itemSelectionDeux }) 
+        this.setState({ itemSelectionDeux, loading: false }) 
     }
 
     // recherche items par mois
@@ -57,15 +56,17 @@ class CalendarPage extends Component {
 
     render() {
         const loading = this.state.loading
+        
         return (
             <div className="container">
-                
                 <div className="">Rechercher par aliment</div>
                 <input className="input input--search" type='text' onChange={this.handleChange} value={this.state.search} placeholder="tomate"/>
                 <div className="fruitVegBlocks">
+                    {loading && <IngredientLoader />} 
                     {
                         this.state.itemSelectionDeux.map((ingredient) => 
-                            <FruitVegBlock
+                            !loading && <FruitVegBlock
+                                key={ingredient.id}
                                 id={ingredient.id}
                                 family={ingredient.family}
                                 name={ingredient.name}
@@ -73,9 +74,11 @@ class CalendarPage extends Component {
                                 season={ingredient.season}
                             />)
                     }
+                    
                 </div>
 
                 <div className="title--category">Rechercher par mois</div>
+                
                 <select size="1" onChange={this.handleMonth}>
                     <option defaultValue >choississez</option>
                     <option>janvier</option>
@@ -91,18 +94,20 @@ class CalendarPage extends Component {
                     <option>novembre</option>
                     <option>décembre</option>
                 </select>
+                
                 <div className="fruitVegBlocks" >
-                {loading && <IngredientLoader /> }
+                    {loading && <IngredientLoader />} 
                     {
-                        !loading && this.state.itemSelection.map((ingredient) => 
-                            <FruitVegBlock
+                        this.state.itemSelection.map((ingredient) => 
+                         !loading && <FruitVegBlock
                                 key={ingredient.id}
                                 id={ingredient.id}
                                 family={ingredient.family}
                                 name={ingredient.name}
                                 icon={ingredient.icon}
                                 season={ingredient.season}
-                            />)
+                            />
+                              )
                     }
                 </div>
             </div>

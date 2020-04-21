@@ -69,8 +69,9 @@ class LoginPage extends Component {
                         type="submit">
                             se connecter
                     </button>
-                    <Link to="/login" className="psswrdForgotten">Mot de passe oublié ?</Link>
+                   
                 </form>
+                 <Link to="/login" className="psswrdForgotten">Mot de passe oublié ?</Link>
             </div>
         );
     }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import ListLoader from '../../loaders/ListLoader';
+import ListLoader from '../../loaders/AddLoader';
 
 
 class ListAdPage extends Component {
