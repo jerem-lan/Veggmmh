@@ -48,11 +48,21 @@ input:focus,
 select:focus,
 textarea:focus {
     outline: none;
+    background-color: #FCFBF7;
 }
 input,
 select,
 textarea {
-  background-color: #FCFBF7;
+  background-color: transparent;
+}
+input[type="number"] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
 }
 .alert--error {
   display: flex;
@@ -228,7 +238,9 @@ Login Page
 .psswrdForgotten {
   color: #56B693!important;
   font-size: .875em;
-  transform: translateY(-140%);
+  display: inline-block;
+  background-color: red;
+  transform: translateY(-150%);
 }
 /* ----------------------------
 Dashboard Page
@@ -415,6 +427,79 @@ Add Recipe Page
 ---------------------------- */
 .input--group {
   display: flex;
+  align-items: flex-start;
+  /* margin-bottom: 15px; */
+}
+.input, .label {
+  display: block;
+}
+.label {
+  margin-bottom: 10px;
+  font-size: 1.125em;
+  font-weight: 600;
+}
+.input--number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+.input--number {
+  text-align: right;
+}
+.input--time {
+  width: 140px;
+  display: flex;
+}
+.input--time > .input--number {
+  width: 100%;
+  border-radius: 25px 0 0 25px;
+}
+.input--time > span {
+  border: 1px solid #444;
+  border-radius: 0 25px 25px 0;
+  padding: 5px 15px;
+  margin-left: -1px;
+}
+.input--number {
+  width: 140px;
+  border: 1px solid #444;
+  border-radius: 25px;
+  display: inline-flex;
+}
+.input--number input {
+  font-size: 1em;
+  color: #444;
+  display: block;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  padding: 7px 15px;
+  width: 60px;
+}
+.btn--inputNumber:focus {
+  outline: none;
+}
+.btn--inputNumber {
+  background-color: transparent;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  padding: 0 15px;
+}
+.btn--minus {
+  border-radius: 25px 0 0 25px;
+}
+.btn--plus {
+  border-radius: 0 25px 25px 0;
+}
+.btn--add {
+  align-self: flex-start;
+}
+.textarea--steps {
+  width: 330px;
+  min-height: 105px;
+}
+.ingredientBlock {
+  display: flex;
 }
 /* ----------------------------
 Favorites Pages
@@ -474,6 +559,7 @@ Calendar Page
   font-size: 1em;
   border: 1px solid #444;
   border-radius: 25px;
+  height: 34px;
 }
 .input--search {
   padding-right: 30px;
@@ -542,12 +628,9 @@ A bouger
 	margin: 0;
 	background: #eceff1;
 }
-
-
 /* ----------------------------
 	Media Queries
 ---------------------------- */
-
 @media screen and (max-width: 1000px) {
   .container {
     max-width: inherit;
@@ -568,6 +651,9 @@ A bouger
     max-width: inherit;
     width: 100%;
     padding: 15px;
+  }
+  .input--group {
+    flex-wrap: wrap;
   }
 }
 @media screen and (max-width: 550px) {

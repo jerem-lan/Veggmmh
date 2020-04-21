@@ -3,134 +3,120 @@ import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
 
 class AddRecipePage extends Component {
+
     state = {
-        title: '',
-        ingredientsSelect: [],
-        steps: [],
-        type: '', //choix
-        servings: '', //choix x personnes
-        preptime: '',
-        quantity: [],
-        ingredientsList: [], //tous les fruits/légumes récupérés depuis l'API
-        valueQ: '',
-        value: '',
-        suggestions: []
+        ingredients: [], //Données de Ingredients récupérées depuis l'API
+        title: '', //Titre de la recette
+        preptime: '', //Temps de préparation en minute
+        servings: '', //Nombre de portions
+        quantities: [], //Quantités de chaque ingrédients sélectionnés
+        steps: [], //Etape(s) de la recette
+        type: '', //Tag de la recette (apero, entrée, plat ou dessert)
+
+        ingredientsSelect: [], //Ingrédients sélectionnés qui composent la recette
+        quantity: '', // quantité renseignée dans l'input quantité d'un ingrédient
+
+        value: '', //Autosuggest
+        suggestions: [] //Autosuggest. Les suggestions qui seront affichées 
     }
 
+    //Récupère les données de Ingrédients issues de l'API. 
+    //Appellée une fois que le composant AddRecipePage a été rendu correctement dans le DOM réel. 
     componentDidMount() {
         axios.get("http://127.0.0.1:8000/api/ingredients")
             .then(res => {
-            const ingredientsList = res.data['hydra:member']
-            this.setState({ ingredientsList });
+                const ingredients = res.data['hydra:member']
+                this.setState({ ingredients });
             })
             .catch(error => console.log(error.response))
     }
 
-    handleChange = event => {
-        const { name, value } = event.target
-        this.setState({ [name]: value })
-    }
-
+    //Récupere et set la valeur de l'élément ciblé en fonction de son attribut name.
+    handleChange = (event) => {
+        event.preventDefault();
+        const { name, value } = event.target;
+        this.setState({ [name]: value });
+    };
+    //Récupere et set la valeur du textarea Steps ciblé en fonction de son attribut name, dans un tableau.
+    handleChangeSteps = (event) => {
+        event.preventDefault();
+        const value = event.target.value;
+        this.setState({ steps : [value] });
+    };
+    //Augmente ou décrémente en fonction du bouton ciblé (+ ou -) la valeur de l'input Servings et la set.
+    handleInputNumber = (event) => {
+        event.preventDefault();
+        const buttonPlus = event.currentTarget.classList.contains('btn--plus');
+        const inputServings = document.querySelector("#inputServings");
+        buttonPlus ? inputServings.stepUp() : inputServings.stepDown();
+        const value = inputServings.value;
+        this.setState({ servings : value});
+    };
     handleIngredients = (event) => {
-        event.preventDefault()
-        const suggest = this.state.value
-        const valueQ = this.state.valueQ
+        event.preventDefault();
+        const suggest = this.state.value;
+        const quantity = this.state.quantity;
         this.setState(prevState => ({
-            quantity: [...prevState.quantity, valueQ]
-            }))
-        this.setState(prevState => ({
-                ingredientsSelect: [...prevState.ingredientsSelect, suggest]
-                }))
-        this.setState({value : ''})
-        this.setState({valueQ : ''})
-    }
+            quantities: [...prevState.quantities, quantity],
+            ingredientsSelect: [...prevState.ingredientsSelect, suggest]
+        }));
+        this.setState({
+            value : '',
+            quantity : ''
+        });
+    };
 
-    // handleValueQuantity = event => {
-    //     const value = event.target.value
-    //     return value
-    // }
-
-    // handleChangeQuantity = event => { 
-    //     const quantity = this.handleValueQuantity(event);
-    //     this.setState({quantity: [... this.state.quantity, quantity] })
-    // }
-
-    // handleChangeQuantity = (event) => {
-    //     const test = this.handleValueQuantity(event)
-    //     const qt = this.state.quantity
-    //     //this.setState({ quantity: [ test, this.handleValueQuantity(event)] })
-    //     this.setState({
-    //         quantity: [qt, test]
-    //       })
-    // }
-
-    handleChangeSteps = event => {
-        event.preventDefault()
-        const value = event.target.value
-        this.setState({ steps : [value] })
-    }
-    
+    //AUTOSUGGEST
+    //Met à jour la valeur de l'input value
     onChange = (event, { newValue }) => {
         this.setState({
           value: newValue
         });
     };
-
+    //Recalcule/met à jour les suggestions de l'input search pour les ingredients
     onSuggestionsFetchRequested = ({ value }) => {
         this.setState({
           suggestions: this.getSuggestions(value)
         });
-    };
-    
+    }; 
+    //Purge les suggestions, le reset à vide. 
     onSuggestionsClearRequested = () => {
         this.setState({
           suggestions: []
         });
     };
-
-    getSuggestions = value => {
+    // Calcule les suggestions pour n'importe quelle valeur d'un input donnée.
+    getSuggestions = (value) => {
         const inputValue = value.trim().toLowerCase();
-        const inputLength = inputValue.length;
-      
-        return inputLength === 0 ? [] : this.state.ingredientsList.filter(ingredient =>
+        const inputLength = inputValue.length;  
+        return inputLength === 0 ? [] : this.state.ingredients.filter(ingredient =>
           ingredient.name.toLowerCase().slice(0, inputLength) === inputValue
         );
     };
-
-    getSuggestionValue = suggestion => suggestion.name;
-      
-    renderSuggestion = suggestion => (
+    //Rempli l'entrée basée sur la suggestion cliquée. Calcule la valeur d'entrée pour chaque suggestion donnée.
+    getSuggestionValue = (suggestion) => suggestion.name;
+    renderSuggestion = (suggestion) => (
         <div>
           {suggestion.name}
         </div>
     );
 
-    //   onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) =>{
-    //     event.preventDefault()
-    //     const suggest = suggestionValue
-    //     this.setState(prevState => ({
-    //         ingredientsSelect: [...prevState.ingredientsSelect, suggest]
-    //       }))
-    //     this.setState({value : ''})
-    // };
-
+    //Récupere les informations tapées dans le formulaire, l'envoie à l'API et purge le state
     handleSubmit = async event => {
-        event.preventDefault()
-        const token = window.localStorage.getItem("authToken")
+        event.preventDefault();
+        const token = window.localStorage.getItem("authToken");
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
         const recipe = {
             recipeTitle: this.state.title,
-            ingredients: this.state.ingredientsSelect,
             preparationTime: this.state.preptime,
             nbServings: this.state.servings,
+            ingredients: this.state.ingredientsSelect,
+            quantity: this.state.quantities,
             steps: this.state.steps,
-            type: this.state.type,
-            quantity: this.state.quantity
+            type: this.state.type
         };
-        console.log(recipe)
-        //on donne le header et les données à axios
         try { await axios.post( 
             'http://localhost:8000/api/recipes',
             recipe,
@@ -138,92 +124,105 @@ class AddRecipePage extends Component {
             );
             this.setState({
                 title: '',
-                ingredientsSelect: [],
-                steps: [],
-                type: '',
-                servings: '',
                 preptime: '',
-                quantity: []
-            })
-            //this.props.history.replace("/mes-recettes");
+                servings: '',
+                ingredientsSelect: [],
+                quantities: [],
+                steps: [],
+                type: ''
+            });
         }catch(error){
-            console.log(error)
+            console.log(error);
         }
     }
 
     render() {
         const { value, suggestions } = this.state;
+        // Autosuggest passe toutes ces props à l'input
         const inputProps = {
             placeholder: 'ex : tomate',
             value,
             onChange: this.onChange
         };
+
         return (
             <div className="container">
                 <form className='form' onSubmit= {this.handleSubmit}>
-                    <div>
-                        <h3>Titre de ma recette</h3>
-                        <input
-                            className='input'
-                            name='title'
-                            value={this.state.title}
-                            onChange={this.handleChange}
-                            type="text"
-                            placeholder="Lasagnes provençales"
-                            required />
-                    </div>
+                    <label className="label" htmlFor="title">Titre de ma recette</label>
+                    <input
+                        className='input'
+                        name='title'
+                        value={this.state.title}
+                        onChange={this.handleChange}
+                        type="text"
+                        placeholder="Lasagnes provençales"
+                        required />
 
                     <div className="input--group">
                         <div>
-                            <h3>Temps de préparation</h3>
-                            <input
-                                className='input'
-                                name='preptime'
-                                value={this.state.preptime}
-                                onChange={this.handleChange}
-                                type="text"
-                                placeholder='en minutes'
-                                required />
+                            <label className="label" htmlFor="preptime">Temps de préparation</label>
+                            <div className="input--time">
+                                <input 
+                                    className="input input--number"
+                                    name="preptime"
+                                    value={this.state.preptime}
+                                    onChange={this.handleChange}
+                                    type="number" 
+                                    placeholder="120"
+                                    required />
+                                <span>min</span>
+                            </div>
                         </div>
                         <div>
-                            <h3>Nombre de portions</h3>
-                            <select className='input' name="servings" size="1" onChange={this.handleChange}>
-                                <option defaultValue >Selection :</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                            </select>
-                        </div>
+                            <label className="label" htmlFor="servings">Nombre de portions</label>
+                            <div className="input--number">
+                                <button
+                                    className="btn--inputNumber btn--minus" 
+                                    name="minus" 
+                                    onClick={this.handleInputNumber}>
+                                    -
+                                </button>
+                                <input
+                                    id="inputServings"
+                                    name="servings" 
+                                    placeholder="0"
+                                    type="number"
+                                    min="1"/>
+                                <button 
+                                    className="btn--inputNumber btn--plus"
+                                    name="plus" 
+                                    onClick={this.handleInputNumber}>
+                                    +
+                                </button>
+                            </div>
+                        </div> 
                     </div>
                     
-                    <div>
-                        <h3>Ingrédients</h3>
-                        { 
-                            this.state.ingredientsSelect.length > 0 ?
-                                <div className="container">
-                                    {
-                                        this.state.ingredientsSelect.map(item =>
-                                            <list-item id={item} key={item}>
-                                                <p>{item}</p>
-                                                {}
-                                            </list-item>
-                                        )
-                                    }
-                                    {
-                                        this.state.quantity.map(qty =>
-                                            <list-item id={qty} key={qty}>
-                                                <p>{qty}</p>
-                                            </list-item>
-                                        )
-                                    }
-                                </div> : <Fragment/> 
-                        }
-                    </div>
+                    <label className="label" htmlFor="ingredients">Ingrédients</label>
+                    { 
+                        this.state.ingredientsSelect.length > 0 ?
+                            <div className="ingredientBlock">
+                                <div>
+                                {
+                                    this.state.ingredientsSelect.map(item =>
+                                        <list-item id={item} key={item}>
+                                            <p>{item}</p>
+                                        </list-item>
+                                    )
+                                }
+                                </div>
+                                <div>
+                                {
+                                    this.state.quantities.map(qty =>
+                                        <list-item id={qty} key={qty}>
+                                            <p>{qty}</p>
+                                        </list-item>
+                                    )
+                                }
+                                </div>
+                            </div> : <Fragment/> 
+                    }
+
                     <div className="input--group">
                         <Autosuggest
                             suggestions={suggestions}
@@ -235,43 +234,41 @@ class AddRecipePage extends Component {
                             onSuggestionSelected={this.onSuggestionSelected}/>
                         <input
                             className='input'
-                            name='valueQ'
-                            value={this.state.valueQ}
+                            name='quantity'
+                            value={this.state.quantity}
                             onChange={this.handleChange}
                             type="text"
-                            placeholder="quantité"
-                            required />
-                            <button className="btn" onClick={this.handleIngredients}>+</button>
+                            placeholder="quantité"/>
+                        <button className="btn btn--add" onClick={this.handleIngredients}>+</button>
                     </div>
                         
                     <div>
-                        <h3>Etapes</h3> 
+                        <label className="label" htmlFor="steps">Etapes</label> 
                         <textarea
+                            className="textarea--steps"
                             name='steps'
                             value={this.state.steps}
                             onChange={this.handleChangeSteps}
                             type="text"
-                            rows="10" 
-                            cols="40"
                             placeholder="Découper les oignons et les faire revenir jusqu’à ce qu’ils soient fondants..."
                             required/>
                         <button className="" onClick={this.handleIngredients}>ajouter une étape</button>
                     </div>
                         
                     <div>
-                        <h3>Tag</h3>
+                        <label className="label" htmlFor="type">Tag</label>
 
-                        <input type="radio" id="apero" name="type" value="apero" onChange={this.handleChange}/>
-                        <label for="apero">Apéro</label>
+                        <input type="radio" id="apero" name="type" value="Apero" onChange={this.handleChange}/>
+                        <label htmlFor="apero">Apéro</label>
                         
-                        <input type="radio" id="entree" name="type" value="entree" onChange={this.handleChange}/>
-                        <label for="entree">Entrée</label>
+                        <input type="radio" id="entree" name="type" value="Entree" onChange={this.handleChange}/>
+                        <label htmlFor="entree">Entrée</label>
 
-                        <input type="radio" id="plat" name="type" value="plat" onChange={this.handleChange}/>
-                        <label for="plat">Plat</label>
+                        <input type="radio" id="plat" name="type" value="Plat" onChange={this.handleChange}/>
+                        <label htmlFor="plat">Plat</label>
 
-                        <input type="radio" id="dessert" name="type" value="dessert" onChange={this.handleChange}/>
-                        <label for="dessert">Dessert</label>
+                        <input type="radio" id="dessert" name="type" value="Dessert" onChange={this.handleChange}/>
+                        <label htmlFor="dessert">Dessert</label>
                     </div>
                     <button className="btn" type='submit'>Valider ma recette</button>
                 </form>
