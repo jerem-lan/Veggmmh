@@ -21,6 +21,8 @@ const MyAds = ({ Ads, handleDeleteAds }) => {
 					id={ad.id}
 					key={ad.id}
 					title={ad.title}
+					content={ad.content}
+					postcode={ad.postcode}
 					handleDeleteAds={handleDeleteAds} />
 			)}
 			</div>

@@ -19,6 +19,7 @@ import MyRecipesPage from './components/pages/MyRecipesPage';
 import AddRecipePage from './components/pages/AddRecipePage';
 import MyFavRecipesPage from './components/pages/MyFavRecipesPage';
 import MyAdsPage from './components/pages/MyAdsPage';
+import EditAdPage from './components/pages/EditAdPage';
 import NotFound from './components/pages/NotFound';
 // import Footer from './components/Footer';
 // ROUTES
@@ -98,9 +99,12 @@ const Root = () => {
                         isAuthenticated={isConnected} 
                         component={AddRecipePage} 
                     />
-                    
                     <Route 
-                        path='/:name' 
+                        path='/modifier-annonce' 
+                        component={EditAdPage} 
+                    />
+                    <Route 
+                        path='/carte-ingredient/:name' 
                         component={SeasonalItemCardPage} 
                     />
                     <Route component={NotFound} />

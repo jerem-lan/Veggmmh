@@ -39,14 +39,14 @@ const Header = ({isConnected, onLogout, history}) => {
             <header>
                 <div className="header">
                     <h1 className="header--title">
-                        <NavLink to="/">Vegg'mmh !</NavLink>
+                        <NavLink to="/dashboard">Vegg'mmh !</NavLink>
                     </h1>
                     <div className="btn--group">
                         <NavLink to="/register">
-                            <button className="btn">créer un compte</button>
+                            <button className="btn">Créer un compte</button>
                         </NavLink>
                         <NavLink to="/login">
-                            <button className="btn btn--subscription">se connecter</button>
+                            <button className="btn btn--subscription">Se connecter</button>
                         </NavLink>
                     </div>
                 </div>

@@ -15,7 +15,7 @@ const FruitVegBlock = ( {id, family, name, icon, season} ) => {
     return (
         <div className={classname}>
             <NavLink to={{
-                pathname: `/${name}`,
+                pathname: `/carte-ingredient/${name}`,
                 props: {
                     name: {name},
                     icon: {icon},
