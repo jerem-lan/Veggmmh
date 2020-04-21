@@ -19,7 +19,7 @@ class LoginPage extends Component {
         try {
             this.setState ({ validation: await AuthApi.authenticate(this.state) });
             this.props.onLogin(true)
-            toast.success( `Heureux de te revoir 🥑`)
+            toast.success( `Heureux de te voir 🥑`)
             this.props.history.replace("/dashboard") 
         } catch  {
             this.setState({ error: "Identifiants incorrects." });
@@ -67,10 +67,10 @@ class LoginPage extends Component {
                     <button 
                         className="btn" 
                         type="submit">
-                            se connecter
+                            Se connecter
                     </button>
-                    <Link to="/login" className="psswrdForgotten">Mot de passe oublié ?</Link>
                 </form>
+                <Link to="/login" className="psswrdForgotten">Mot de passe oublié ?</Link>
             </div>
         );
     }

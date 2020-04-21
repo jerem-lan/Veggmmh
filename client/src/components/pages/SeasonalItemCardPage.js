@@ -1,23 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const SeasonalItemCardPage = (props) => {
-    const name = props.location.props.name.name;
-    const icon = props.location.props.icon.icon;
-    const season = props.location.props.season.season;
-    const requireIcon = icon => {
+
+    const [Name, setName] = useState([])
+    const [Season, setSeason] = useState([])
+    const [Icon, setIcon] = useState([])
+
+    useEffect(() => { 
         try {
-            return require(`../../icons/ingredients/${icon}`)
+            window.localStorage.setItem("ingredientIcon", props.location.props.icon.icon);
+            window.localStorage.setItem("ingredientName", props.location.props.name.name);
+            window.localStorage.setItem("ingredientSeason", JSON.stringify(props.location.props.season.season));
+            setName(props.location.props.name.name)
+            setSeason(props.location.props.season.season)
+            setIcon(props.location.props.icon.icon);
+        } 
+        catch(error) {
+            setName(window.localStorage.getItem("ingredientName"))
+            setSeason(JSON.parse(window.localStorage.getItem("ingredientSeason")))
+            setIcon(window.localStorage.getItem("ingredientIcon"))
+        }
+    }, [])
+
+    const requireIcon = Icon => {
+        try {
+            return require(`../../icons/ingredients/${Icon}`)
         } catch (err) {
             return require(`../../icons/ingredients/defaut-boissons.svg`)
         }
     }
+
     return (
         <div>
             <div>
-                <img src={requireIcon(icon)} alt={name}/>
-                <h2>{name}</h2>     
+                <img src={requireIcon(Icon)} alt={Name}/>
+                <h2>{Name}</h2>     
             </div>
-            {season}
+            {Season.map((month) => 
+
+                    <p>{month}</p>
+                )
+            }
         </div>
     );
 };

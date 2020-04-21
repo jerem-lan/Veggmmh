@@ -135,10 +135,9 @@ class RegistrationPage extends Component {
                         />
                         {this.state.error.password ? <AlertMessage message = { this.state.error.password }  /> : ""}
                         
-                            <button className="btn" type="submit" >créer un compte</button> 
-                            <Link to="/login" className="psswrdForgotten">J'ai déjà un compte</Link>
-                        
+                            <button className="btn" type="submit">Créer un compte</button> 
                     </form>
+                    <Link to="/login" className="psswrdForgotten">J'ai déjà un compte</Link>
                 </div>
           
         );
