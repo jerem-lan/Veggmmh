@@ -64,6 +64,16 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
+table {
+  margin-bottom: 15px;
+  border-collapse: collapse;
+}
+tbody,
+td,
+tr {
+  margin: 0;
+  padding: 0;
+}
 .alert--error {
   display: flex;
   align-items: center;
@@ -239,7 +249,6 @@ Login Page
   color: #56B693!important;
   font-size: .875em;
   display: inline-block;
-  background-color: red;
   transform: translateY(-150%);
 }
 /* ----------------------------
@@ -404,15 +413,32 @@ React Autosuggest Style
 }
 .react-autosuggest__container--open {
   width: 242px;
-  border: 1px solid black;
-  border-radius: 17px;
+}
+.react-autosuggest__container {
+  position: relative;
 }
 .react-autosuggest__container--open > 
 .react-autosuggest__input {
-  border: none;
+  border: 1px solid black;
   border-bottom: 1px solid #E3E3E3;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
+  border-top-left-radius: 17px;
+  border-top-right-radius: 17px;
+}
+.react-autosuggest__suggestions-container--open {
+  position: absolute;
+  z-index: 1;
+  background-color: #FCFBF7;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #E3E3E3;
+  border-bottom-right-radius: 17px;
+  border-bottom-left-radius: 17px;
+  color: black;
+  width: 242px;
+  border: 1px solid black;
+  border-top: none;
 }
 .react-autosuggest__suggestions-list {
   list-style:none;
@@ -420,7 +446,16 @@ React Autosuggest Style
   padding:0;
 }
 .react-autosuggest__suggestion{
-padding: 5px 0 5px 15px;
+  padding: 5px 0 5px 15px;
+}
+.react-autosuggest__suggestion:hover{
+  background-color: #ECF4EE;
+
+  cursor: pointer;
+}
+.react-autosuggest__suggestion:hover:last-child {
+  border-bottom-left-radius: 17px;
+  border-bottom-right-radius: 17px;
 }
 /* ----------------------------
 Add Recipe Page
@@ -495,11 +530,60 @@ Add Recipe Page
   align-self: flex-start;
 }
 .textarea--steps {
-  width: 330px;
+  width: 520px;
   min-height: 105px;
 }
 .ingredientBlock {
   display: flex;
+  align-items: center;
+  height: 65px;
+}
+.ingredientBlock:not(:last-child) {
+  border-bottom: 1px solid #ECF4EE;
+}
+.ingredientBlock--quantity {
+  justify-content: flex-end;
+}
+.ingredientBlock > img {
+  background-color: #ECF4EE;
+  border: 1px solid #ECF4EE;
+  border-radius: 10px;
+  padding: 6px;
+  margin-right: 15px;
+}
+.ingredientBlock > p {
+  text-transform: capitalize;
+}
+.btn--delete {
+  height: 25px;
+  width: 25px;
+  align-self: center;
+  background-color: transparent;
+  cursor: pointer;
+  margin-left: 25px;
+}
+.btn--addStep {
+  transition: .2s;
+  cursor: pointer;
+  display: inline-block;
+  border: 1px solid #aadac9;
+  background-color: #aadac9;
+  color:white;
+  padding: 7px 15px;
+  text-align: center;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+  border-radius: 10px;
+  width: 520px;
+}
+.btn--radio {
+  display: flex;
+  justify-content: space-between;
+  width: 520px;
+}
+.btn--validate {
+  align-self: flex-start;
 }
 /* ----------------------------
 Favorites Pages
@@ -657,9 +741,22 @@ A bouger
   }
 }
 @media screen and (max-width: 550px) {
-  .btn--group {
+  .btn--group,
+  .btn--radio {
     flex-wrap: wrap;
+    width: 100%;
   }
+  input[type="number"],
+  input[type="text"],
+  .react-autosuggest__container,
+  .textarea--steps,
+  .btn--addStep {
+    width: 100%;
+  }
+  .profilCartouche .edit p{
+    display: none;
+  }
+
 }
 @media screen and (max-width: 360px) {
   .container--index,
