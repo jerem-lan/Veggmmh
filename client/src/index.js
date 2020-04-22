@@ -20,6 +20,11 @@ import AddRecipePage from './components/pages/AddRecipePage';
 import MyFavRecipesPage from './components/pages/MyFavRecipesPage';
 import MyAdsPage from './components/pages/MyAdsPage';
 import EditAdPage from './components/pages/EditAdPage';
+import AdminDashboard from './components/pages/AdminDashboard';
+import ManageRecipes from './components/pages/ManageRecipes';
+import ManageAds from './components/pages/ManageAds';
+import ManageIngredients from './components/pages/ManageIngredients';
+import ManageUsers from './components/pages/ManageUsers';
 import NotFound from './components/pages/NotFound';
 // import Footer from './components/Footer';
 // ROUTES
@@ -73,6 +78,7 @@ const Root = () => {
                         path="/liste-annonces"
                         component={ListAdPage}
                     />
+                    
                     <PrivateRoute
                         path="/ajouter-annonce"
                         isAuthenticated={isConnected}
@@ -106,6 +112,32 @@ const Root = () => {
                     <Route 
                         path='/carte-ingredient/:name' 
                         component={SeasonalItemCardPage} 
+                    />
+                    {/*ROUTE ADMIN*/}
+                    <PrivateRoute 
+                        path="/admin/dashboard"
+                        isAuthenticated={isConnected}
+                        component={AdminDashboard}
+                    />
+                    <PrivateRoute 
+                        path="/admin/gerer-recettes"
+                        isAuthenticated={isConnected}
+                        component={ManageRecipes}
+                    />
+                    <PrivateRoute 
+                        path="/admin/gerer-annonces"
+                        isAuthenticated={isConnected}
+                        component={ManageAds}
+                    />
+                    <PrivateRoute 
+                        path="/admin/gerer-ingredients"
+                        isAuthenticated={isConnected}
+                        component={ManageIngredients}
+                    />
+                    <PrivateRoute 
+                        path="/admin/gerer-utilisateurs"
+                        isAuthenticated={isConnected}
+                        component={ManageUsers}
                     />
                     <Route component={NotFound} />
                 </Switch>
