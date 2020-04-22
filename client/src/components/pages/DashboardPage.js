@@ -6,6 +6,7 @@ import authApi from '../../services/authApi';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import DashBoardLoader from '../../loaders/DashBoardLoader';
+import { toast } from 'react-toastify';
 
 class DashboardPage extends Component {
 
@@ -67,6 +68,7 @@ class DashboardPage extends Component {
                 email: this.state.email            
                 }
             })
+            toast.info("Vos données ont été modifiées avec succès 👌")
         }
     }
 

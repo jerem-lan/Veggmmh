@@ -69,10 +69,6 @@ const Root = () => {
                         path='/calendrier-des-saisons'
                         component={CalendarPage} 
                     />
-                    <Route 
-                        path='/calendrier-des-saisons' 
-                        component={CalendarPage} 
-                    />
                     <Route
                         path="/liste-annonces"
                         component={ListAdPage}
