@@ -19,6 +19,16 @@ class RecipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipe::class);
     }
 
+    public function findRecipe($id){
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('a')
+            ->from(Recipe::class, 'a')
+            ->where('a.id = :id')
+            ->setParameter('id', $id);
+        return $qb->getQuery()
+                ->getSingleResult();
+    }
+
     // /**
     //  * @return Recipe[] Returns an array of Recipe objects
     //  */

@@ -22,8 +22,16 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      itemOperations={
  *          "GET", 
  *          "PUT", 
- *          "DELETE" = {"path" = "/admin/users/{id}"}
- * },
+ *          "DELETE" = {"path" = "/admin/users/{id}"},
+ *          "addBookmarks" = { 
+ *                          "method"="POST",
+ *                          "path"="{id}/bookmarks/", 
+ *                          "controller"="App\Controller\BookmarksController",
+ *                          "openapi_context"={
+ *                                  "summary"="Add a recipe bookmarks"
+ *                              }
+ *                            }
+ *      },
  *      subresourceOperations = {
  *          "ingredients_get_subresource" = {"path" = "/users/{id}/ingredients"},
  *          "recipes_get_subresource" = {"path" = "/users/{id}/recipes"},
