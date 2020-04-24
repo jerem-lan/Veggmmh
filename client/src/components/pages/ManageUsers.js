@@ -20,7 +20,7 @@ class ManageUsers extends Component {
 
         axios.get('http://localhost:8000/api/admin/users', config)
              .then(res => {
-                const users = res.data['hydra:member'];
+                const users = res.data['hydra:member'].reverse();
                 this.setState({ users, loading: false });
              })
     }
@@ -41,8 +41,7 @@ class ManageUsers extends Component {
             this.setState({ users: users })
 
             axios.delete("http://127.0.0.1:8000/api/admin/users/" + id, config)
-                .then(response => console.log('Utilisateur supprimé'))
-                .then(toast.info("👌 L'utilisateur a été supprimé avec succès"))
+                .then(response => toast.info("👌 L'utilisateur a été supprimé avec succès"))
                 .catch(error => {
                     this.setState({ users: original });
                     console.log(error.response);
@@ -58,6 +57,7 @@ class ManageUsers extends Component {
             return (
                <div className="container">
                    {this.state.loading && <ListLoader /> }
+                   <h2>Liste des utilisateurs</h2>
                    <table>
                        <thead>
                            <tr>
