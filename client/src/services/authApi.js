@@ -59,10 +59,32 @@ function isAuthenticated() {
     return false 
 }
 
+function isAdmin() {
+
+    const token = isAuthenticated();
+    //si il y a un token
+    if (token){
+        //je decode le token pour recuperer le role de l'utilisateur
+        const decoded = jwtDecode(window.localStorage.getItem("authToken"))
+        const role = decoded.roles
+        //si c'est un admin je return true sinon false
+        if (role[0] === "ROLE_ADMIN") {
+            return true;
+            
+        }else{
+            return false;
+        }
+    }else{
+        return false;
+    }
+    
+}
+
 
 export default {
     authenticate,
     setup,
     logout,
-    isAuthenticated
+    isAuthenticated,
+    isAdmin
 };
