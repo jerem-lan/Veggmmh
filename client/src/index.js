@@ -32,6 +32,7 @@ import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'rea
 //
 import * as serviceWorker from './serviceWorker';
 import { ToastContainer, toast } from 'react-toastify';
+import authApi from './services/authApi';
 
 AuthApi.setup()
 
@@ -41,15 +42,22 @@ const PrivateRoute = ({path, isAuthenticated, component}) => {
     <Redirect to="/login" />)
 }
 
+const AdminRoute = ({path, isAuthenticated, component, isAdmin}) => {
+    return isAuthenticated && isAdmin ? (<Route path={path} component={component} />) : 
+    (<Redirect to="/dashboard" />)
+}
+
 const Root = () => {
 
     const [isConnected, setIsConnected] = useState(AuthApi.isAuthenticated());
+    const isAdmin = authApi.isAdmin();
     const HeaderWithRouter = withRouter(Header);
+    console.log(isAdmin)
     // const FooterWithRouter = withRouter(Footer);
 
     return (
         <Router>
-            <HeaderWithRouter isConnected={isConnected} onLogout={setIsConnected} />
+            <HeaderWithRouter isConnected={isConnected} onLogout={setIsConnected} isAdmin={isAdmin} />
                 <Switch>
                     <Route 
                         exact path='/' 
@@ -114,29 +122,34 @@ const Root = () => {
                         component={SeasonalItemCardPage} 
                     />
                     {/*ROUTE ADMIN*/}
-                    <PrivateRoute 
+                    <AdminRoute 
                         path="/admin/dashboard"
                         isAuthenticated={isConnected}
+                        isAdmin={isAdmin}
                         component={AdminDashboard}
                     />
-                    <PrivateRoute 
+                    <AdminRoute 
                         path="/admin/gerer-recettes"
                         isAuthenticated={isConnected}
+                        isAdmin={isAdmin}
                         component={ManageRecipes}
                     />
-                    <PrivateRoute 
+                    <AdminRoute 
                         path="/admin/gerer-annonces"
                         isAuthenticated={isConnected}
+                        isAdmin={isAdmin}
                         component={ManageAds}
                     />
-                    <PrivateRoute 
+                    <AdminRoute 
                         path="/admin/gerer-ingredients"
                         isAuthenticated={isConnected}
+                        isAdmin={isAdmin}
                         component={ManageIngredients}
                     />
-                    <PrivateRoute 
+                    <AdminRoute 
                         path="/admin/gerer-utilisateurs"
                         isAuthenticated={isConnected}
+                        isAdmin={isAdmin}
                         component={ManageUsers}
                     />
                     <Route component={NotFound} />
