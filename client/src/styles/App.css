@@ -551,7 +551,7 @@ Add Recipe Page
   padding: 6px;
   margin-right: 15px;
 }
-.ingredientBlock > p {
+.ingredientBlock > p::first-letter {
   text-transform: capitalize;
 }
 .btn--delete {
@@ -693,6 +693,43 @@ Calendar Page
 }
 .fruitVegBlock span {
   max-width: 100px;
+}
+
+/* ----------------------------
+Seasonal Item Page
+---------------------------- */
+.fruitVegName {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 2px solid #56B693;
+}
+.fruitVegName > img {
+  margin-right: 20px;
+}
+.fruitVegName > h2::first-letter {
+  text-transform: capitalize;
+}
+.calendar {
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.month {
+  text-align: center;
+  width: 16.667%;
+  margin-bottom: 25px;
+}
+.name {
+  margin-bottom : 10px;
+}
+.number {
+  background-color: #bddfd7;
+  padding: 5px 0;
+}
+.calendar  .active {
+  background-color: #56B693;
 }
 /* ----------------------------
 A bouger

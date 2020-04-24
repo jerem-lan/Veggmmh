@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from "axios";
-// COMPONENTS
 import FruitVegBlock from '../FruitVegBlock'
 import IngredientLoader from '../../loaders/IngredientsLoader';
 
@@ -35,7 +34,7 @@ class CalendarPage extends Component {
             })
         }catch(error) { console.log(error.response)}
     }
-
+    
     // recherche item par son nom
     handleChange = (event) => {
         this.setState({ search: event.target.value, loading: true })
@@ -59,7 +58,7 @@ class CalendarPage extends Component {
         
         return (
             <div className="container">
-                <div className="">Rechercher par aliment</div>
+                <label className="label">Rechercher par aliment</label>
                 <input className="input input--search" type='text' onChange={this.handleChange} value={this.state.search} placeholder="tomate"/>
                 <div className="fruitVegBlocks">
                     {loading && <IngredientLoader />} 
@@ -73,12 +72,10 @@ class CalendarPage extends Component {
                                 icon={ingredient.icon}
                                 season={ingredient.season}
                             />)
-                    }
-                    
+                    }   
                 </div>
 
-                <div className="title--category">Rechercher par mois</div>
-                
+                <label className="label">Rechercher par mois</label>
                 <select size="1" onChange={this.handleMonth}>
                     <option defaultValue >choississez</option>
                     <option>janvier</option>
