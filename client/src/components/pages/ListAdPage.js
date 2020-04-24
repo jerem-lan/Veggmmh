@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import Axios from 'axios';
+import React, { Component } from 'react';
+import axios from 'axios';
 import ListLoader from '../../loaders/AddLoader';
 import jwtDecode from 'jwt-decode';
 import authApi from '../../services/authApi';
@@ -12,7 +12,7 @@ class ListAdPage extends Component {
     }
 
     componentDidMount() {
-        Axios.get('http://localhost:8000/api/ads')
+        axios.get('http://localhost:8000/api/ads')
              .then(res => {
                 const ads = res.data['hydra:member'].reverse();
                 this.setState({ ads, loading: false });
@@ -30,7 +30,7 @@ class ListAdPage extends Component {
         let ads = this.state.ads.filter(ad => {return ad.id !== id})
         this.setState({ ads: ads })
         //on supprime l'annonce dans la BDD
-        Axios.delete("http://127.0.0.1:8000/api/ads/" + id, config)
+        axios.delete("http://127.0.0.1:8000/api/ads/" + id, config)
         
             .then(response => console.log('ok'))
             .catch(error => {

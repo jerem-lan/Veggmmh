@@ -20,7 +20,7 @@ const SeasonalItemCardPage = (props) => {
             setSeason(JSON.parse(window.localStorage.getItem("ingredientSeason")))
             setIcon(window.localStorage.getItem("ingredientIcon"))
         }
-    }, [])
+    }, [props])
 
     // Affiche l'icone propre au fruit/légume sélectionné. 
     const requireIcon = Icon => {
