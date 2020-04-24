@@ -44,8 +44,7 @@ const PrivateRoute = ({path, isAuthenticated, component}) => {
 
 const AdminRoute = ({path, isAuthenticated, component, isAdmin}) => {
     return isAuthenticated && isAdmin ? (<Route path={path} component={component} />) : 
-    (toast.info("Tu as été déconnecté ⌛"), 
-    <Redirect to="/login" />)
+    (<Redirect to="/dashboard" />)
 }
 
 const Root = () => {
