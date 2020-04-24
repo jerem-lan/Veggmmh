@@ -20,7 +20,7 @@ const SeasonalItemCardPage = (props) => {
             setSeason(JSON.parse(window.localStorage.getItem("ingredientSeason")))
             setIcon(window.localStorage.getItem("ingredientIcon"))
         }
-    }, [])
+    }, [props])
 
     const requireIcon = Icon => {
         try {

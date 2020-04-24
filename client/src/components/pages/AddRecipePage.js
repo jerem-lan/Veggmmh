@@ -10,12 +10,12 @@ class AddRecipePage extends Component {
         preptime: '', //Temps de préparation en minute
         servings: '', //Nombre de portions
         quantities: [], //Quantités de chaque ingrédients sélectionnés
-        steps: [], //Etape(s) de la recette
         type: '', //Tag de la recette (apero, entrée, plat ou dessert)
         value: '', //Autosuggest
         suggestions: [], //Autosuggest. Les suggestions qui seront affichées 
         ingredientsSelect: [], //Ingrédients sélectionnés qui composent la recette
-        quantity: '' // quantité renseignée dans l'input quantité d'un ingrédient
+        quantity: '', //Quantité renseignée dans l'input quantité d'un ingrédient
+        newSteps: [""] //Liste des étapes
     }
 
     //Récupère les données de Ingrédients issues de l'API. 
@@ -35,12 +35,7 @@ class AddRecipePage extends Component {
         const { name, value } = event.target;
         this.setState({ [name]: value });
     };
-    //Récupere et set la valeur du textarea Steps ciblé en fonction de son attribut name, dans un tableau.
-    handleChangeSteps = (event) => {
-        event.preventDefault();
-        const value = event.target.value;
-        this.setState({ steps : [value] });
-    };
+
     //Augmente ou décrémente en fonction du bouton ciblé (+ ou -) la valeur de l'input Servings et la set.
     handleInputNumber = (event) => {
         event.preventDefault();
@@ -61,6 +56,35 @@ class AddRecipePage extends Component {
         this.setState({
             value : '',
             quantity : ''
+        });
+    };
+
+    //STEPS
+    //Récupere et set la valeur du textarea Steps ciblé en fonction de son attribut name, dans un tableau.
+    handleChangeSteps = idx => (event) => {
+        event.preventDefault();
+        const newSteps = this.state.newSteps.map((step, sidx)=>
+        {
+            //Récupère l'index du champs actuellement modifié, et le compare au nouvel index du .map
+            //Si les indexs sont différents, renvoie la valeur à l'index du state..map
+            //S'ils sont les mêmes, renvoie la valeur sur l'index du champs modifié
+            if (idx !== sidx) return step
+            return event.target.value
+        })
+        this.setState({newSteps: newSteps})
+    };
+    //Ajoute une étape avec son textarea
+    handleAddStep = (event) => {
+        event.preventDefault()
+        this.setState(prevState => ({
+            newSteps: [...prevState.newSteps, ""]
+          }));
+        };
+    //Retire une étape
+    handleRemoveStep = idx => (event) => {
+        event.preventDefault()
+        this.setState({
+            newSteps: this.state.newSteps.filter((s, sidx) => idx !== sidx)
         });
     };
 
@@ -132,7 +156,7 @@ class AddRecipePage extends Component {
             nbServings: this.state.servings,
             ingredients: this.state.ingredientsSelect,
             quantity: this.state.quantities,
-            steps: this.state.steps,
+            steps: this.state.newSteps,
             type: this.state.type
         };
         try { await axios.post( 
@@ -241,7 +265,7 @@ class AddRecipePage extends Component {
                                                 <div id={index} key={index} className="ingredientBlock ingredientBlock--quantity">
                                                     <p>{qty}</p>
                                                     <svg className="btn--delete" onClick={this.removeIngredient} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M18 6L6 18M6 6l12 12" stroke="#E94C4C" stroke-width="2" stroke-linecap="round"/>
+                                                        <path d="M18 6L6 18M6 6l12 12" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
                                                     </svg>
                                                 </div>
                                             )
@@ -272,15 +296,22 @@ class AddRecipePage extends Component {
                     </div>
                         
                     <label className="label" htmlFor="steps">Etapes</label> 
-                    <textarea
-                        className="textarea--steps"
-                        name='steps'
-                        value={this.state.steps}
-                        onChange={this.handleChangeSteps}
-                        type="text"
-                        placeholder="Découper les oignons et les faire revenir jusqu’à ce qu’ils soient fondants..."
-                        required/>
-                    <button className="btn--addStep">+ ajouter une étape</button>
+                    {
+                        this.state.newSteps.map((newStep, idx)=> 
+                            <div>
+                                <textarea
+                                className="textarea--steps"
+                                name='steps'
+                                value={newStep}
+                                onChange={this.handleChangeSteps(idx)}
+                                type="text"
+                                placeholder="Découper les oignons et les faire revenir jusqu’à ce qu’ils soient fondants..."
+                                required />
+                                <button className="btn btn--add" onClick={this.handleRemoveStep(idx)}>-</button>
+                            </div>
+                        )
+                    }
+                    <button className="btn--addStep" onClick={this.handleAddStep}>+ ajouter une étape</button>
 
                         
                     <div>

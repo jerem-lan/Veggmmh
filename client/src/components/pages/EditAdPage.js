@@ -27,7 +27,7 @@ const EditAdPage = (props) => {
             setPostcode(window.localStorage.getItem("adPostcode"));
             setId(window.localStorage.getItem("adId"));
         }
-    }, [])
+    }, [props])
     
 
     function handleTitleChange(e){
