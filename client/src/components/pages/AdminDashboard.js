@@ -1,18 +1,16 @@
 import React, { Component } from 'react'
 import featureBlocksDataAdmin from '../../data/featureBlocksDataAdmin'
-import ProfilCartouche from '../ProfilCartouche'
 import FeatureBlock from '../FeatureBlock'
 import authApi from '../../services/authApi';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import DashBoardLoader from '../../loaders/DashBoardLoader';
-import { toast } from 'react-toastify';
+
 
 class AdminDashboard extends Component {
     state = {  
         firstname : "",
         lastname : "", 
-        username : "",
         loading : true
     }
 
@@ -42,7 +40,6 @@ class AdminDashboard extends Component {
     }
 
     render() { 
-        const username = this.state.firstname + " " + this.state.lastname
         let loading = this.state.loading 
         return (  
             <div className="container container--dashboard"> 

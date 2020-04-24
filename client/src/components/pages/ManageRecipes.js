@@ -13,7 +13,7 @@ class ManageRecipes extends Component {
     componentDidMount() {
         axios.get('http://localhost:8000/api/recipes')
              .then(res => {
-                const recipes = res.data['hydra:member'];
+                const recipes = res.data['hydra:member'].reverse();
                 this.setState({ recipes, loading: false });
              })
     }
@@ -32,8 +32,7 @@ class ManageRecipes extends Component {
         this.setState({ recipes: recipes })
 
         axios.delete("http://127.0.0.1:8000/api/recipes/" + id, config)
-            .then(response => console.log('Recette supprimée'))
-            .then(toast.info("👌 La recette a été supprimée avec succès"))
+            .then(response => toast.info("👌 La recette a été supprimée avec succès"))
             .catch(error => {
                 this.setState({ recipes: original });
                 console.log(error.response);
@@ -46,6 +45,7 @@ class ManageRecipes extends Component {
             return (
                <div className="container">
                    {this.state.loading && <ListLoader /> }
+                   <h2>Liste des recettes</h2>
                    <table>
                        <thead>
                            <tr>
@@ -59,7 +59,7 @@ class ManageRecipes extends Component {
                        <tbody>
                             
                             {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
-                            { !this.state.loading && this.state.recipes.reverse().map(recipe => 
+                            { !this.state.loading && this.state.recipes.map(recipe => 
                                 <tr key={recipe.id}>
                                     <td>{recipe.id}</td>
                                     <td>{recipe.user.username}</td>

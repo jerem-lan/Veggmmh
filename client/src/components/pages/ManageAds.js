@@ -3,18 +3,23 @@ import axios from 'axios';
 import authApi from '../../services/authApi';
 import ListLoader from '../../loaders/AddLoader';
 import { toast } from 'react-toastify';
+import PaginationForTab from '../PaginationForTab'
 
 class ManageAds extends Component {
     state = { 
         ads : [],
-        loading : true
+        // adsCopy : [],
+        loading : true,
+        search : "",
+        currentPage : 1
      }
 
     componentDidMount() {
         axios.get('http://localhost:8000/api/ads')
              .then(res => {
-                const ads = res.data['hydra:member'];
+                const ads = res.data['hydra:member'].reverse();
                 this.setState({ ads, loading: false });
+                // this.setState({ adsCopy : ads })
              })
     }
 
@@ -32,8 +37,7 @@ class ManageAds extends Component {
         this.setState({ ads: ads })
 
         axios.delete("http://127.0.0.1:8000/api/ads/" + id, config)
-            .then(response => console.log('Annonce supprimée'))
-            .then(toast.info("👌 L'annonce a été supprimée avec succès"))
+            .then(response => toast.info("👌 L'annonce a été supprimée avec succès"))
             .catch(error => {
                 this.setState({ ads: original });
                 console.log(error.response);
@@ -41,11 +45,44 @@ class ManageAds extends Component {
             });
     }
 
+    // handleSearch = (event) => {
+    //     const value = event.currentTarget.value;
+    //     this.setState({ search : value });
+
+    //     if(value.trim()) {
+    //         const adsFilter = this.state.ads.filter(
+    //             ad => 
+    //                 ad.title.toLowerCase().includes(this.state.search.toLowerCase()) ||
+    //                 ad.content.toLowerCase().includes(this.state.search.toLowerCase()) ||
+    //                 ad.id.toString().includes(this.state.search)
+    //         )
+    //         this.setState({ ads : adsFilter })
+    //         console.log(this.state.adsCopy)
+    //     } else {
+    //         this.setState({ ads : this.state.adsCopy })
+    //         console.log(this.state.adsCopy)
+    //     }
+    // }
+
+    handlePageChanged = (page) => {
+        this.setState({ currentPage : page })
+    }
+
     render() { 
+        //Détermine les nombres d'annonces par page
+        const itemsPerPage = 5;
+        
+        const start = this.state.currentPage * itemsPerPage - itemsPerPage
+        const paginatedAds = this.state.ads.slice(start, start + itemsPerPage)
+       
         if (authApi.isAuthenticated()) {
             return (
                <div className="container">
                    {this.state.loading && <ListLoader /> }
+                   <h1>Liste des annonces</h1>
+                   {/* <div>
+                       <input type="text" placeholder="Rechercher" onChange={this.handleSearch} value={this.state.search}/>
+                   </div> */}
                    <table>
                        <thead>
                            <tr>
@@ -60,9 +97,7 @@ class ManageAds extends Component {
                            </tr>
                        </thead>
                        <tbody>
-                            
-                            {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
-                            { !this.state.loading && this.state.ads.reverse().map(ad => 
+                            { !this.state.loading && paginatedAds.map(ad => 
                                 <tr key={ad.id}>
                                     <td>{ad.id}</td>
                                     <td>{ad.user.username}</td>
@@ -83,6 +118,7 @@ class ManageAds extends Component {
                             )}
                        </tbody>
                    </table>
+                   <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={this.state.ads.length} onPageChanged={this.handlePageChanged}/>
                </div>
             )
         }

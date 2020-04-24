@@ -14,7 +14,7 @@ class ListAdPage extends Component {
     componentDidMount() {
         Axios.get('http://localhost:8000/api/ads')
              .then(res => {
-                const ads = res.data['hydra:member'];
+                const ads = res.data['hydra:member'].reverse();
                 this.setState({ ads, loading: false });
              })
     }
@@ -49,7 +49,7 @@ class ListAdPage extends Component {
            <div className="container">
                {this.state.loading && <ListLoader /> }
                {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
-               { !this.state.loading && this.state.ads.reverse().map(ad =>
+               { !this.state.loading && this.state.ads.map(ad =>
                 <list-item key={ad.id}> 
                     <h2>{ad.title}</h2>
                     <p>Ajouté par : {ad.user.username} - Le {ad.creationDate}</p>
