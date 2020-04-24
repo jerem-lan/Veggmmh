@@ -3,11 +3,13 @@ import axios from 'axios';
 import authApi from '../../services/authApi';
 import ListLoader from '../../loaders/AddLoader';
 import { toast } from 'react-toastify';
+import PaginationForTab from '../PaginationForTab'
 
 class ManageIngredients extends Component {
     state = { 
         ingredients : [],
-        loading : true
+        loading : true,
+        currentPage : 1
     }
 
     componentDidMount() {
@@ -40,7 +42,18 @@ class ManageIngredients extends Component {
             });
     }
 
+    handlePageChanged = (page) => {
+        this.setState({ currentPage : page })
+    }
+
     render() { 
+
+        //Détermine les nombres d'annonces par page
+        const itemsPerPage = 10;
+        
+        const start = this.state.currentPage * itemsPerPage - itemsPerPage
+        const paginatedIngredients = this.state.ingredients.slice(start, start + itemsPerPage)
+
         if (authApi.isAuthenticated()) {
             return (
                <div className="container">
@@ -58,7 +71,7 @@ class ManageIngredients extends Component {
                        <tbody>
                             
                             {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
-                            { !this.state.loading && this.state.ingredients.map(ingredient => 
+                            { !this.state.loading && paginatedIngredients.map(ingredient => 
                                 <tr key={ingredient.id}>
                                     <td>{ingredient.id}</td>
                                     <td>{ingredient.family}</td>
@@ -75,6 +88,7 @@ class ManageIngredients extends Component {
                             )}
                        </tbody>
                    </table>
+                   <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={this.state.ingredients.length} onPageChanged={this.handlePageChanged}/>
                </div>
             )
         }

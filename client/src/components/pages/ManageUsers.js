@@ -4,11 +4,13 @@ import authApi from '../../services/authApi';
 import ListLoader from '../../loaders/AddLoader';
 import { toast } from 'react-toastify';
 import jwtDecode from 'jwt-decode';
+import PaginationForTab from '../PaginationForTab'
 
 class ManageUsers extends Component {
     state = { 
         users : [],
-        loading : true
+        loading : true,
+        currentPage : 1
     }
 
     componentDidMount() {
@@ -52,7 +54,18 @@ class ManageUsers extends Component {
         }
     }
 
+    handlePageChanged = (page) => {
+        this.setState({ currentPage : page })
+    }
+
     render() { 
+
+        //Détermine les nombres d'annonces par page
+        const itemsPerPage = 5;
+        
+        const start = this.state.currentPage * itemsPerPage - itemsPerPage
+        const paginatedUsers = this.state.users.slice(start, start + itemsPerPage)
+
         if (authApi.isAuthenticated()) {
             return (
                <div className="container">
@@ -75,7 +88,7 @@ class ManageUsers extends Component {
                        <tbody>
                             
                             {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
-                            { !this.state.loading && this.state.users.map(user => 
+                            { !this.state.loading && paginatedUsers.map(user => 
                                 <tr key={user.id}>
                                     <td>{user.id}</td>
                                     <td>{user.email}</td>
@@ -97,6 +110,7 @@ class ManageUsers extends Component {
                             )}
                        </tbody>
                    </table>
+                   <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={this.state.users.length} onPageChanged={this.handlePageChanged}/>
                </div>
             )
         }
