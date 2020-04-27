@@ -7,6 +7,7 @@ import './styles/App.css';
 import 'react-toastify/dist/ReactToastify.css';
 // PAGES COMPONENTS
 import Header from './components/Header';
+import BreadCrumbs from './components/BreadCrumbs';
 import IndexPage from './components/pages/IndexPage';
 import LoginPage from './components/pages/LoginPage';
 import RegistrationPage from './components/pages/RegistrationPage';
@@ -28,8 +29,7 @@ import ManageUsers from './components/pages/ManageUsers';
 import NotFound from './components/pages/NotFound';
 // import Footer from './components/Footer';
 // ROUTES
-import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom'
-//
+import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -45,11 +45,13 @@ const Root = () => {
 
     const [isConnected, setIsConnected] = useState(AuthApi.isAuthenticated());
     const HeaderWithRouter = withRouter(Header);
+    const BackWithRouter = withRouter(BreadCrumbs);
     // const FooterWithRouter = withRouter(Footer);
 
     return (
         <Router>
             <HeaderWithRouter isConnected={isConnected} onLogout={setIsConnected} />
+            <BackWithRouter />
                 <Switch>
                     <Route 
                         exact path='/' 

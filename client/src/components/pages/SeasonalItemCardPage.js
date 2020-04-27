@@ -106,7 +106,7 @@ const SeasonalItemCardPage = (props) => {
                 <h2>Conservation</h2>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id sit dolor obcaecati soluta earum, ut aspernatur atque aperiam provident, maxime ratione perspiciatis eligendi ab molestias debitis ipsum quos reprehenderit. Tenetur?</p>
             </div>
-        </div> 
+        </div>
     );
 };
 

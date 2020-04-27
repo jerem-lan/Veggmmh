@@ -31,10 +31,27 @@ class CalendarPage extends Component {
                 this.setState({ 
                     fruitsAndVeggies: fruitsAndVeggies
                 })
+                //Affiche les fruits/légumes du mois courant dès le premier rendu
+                const now = new Date();
+                const currentMonth = now.getMonth();
+                const months = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+                for(let m = 0; m <= 11; m++) {
+                    const option = document.createElement("OPTION"); //crée des <option/>
+                    option.text = months[m];
+                    option.value = (m+1); // les mois commencent à 1 côté serveur
+                    if ( m === currentMonth) {
+                        option.selected = true;
+                        const itemSelection = this.state.fruitsAndVeggies.filter(item => 
+                            item.season.includes(option.text)
+                        )
+                        this.setState({ itemSelection })
+                    }
+                    document.getElementById('month').options.add(option); //rend les <options/> dans le <select /> qui a l'id month 
+                }
             })
-        }catch(error) { console.log(error.response)}
+        }catch(error) {console.log(error.response)}
     }
-    
+
     // recherche item par son nom
     handleChange = (event) => {
         this.setState({ search: event.target.value, loading: true })
@@ -46,16 +63,15 @@ class CalendarPage extends Component {
 
     // recherche items par mois
     handleMonth = (event) => {
-        const selectedMonth = event.target.value
+        const selectedMonth = event.target.options[event.target.selectedIndex].text
         const itemSelection = this.state.fruitsAndVeggies.filter(item => 
            item.season.includes(selectedMonth) //contient les items qui ont dans "season", le mois qui a été sélectionné
         )
         this.setState({ itemSelection })
     }
-
+    
     render() {
         const loading = this.state.loading
-        
         return (
             <div className="container">
                 <label className="label">Rechercher par aliment</label>
@@ -76,22 +92,7 @@ class CalendarPage extends Component {
                 </div>
 
                 <label className="label">Rechercher par mois</label>
-                <select size="1" onChange={this.handleMonth}>
-                    <option defaultValue >choississez</option>
-                    <option>janvier</option>
-                    <option>février</option>
-                    <option>mars</option>
-                    <option>avril</option>
-                    <option>mai</option>
-                    <option>juin</option>
-                    <option>juillet</option>
-                    <option>août</option>
-                    <option>septembre</option>
-                    <option>octobre</option>
-                    <option>novembre</option>
-                    <option>décembre</option>
-                </select>
-                
+                <select name="month" id="month"  size="1" onChange={this.handleMonth}></select>   
                 <div className="fruitVegBlocks" >
                     {loading && <IngredientLoader />} 
                     {
