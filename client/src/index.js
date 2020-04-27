@@ -7,6 +7,7 @@ import './styles/App.css';
 import 'react-toastify/dist/ReactToastify.css';
 // PAGES COMPONENTS
 import Header from './components/Header';
+import BreadCrumbs from './components/BreadCrumbs';
 import IndexPage from './components/pages/IndexPage';
 import LoginPage from './components/pages/LoginPage';
 import RegistrationPage from './components/pages/RegistrationPage';
@@ -28,8 +29,7 @@ import ManageUsers from './components/pages/ManageUsers';
 import NotFound from './components/pages/NotFound';
 // import Footer from './components/Footer';
 // ROUTES
-import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom'
-//
+import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import { ToastContainer, toast } from 'react-toastify';
 import authApi from './services/authApi';
@@ -54,6 +54,7 @@ const Root = () => {
     const [isConnected, setIsConnected] = useState(AuthApi.isAuthenticated());
     const isAdmin = authApi.isAdmin();
     const HeaderWithRouter = withRouter(Header);
+    const BackWithRouter = withRouter(BreadCrumbs);
     console.log(isAdmin)
     // const FooterWithRouter = withRouter(Footer);
 
@@ -65,16 +66,22 @@ const Root = () => {
                         exact path='/' 
                         component={IndexPage} 
                     />
-                    <Route  path='/login'
-                            render={(props) => 
-                            <LoginPage 
-                                onLogin={setIsConnected}
-                                {...props}
-                            />} 
+                    <Route  
+                        path='/login'
+                        render={(props) => 
+                        <LoginPage 
+                            onLogin={setIsConnected}
+                            BackWithRouter={BackWithRouter}
+                            {...props}
+                        />} 
                     />
                     <Route 
                         path='/register' 
-                        component={RegistrationPage} 
+                        render={(props) => 
+                        <RegistrationPage
+                            BackWithRouter={BackWithRouter}
+                            {...props}
+                        />}
                     />
                     <Route
                         path='/dashboard'
@@ -82,7 +89,7 @@ const Root = () => {
                     />
                     <Route 
                         path='/calendrier-des-saisons'
-                        component={CalendarPage} 
+                        component={CalendarPage}
                     />
                     <Route
                         path="/liste-annonces"
@@ -125,8 +132,12 @@ const Root = () => {
                         component={EditAdPage} 
                     />
                     <Route 
-                        path='/carte-ingredient/:name' 
-                        component={SeasonalItemCardPage} 
+                        path='/carte-ingredient/:name'
+                        render={(props) => 
+                        <SeasonalItemCardPage
+                            BackWithRouter={BackWithRouter}
+                            {...props}
+                        />}
                     />
                     <Route 
                         path='/annonce/:id' 
