@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import AlertMessage from '../AlertMessage';
-// import BreadCrumbs from '../BreadCrumbs';
 import AuthApi from '../../services/authApi';
 import { toast } from 'react-toastify';
 
@@ -34,9 +33,10 @@ class LoginPage extends Component {
     }
 
     render() {
+        const BackWithRouter = this.props.BackWithRouter
         return (
             <Fragment>
-                {/* <BreadCrumbs/> */}
+                <BackWithRouter />
                 <div className="container container--login">
                     <form className='form' onSubmit={this.goToApp} >
                         <input 

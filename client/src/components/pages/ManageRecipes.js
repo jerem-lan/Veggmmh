@@ -3,17 +3,19 @@ import axios from 'axios';
 import authApi from '../../services/authApi';
 import ListLoader from '../../loaders/AddLoader';
 import { toast } from 'react-toastify';
+import PaginationForTab from '../PaginationForTab'
 
 class ManageRecipes extends Component {
     state = { 
         recipes : [],
-        loading : true
+        loading : true,
+        currentPage : 1
     }
 
     componentDidMount() {
         axios.get('http://localhost:8000/api/recipes')
              .then(res => {
-                const recipes = res.data['hydra:member'];
+                const recipes = res.data['hydra:member'].reverse();
                 this.setState({ recipes, loading: false });
              })
     }
@@ -32,8 +34,7 @@ class ManageRecipes extends Component {
         this.setState({ recipes: recipes })
 
         axios.delete("http://127.0.0.1:8000/api/recipes/" + id, config)
-            .then(response => console.log('Recette supprimée'))
-            .then(toast.info("👌 La recette a été supprimée avec succès"))
+            .then(response => toast.info("👌 La recette a été supprimée avec succès"))
             .catch(error => {
                 this.setState({ recipes: original });
                 console.log(error.response);
@@ -41,11 +42,23 @@ class ManageRecipes extends Component {
             });
     }
 
+    handlePageChanged = (page) => {
+        this.setState({ currentPage : page })
+    }
+
     render() { 
+
+        //Détermine les nombres d'annonces par page
+        const itemsPerPage = 5;
+        
+        const start = this.state.currentPage * itemsPerPage - itemsPerPage
+        const paginatedRecipes = this.state.recipes.slice(start, start + itemsPerPage)
+
         if (authApi.isAuthenticated()) {
             return (
                <div className="container">
                    {this.state.loading && <ListLoader /> }
+                   <h2>Liste des recettes</h2>
                    <table>
                        <thead>
                            <tr>
@@ -59,7 +72,7 @@ class ManageRecipes extends Component {
                        <tbody>
                             
                             {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
-                            { !this.state.loading && this.state.recipes.reverse().map(recipe => 
+                            { !this.state.loading && paginatedRecipes.map(recipe => 
                                 <tr key={recipe.id}>
                                     <td>{recipe.id}</td>
                                     <td>{recipe.user.username}</td>
@@ -77,6 +90,7 @@ class ManageRecipes extends Component {
                             )}
                        </tbody>
                    </table>
+                   <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={this.state.recipes.length} onPageChanged={this.handlePageChanged}/>
                </div>
             )
         }

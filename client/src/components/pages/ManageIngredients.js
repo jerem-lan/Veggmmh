@@ -3,17 +3,19 @@ import axios from 'axios';
 import authApi from '../../services/authApi';
 import ListLoader from '../../loaders/AddLoader';
 import { toast } from 'react-toastify';
+import PaginationForTab from '../PaginationForTab'
 
 class ManageIngredients extends Component {
     state = { 
         ingredients : [],
-        loading : true
+        loading : true,
+        currentPage : 1
     }
 
     componentDidMount() {
         axios.get('http://localhost:8000/api/ingredients')
              .then(res => {
-                const ingredients = res.data['hydra:member'];
+                const ingredients = res.data['hydra:member'].reverse();
                 this.setState({ ingredients, loading: false });
              })
     }
@@ -32,8 +34,7 @@ class ManageIngredients extends Component {
         this.setState({ ingredients: ingredients })
 
         axios.delete("http://127.0.0.1:8000/api/ingredients/" + id, config)
-            .then(response => console.log('Ingredient supprimé'))
-            .then(toast.info("👌 L'ingredient a été supprimé avec succès"))
+            .then(response => toast.info("👌 L'ingredient a été supprimé avec succès"))
             .catch(error => {
                 this.setState({ ingredients: original });
                 console.log(error.response);
@@ -41,11 +42,23 @@ class ManageIngredients extends Component {
             });
     }
 
+    handlePageChanged = (page) => {
+        this.setState({ currentPage : page })
+    }
+
     render() { 
+
+        //Détermine les nombres d'annonces par page
+        const itemsPerPage = 10;
+        
+        const start = this.state.currentPage * itemsPerPage - itemsPerPage
+        const paginatedIngredients = this.state.ingredients.slice(start, start + itemsPerPage)
+
         if (authApi.isAuthenticated()) {
             return (
                <div className="container">
                    {this.state.loading && <ListLoader /> }
+                   <h2>Liste des ingrédients</h2>
                    <table>
                        <thead>
                            <tr>
@@ -58,7 +71,7 @@ class ManageIngredients extends Component {
                        <tbody>
                             
                             {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
-                            { !this.state.loading && this.state.ingredients.reverse().map(ingredient => 
+                            { !this.state.loading && paginatedIngredients.map(ingredient => 
                                 <tr key={ingredient.id}>
                                     <td>{ingredient.id}</td>
                                     <td>{ingredient.family}</td>
@@ -75,6 +88,7 @@ class ManageIngredients extends Component {
                             )}
                        </tbody>
                    </table>
+                   <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={this.state.ingredients.length} onPageChanged={this.handlePageChanged}/>
                </div>
             )
         }

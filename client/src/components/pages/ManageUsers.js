@@ -4,11 +4,13 @@ import authApi from '../../services/authApi';
 import ListLoader from '../../loaders/AddLoader';
 import { toast } from 'react-toastify';
 import jwtDecode from 'jwt-decode';
+import PaginationForTab from '../PaginationForTab'
 
 class ManageUsers extends Component {
     state = { 
         users : [],
-        loading : true
+        loading : true,
+        currentPage : 1
     }
 
     componentDidMount() {
@@ -20,7 +22,7 @@ class ManageUsers extends Component {
 
         axios.get('http://localhost:8000/api/admin/users', config)
              .then(res => {
-                const users = res.data['hydra:member'];
+                const users = res.data['hydra:member'].reverse();
                 this.setState({ users, loading: false });
              })
     }
@@ -41,8 +43,7 @@ class ManageUsers extends Component {
             this.setState({ users: users })
 
             axios.delete("http://127.0.0.1:8000/api/admin/users/" + id, config)
-                .then(response => console.log('Utilisateur supprimé'))
-                .then(toast.info("👌 L'utilisateur a été supprimé avec succès"))
+                .then(response => toast.info("👌 L'utilisateur a été supprimé avec succès"))
                 .catch(error => {
                     this.setState({ users: original });
                     console.log(error.response);
@@ -53,11 +54,23 @@ class ManageUsers extends Component {
         }
     }
 
+    handlePageChanged = (page) => {
+        this.setState({ currentPage : page })
+    }
+
     render() { 
+
+        //Détermine les nombres d'annonces par page
+        const itemsPerPage = 5;
+        
+        const start = this.state.currentPage * itemsPerPage - itemsPerPage
+        const paginatedUsers = this.state.users.slice(start, start + itemsPerPage)
+
         if (authApi.isAuthenticated()) {
             return (
                <div className="container">
                    {this.state.loading && <ListLoader /> }
+                   <h2>Liste des utilisateurs</h2>
                    <table>
                        <thead>
                            <tr>
@@ -75,7 +88,7 @@ class ManageUsers extends Component {
                        <tbody>
                             
                             {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
-                            { !this.state.loading && this.state.users.map(user => 
+                            { !this.state.loading && paginatedUsers.map(user => 
                                 <tr key={user.id}>
                                     <td>{user.id}</td>
                                     <td>{user.email}</td>
@@ -97,6 +110,7 @@ class ManageUsers extends Component {
                             )}
                        </tbody>
                    </table>
+                   <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={this.state.users.length} onPageChanged={this.handlePageChanged}/>
                </div>
             )
         }

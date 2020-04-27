@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
+import { toast } from 'react-toastify';
 
 class AddRecipePage extends Component {
 
@@ -170,10 +171,11 @@ class AddRecipePage extends Component {
                 servings: '',
                 ingredientsSelect: [],
                 quantities: [],
-                steps: [],
+                newSteps: [],
                 type: ''
             });
-            window.location.reload(); //refresh la page pour que l'input nb portions et tag soit remis à zero
+            toast.info("Votre rectte a été créée avec succès 👌")
+            this.props.history.push('/dashboard')
         }catch(error){
             console.log(error);
         }

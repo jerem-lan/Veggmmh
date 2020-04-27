@@ -97,7 +97,7 @@ class CalendarPage extends Component {
                     {loading && <IngredientLoader />} 
                     {
                         this.state.itemSelection.map((ingredient) => 
-                         !loading && <FruitVegBlock
+                        !loading && <FruitVegBlock
                                 key={ingredient.id}
                                 id={ingredient.id}
                                 family={ingredient.family}
@@ -105,7 +105,7 @@ class CalendarPage extends Component {
                                 icon={ingredient.icon}
                                 season={ingredient.season}
                             />
-                              )
+                            )
                     }
                 </div>
             </div>

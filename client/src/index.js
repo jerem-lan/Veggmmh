@@ -32,6 +32,7 @@ import NotFound from './components/pages/NotFound';
 import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import { ToastContainer, toast } from 'react-toastify';
+import authApi from './services/authApi';
 
 AuthApi.setup()
 
@@ -41,32 +42,44 @@ const PrivateRoute = ({path, isAuthenticated, component}) => {
     <Redirect to="/login" />)
 }
 
+const AdminRoute = ({path, isAuthenticated, component, isAdmin}) => {
+    return isAuthenticated && isAdmin ? (<Route path={path} component={component} />) : 
+    (<Redirect to="/dashboard" />)
+}
+
 const Root = () => {
 
     const [isConnected, setIsConnected] = useState(AuthApi.isAuthenticated());
+    const isAdmin = authApi.isAdmin();
     const HeaderWithRouter = withRouter(Header);
     const BackWithRouter = withRouter(BreadCrumbs);
+    console.log(isAdmin)
     // const FooterWithRouter = withRouter(Footer);
 
     return (
         <Router>
-            <HeaderWithRouter isConnected={isConnected} onLogout={setIsConnected} />
-            <BackWithRouter />
+            <HeaderWithRouter isConnected={isConnected} onLogout={setIsConnected} isAdmin={isAdmin} />
                 <Switch>
                     <Route 
                         exact path='/' 
                         component={IndexPage} 
                     />
-                    <Route  path='/login'
-                            render={(props) => 
-                            <LoginPage 
-                                onLogin={setIsConnected}
-                                {...props}
-                            />} 
+                    <Route  
+                        path='/login'
+                        render={(props) => 
+                        <LoginPage 
+                            onLogin={setIsConnected}
+                            BackWithRouter={BackWithRouter}
+                            {...props}
+                        />} 
                     />
                     <Route 
                         path='/register' 
-                        component={RegistrationPage} 
+                        render={(props) => 
+                        <RegistrationPage
+                            BackWithRouter={BackWithRouter}
+                            {...props}
+                        />}
                     />
                     <Route
                         path='/dashboard'
@@ -74,7 +87,7 @@ const Root = () => {
                     />
                     <Route 
                         path='/calendrier-des-saisons'
-                        component={CalendarPage} 
+                        component={CalendarPage}
                     />
                     <Route
                         path="/liste-annonces"
@@ -112,33 +125,42 @@ const Root = () => {
                         component={EditAdPage} 
                     />
                     <Route 
-                        path='/carte-ingredient/:name' 
-                        component={SeasonalItemCardPage} 
+                        path='/carte-ingredient/:name'
+                        render={(props) => 
+                        <SeasonalItemCardPage
+                            BackWithRouter={BackWithRouter}
+                            {...props}
+                        />}
                     />
                     {/*ROUTE ADMIN*/}
-                    <PrivateRoute 
+                    <AdminRoute 
                         path="/admin/dashboard"
                         isAuthenticated={isConnected}
+                        isAdmin={isAdmin}
                         component={AdminDashboard}
                     />
-                    <PrivateRoute 
+                    <AdminRoute 
                         path="/admin/gerer-recettes"
                         isAuthenticated={isConnected}
+                        isAdmin={isAdmin}
                         component={ManageRecipes}
                     />
-                    <PrivateRoute 
+                    <AdminRoute 
                         path="/admin/gerer-annonces"
                         isAuthenticated={isConnected}
+                        isAdmin={isAdmin}
                         component={ManageAds}
                     />
-                    <PrivateRoute 
+                    <AdminRoute 
                         path="/admin/gerer-ingredients"
                         isAuthenticated={isConnected}
+                        isAdmin={isAdmin}
                         component={ManageIngredients}
                     />
-                    <PrivateRoute 
+                    <AdminRoute 
                         path="/admin/gerer-utilisateurs"
                         isAuthenticated={isConnected}
+                        isAdmin={isAdmin}
                         component={ManageUsers}
                     />
                     <Route component={NotFound} />
