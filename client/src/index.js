@@ -33,6 +33,8 @@ import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'rea
 import * as serviceWorker from './serviceWorker';
 import { ToastContainer, toast } from 'react-toastify';
 import authApi from './services/authApi';
+import ResumeAdPage from './components/pages/ResumeAdPage';
+import ResumeUserPage from './components/pages/ResumeUserPage';
 
 AuthApi.setup()
 
@@ -113,6 +115,11 @@ const Root = () => {
                         isAuthenticated={isConnected} 
                         component={AddRecipePage} 
                     />
+                    <PrivateRoute 
+                        path="/utilisateur/:id"
+                        isAuthenticated={isConnected}
+                        component={ResumeUserPage}
+                    />
                     <Route 
                         path='/modifier-annonce' 
                         component={EditAdPage} 
@@ -120,6 +127,10 @@ const Root = () => {
                     <Route 
                         path='/carte-ingredient/:name' 
                         component={SeasonalItemCardPage} 
+                    />
+                    <Route 
+                        path='/annonce/:id' 
+                        component={ResumeAdPage} 
                     />
                     {/*ROUTE ADMIN*/}
                     <AdminRoute 
