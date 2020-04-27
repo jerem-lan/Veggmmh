@@ -2,7 +2,7 @@
 const featureBlocksDataAdmin = {
     featureBlock1: {
       title: 'Gérer les recettes',
-      icon: 'recipes-submitted.svg',
+      icon: 'recipe-submitted.svg',
       route: '/admin/gerer-recettes',
       isAnonym: false,
     },

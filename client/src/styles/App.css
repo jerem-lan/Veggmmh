@@ -789,6 +789,36 @@ ul.pagination li.inlineDisplay button.paginationButton {
 }
 
 /* ----------------------------
+	Tableaux
+---------------------------- */
+
+.tableAdmin {
+  border-collapse: collapse;
+  width: 100%;
+
+}
+
+.tableAdmin td, .tableAdmin th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.tableAdmin tr:nth-child(even){background-color: #f2f2f2;}
+
+.tableAdmin tr:hover {background-color: #ddd;}
+
+.tableAdmin th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #56B693;
+  color: white;
+}
+.alignTabButton {
+  text-align: center;
+}
+
+/* ----------------------------
 	Media Queries
 ---------------------------- */
 @media screen and (max-width: 1000px) {

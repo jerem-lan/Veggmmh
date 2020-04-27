@@ -90,7 +90,7 @@ class ManageUsers extends Component {
                    <div>
                        <input type="text" placeholder="Rechercher" className='input' onChange={this.handleSearch} value={this.state.search}/>
                    </div>
-                   <table>
+                   <table className="tableAdmin">
                        <thead>
                            <tr>
                                <th>ID.</th>
@@ -120,7 +120,7 @@ class ManageUsers extends Component {
                                     <td>{user.firstname}</td>
                                     <td>{user.postcode}</td>
                                     <td>{user.registrationDate}</td>
-                                    <td>
+                                    <td className="alignTabButton">
                                         <button className="btn" onClick={() => this.handleDelete(user.id)}>
                                             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M17.9933 6.49329L6.00034 18.5" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
