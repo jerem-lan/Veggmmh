@@ -9,7 +9,8 @@ class ManageIngredients extends Component {
     state = { 
         ingredients : [],
         loading : true,
-        currentPage : 1
+        currentPage : 1,
+        search : ""
     }
 
     componentDidMount() {
@@ -42,6 +43,11 @@ class ManageIngredients extends Component {
             });
     }
 
+    handleSearch = (event) => {
+        const value = event.currentTarget.value;
+        this.setState({ search : value, currentPage : 1 });
+    }
+
     handlePageChanged = (page) => {
         this.setState({ currentPage : page })
     }
@@ -49,16 +55,26 @@ class ManageIngredients extends Component {
     render() { 
 
         //Détermine les nombres d'annonces par page
-        const itemsPerPage = 10;
+        const itemsPerPage = 8;
+
+        const filteredIngredients = this.state.ingredients.filter(
+            ingredient =>
+                ingredient.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
+                ingredient.family.toLowerCase().includes(this.state.search.toLowerCase()) ||
+                ingredient.id.toString().includes(this.state.search)
+            )
         
         const start = this.state.currentPage * itemsPerPage - itemsPerPage
-        const paginatedIngredients = this.state.ingredients.slice(start, start + itemsPerPage)
+        const paginatedIngredients = filteredIngredients.slice(start, start + itemsPerPage)
 
         if (authApi.isAuthenticated()) {
             return (
                <div className="container">
                    {this.state.loading && <ListLoader /> }
                    <h2>Liste des ingrédients</h2>
+                   <div>
+                       <input type="text" placeholder="Rechercher" className='input' onChange={this.handleSearch} value={this.state.search}/>
+                   </div>
                    <table>
                        <thead>
                            <tr>
@@ -69,8 +85,11 @@ class ManageIngredients extends Component {
                            </tr>
                        </thead>
                        <tbody>
-                            
-                            {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
+                            {paginatedIngredients.length === 0 && 
+                                <tr>
+                                    <td> Aucun résultat </td>
+                                </tr>
+                            }
                             { !this.state.loading && paginatedIngredients.map(ingredient => 
                                 <tr key={ingredient.id}>
                                     <td>{ingredient.id}</td>
@@ -88,7 +107,7 @@ class ManageIngredients extends Component {
                             )}
                        </tbody>
                    </table>
-                   <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={this.state.ingredients.length} onPageChanged={this.handlePageChanged}/>
+                   <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={filteredIngredients.length} onPageChanged={this.handlePageChanged}/>
                </div>
             )
         }

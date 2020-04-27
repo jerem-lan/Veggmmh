@@ -8,7 +8,6 @@ import PaginationForTab from '../PaginationForTab'
 class ManageAds extends Component {
     state = { 
         ads : [],
-        // adsCopy : [],
         loading : true,
         search : "",
         currentPage : 1
@@ -19,7 +18,6 @@ class ManageAds extends Component {
              .then(res => {
                 const ads = res.data['hydra:member'].reverse();
                 this.setState({ ads, loading: false });
-                // this.setState({ adsCopy : ads })
              })
     }
 
@@ -45,24 +43,10 @@ class ManageAds extends Component {
             });
     }
 
-    // handleSearch = (event) => {
-    //     const value = event.currentTarget.value;
-    //     this.setState({ search : value });
-
-    //     if(value.trim()) {
-    //         const adsFilter = this.state.ads.filter(
-    //             ad => 
-    //                 ad.title.toLowerCase().includes(this.state.search.toLowerCase()) ||
-    //                 ad.content.toLowerCase().includes(this.state.search.toLowerCase()) ||
-    //                 ad.id.toString().includes(this.state.search)
-    //         )
-    //         this.setState({ ads : adsFilter })
-    //         console.log(this.state.adsCopy)
-    //     } else {
-    //         this.setState({ ads : this.state.adsCopy })
-    //         console.log(this.state.adsCopy)
-    //     }
-    // }
+    handleSearch = (event) => {
+        const value = event.currentTarget.value;
+        this.setState({ search : value, currentPage : 1 });
+    }
 
     handlePageChanged = (page) => {
         this.setState({ currentPage : page })
@@ -71,18 +55,26 @@ class ManageAds extends Component {
     render() { 
         //Détermine les nombres d'annonces par page
         const itemsPerPage = 5;
+
+        const filteredAds = this.state.ads.filter(
+            ad =>
+                ad.title.toLowerCase().includes(this.state.search.toLowerCase()) ||
+                ad.content.toLowerCase().includes(this.state.search.toLowerCase()) ||
+                ad.user.username.toLowerCase().includes(this.state.search.toLowerCase()) ||
+                ad.id.toString().includes(this.state.search)
+            )
         
         const start = this.state.currentPage * itemsPerPage - itemsPerPage
-        const paginatedAds = this.state.ads.slice(start, start + itemsPerPage)
+        const paginatedAds = filteredAds.slice(start, start + itemsPerPage)
        
         if (authApi.isAuthenticated()) {
             return (
                <div className="container">
                    {this.state.loading && <ListLoader /> }
                    <h1>Liste des annonces</h1>
-                   {/* <div>
-                       <input type="text" placeholder="Rechercher" onChange={this.handleSearch} value={this.state.search}/>
-                   </div> */}
+                   <div>
+                       <input type="text" placeholder="Rechercher" className='input' onChange={this.handleSearch} value={this.state.search}/>
+                   </div>
                    <table>
                        <thead>
                            <tr>
@@ -97,6 +89,11 @@ class ManageAds extends Component {
                            </tr>
                        </thead>
                        <tbody>
+                            {paginatedAds.length === 0 && 
+                                <tr>
+                                    <td> Aucun résultat </td>
+                                </tr>
+                            }
                             { !this.state.loading && paginatedAds.map(ad => 
                                 <tr key={ad.id}>
                                     <td>{ad.id}</td>
@@ -118,7 +115,7 @@ class ManageAds extends Component {
                             )}
                        </tbody>
                    </table>
-                   <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={this.state.ads.length} onPageChanged={this.handlePageChanged}/>
+                   <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={filteredAds.length} onPageChanged={this.handlePageChanged}/>
                </div>
             )
         }

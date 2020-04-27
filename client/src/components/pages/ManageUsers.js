@@ -10,7 +10,8 @@ class ManageUsers extends Component {
     state = { 
         users : [],
         loading : true,
-        currentPage : 1
+        currentPage : 1,
+        search : ""
     }
 
     componentDidMount() {
@@ -54,6 +55,11 @@ class ManageUsers extends Component {
         }
     }
 
+    handleSearch = (event) => {
+        const value = event.currentTarget.value;
+        this.setState({ search : value, currentPage : 1 });
+    }
+
     handlePageChanged = (page) => {
         this.setState({ currentPage : page })
     }
@@ -62,15 +68,28 @@ class ManageUsers extends Component {
 
         //Détermine les nombres d'annonces par page
         const itemsPerPage = 5;
+
+        const filteredUsers = this.state.users.filter(
+            user =>
+                user.email.toLowerCase().includes(this.state.search.toLowerCase()) ||
+                user.username.toLowerCase().includes(this.state.search.toLowerCase()) ||
+                user.firstname.toLowerCase().includes(this.state.search.toLowerCase()) ||
+                user.lastname.toLowerCase().includes(this.state.search.toLowerCase()) ||
+                user.postcode.toLowerCase().includes(this.state.search.toLowerCase()) ||
+                user.id.toString().includes(this.state.search)
+            )
         
         const start = this.state.currentPage * itemsPerPage - itemsPerPage
-        const paginatedUsers = this.state.users.slice(start, start + itemsPerPage)
+        const paginatedUsers = filteredUsers.slice(start, start + itemsPerPage)
 
         if (authApi.isAuthenticated()) {
             return (
                <div className="container">
                    {this.state.loading && <ListLoader /> }
                    <h2>Liste des utilisateurs</h2>
+                   <div>
+                       <input type="text" placeholder="Rechercher" className='input' onChange={this.handleSearch} value={this.state.search}/>
+                   </div>
                    <table>
                        <thead>
                            <tr>
@@ -86,8 +105,11 @@ class ManageUsers extends Component {
                            </tr>
                        </thead>
                        <tbody>
-                            
-                            {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
+                            {paginatedUsers.length === 0 && 
+                            <tr>
+                                <td> Aucun résultat </td>
+                            </tr>
+                            }
                             { !this.state.loading && paginatedUsers.map(user => 
                                 <tr key={user.id}>
                                     <td>{user.id}</td>
@@ -108,9 +130,10 @@ class ManageUsers extends Component {
                                     </td>
                                 </tr>
                             )}
+
                        </tbody>
                    </table>
-                   <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={this.state.users.length} onPageChanged={this.handlePageChanged}/>
+                   <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={filteredUsers.length} onPageChanged={this.handlePageChanged}/>
                </div>
             )
         }
