@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
 import { toast } from 'react-toastify';
+import AlertMessage from '../AlertMessage';
 
 class AddRecipePage extends Component {
 
@@ -16,7 +17,8 @@ class AddRecipePage extends Component {
         suggestions: [], //Autosuggest. Les suggestions qui seront affichées 
         ingredientsSelect: [], //Ingrédients sélectionnés qui composent la recette
         quantity: '', //Quantité renseignée dans l'input quantité d'un ingrédient
-        newSteps: [""] //Liste des étapes
+        newSteps: [""], //Liste des étapes
+        errorFront: "" //Eventuelles erreurs
     }
 
     //Récupère les données de Ingrédients issues de l'API. 
@@ -50,14 +52,25 @@ class AddRecipePage extends Component {
         event.preventDefault();
         const suggest = this.state.value;
         const quantity = this.state.quantity;
-        this.setState(prevState => ({
-            quantities: [...prevState.quantities, quantity],
-            ingredientsSelect: [...prevState.ingredientsSelect, suggest]
-        }));
-        this.setState({
-            value : '',
-            quantity : ''
-        });
+        //Verif que les champs ne soient pas vides
+        if (suggest && quantity !== "") {
+            //Verif que l'ingrédient choisi n'a pas encore été selectionné
+            if (!this.state.ingredientsSelect.includes(suggest)) {
+                this.setState(prevState => ({
+                    quantities: [...prevState.quantities, quantity],
+                    ingredientsSelect: [...prevState.ingredientsSelect, suggest]
+                }));
+                this.setState({
+                    value : '',
+                    quantity : '',
+                    errorFront: ''
+                });
+            }else {
+                this.setState({errorFront : "Vous avez déjà renseigné cet ingrédient"})
+            }
+        }else{
+            this.setState({errorFront : "Vous n'avez pas entré d'ingrédient, sa quantité ou ni l'un ni l'autre"})
+        }
     };
 
     //STEPS
@@ -160,24 +173,28 @@ class AddRecipePage extends Component {
             steps: this.state.newSteps,
             type: this.state.type
         };
-        try { await axios.post( 
-            'http://localhost:8000/api/recipes',
-            recipe,
-            config
-            );
-            this.setState({
-                title: '',
-                preptime: '',
-                servings: '',
-                ingredientsSelect: [],
-                quantities: [],
-                newSteps: [],
-                type: ''
-            });
-            toast.info("Votre rectte a été créée avec succès 👌")
-            this.props.history.push('/dashboard')
-        }catch(error){
-            console.log(error);
+        if (recipe.quantity && recipe.steps !== "") {
+            try { await axios.post( 
+                'http://localhost:8000/api/recipes',
+                recipe,
+                config
+                );
+                this.setState({
+                    title: '',
+                    preptime: '',
+                    servings: '',
+                    ingredientsSelect: [],
+                    quantities: [],
+                    newSteps: [],
+                    type: ''
+                });
+                toast.info("Votre recette a été créée avec succès 👌")
+                this.props.history.push('/dashboard')
+            }catch(error){
+                console.log(error);
+            }
+        }else{
+            
         }
     }
 
@@ -246,6 +263,7 @@ class AddRecipePage extends Component {
                     </div>
                     
                     <label className="label" htmlFor="ingredients">Ingrédients</label>
+                    {this.state.errorFront ? <AlertMessage message = {this.state.errorFront} />: "" }
                     { 
                         this.state.ingredientsSelect.length > 0 ?
                         <table>
