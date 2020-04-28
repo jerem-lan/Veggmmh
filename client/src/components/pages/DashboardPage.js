@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import featureBlocksData from '../../data/featureBlocksData'
-import ProfilCartouche from '../ProfilCartouche'
-import FeatureBlock from '../FeatureBlock'
+import React, { Component } from 'react';
+import featureBlocksData from '../../data/featureBlocksData';
+import ProfilCartouche from '../ProfilCartouche';
+import FeatureBlock from '../FeatureBlock';
 import authApi from '../../services/authApi';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
@@ -98,7 +98,10 @@ class DashboardPage extends Component {
     render() {
         const username = this.state.firstname + " " + this.state.lastname
         let loading = this.state.loading 
-        return (   
+        return (
+            //     {!loading && !authApi.isAuthenticated() && <> 
+            //         <BreadCrumbs/>
+            //     </>}
             <div className="container container--dashboard"> 
 
                 {loading && <DashBoardLoader />}      
@@ -132,7 +135,7 @@ class DashboardPage extends Component {
                         </div>
                     </div> </>}
 
-               {!loading && !authApi.isAuthenticated() && <>
+            {!loading && !authApi.isAuthenticated() && <>
                     <ProfilCartouche isConnected={false} username="jeune pousse !"/>
                     <div className="profilNav">
                         <div className="featureBlocks">

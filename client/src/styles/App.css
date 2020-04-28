@@ -172,20 +172,43 @@ header {
   text-align: center;
   font-family: 'Quicksand', sans-serif;
   font-size: 1em;
-  font-weight: 500;
+  font-weight: 600;
   border-radius: 50px;
   align-self: flex-end;  
 }
 .btn:hover {
   transform: scale(1.05);
 }
-
+/* ----------------------------
+Bread Crumbs (bouton retour)
+---------------------------- */
+.container--breadCrumbs {
+  background-color: #AADAC9;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.breadCrumbs {
+  display: flex;
+  width: 1000px;
+  align-items: center;
+  padding: 0 15px;
+}
+.breadCrumbs > .breadCrumbs--title, 
+.breadCrumbs > svg {
+  cursor: pointer;
+} 
+.breadCrumbs--title {
+  color: #FCFBF7;
+  font-size: 1.5em;
+  font-weight: 600;
+}
 /* ----------------------------
 Index Page
 ---------------------------- */
 .medium--text {
   font-size: 1.28em;
-  font-weight: 500; 
+  font-weight: 600; 
 }
 .regular--text {
   font-size: 1em;
@@ -231,7 +254,7 @@ Login Page
   border-bottom: 1px solid #444;
   font-family: 'Quicksand', sans-serif;
   font-size: 1em;
-  font-weight: 500;
+  font-weight: 600;
 }
 .inputBottomMargin {
   margin-bottom: 35px; 
@@ -395,6 +418,7 @@ Dashboard Page
 }
 .featureBlock span {
   max-width: 100px;
+  font-weight: 600;
 }
 .featureBlock--mySpace {
   width: 100%;
@@ -576,9 +600,13 @@ Add Recipe Page
   text-align: center;
   font-family: 'Quicksand', sans-serif;
   font-size: 1em;
-  font-weight: 500;
+  font-weight: 600;
   border-radius: 10px;
   width: 520px;
+}
+.steps > .btn--delete {
+  /* visibility: hidden; */
+  background-color: red;
 }
 .btn--radio {
   display: flex;
@@ -635,7 +663,7 @@ Favorites Pages
 }
 .CardTitle {
   max-width: 220px;
-  font-weight : 500;
+  font-weight : 600;
 }
 
 /* ----------------------------
@@ -786,6 +814,36 @@ ul.pagination li.inlineDisplay button.paginationButton {
 }
 .activePage > .paginationButton:hover {
   transform: scale(1.10);
+}
+
+/* ----------------------------
+	Tableaux
+---------------------------- */
+
+.tableAdmin {
+  border-collapse: collapse;
+  width: 100%;
+
+}
+
+.tableAdmin td, .tableAdmin th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.tableAdmin tr:nth-child(even){background-color: #f2f2f2;}
+
+.tableAdmin tr:hover {background-color: #ddd;}
+
+.tableAdmin th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #56B693;
+  color: white;
+}
+.alignTabButton {
+  text-align: center;
 }
 
 /* ----------------------------
