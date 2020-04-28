@@ -80,11 +80,21 @@ function isAdmin() {
     
 }
 
+//TODO : A déplacer dans un autre fichier. Permet du supprimer les espaces dans les inputs
+function res(str)
+{
+    str = str.replace(/[\s]{2,}/g," "); // Enlève les espaces doubles, triples, etc.
+    str = str.replace(/^[\s]/, ""); // Enlève les espaces au début
+    str = str.replace(/[\s]$/,""); // Enlève les espaces à la fin
+    return str;    
+}
+
 
 export default {
     authenticate,
     setup,
     logout,
     isAuthenticated,
-    isAdmin
+    isAdmin,
+    res
 };

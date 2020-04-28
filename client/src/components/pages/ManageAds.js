@@ -116,7 +116,6 @@ class ManageAds extends Component {
                                         <NavLink to={{
                                             pathname: `/annonce/${ad.id}`,
                                             props: {
-                                                id : `${ad.id}`,
                                                 title: `${ad.title}`,
                                                 postcode: `${ad.postcode}`,
                                                 creationDate: `${ad.creationDate}`,

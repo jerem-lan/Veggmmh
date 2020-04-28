@@ -55,7 +55,6 @@ const Root = () => {
     const isAdmin = authApi.isAdmin();
     const HeaderWithRouter = withRouter(Header);
     const BackWithRouter = withRouter(BreadCrumbs);
-    console.log(isAdmin)
     // const FooterWithRouter = withRouter(Footer);
 
     return (
