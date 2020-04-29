@@ -26,6 +26,8 @@ import ManageAds from './components/pages/ManageAds';
 import ManageIngredients from './components/pages/ManageIngredients';
 import ManageUsers from './components/pages/ManageUsers';
 import NotFound from './components/pages/NotFound';
+import RecipePage from './components/pages/RecipePage';
+import ListRecipePage from './components/pages/ListRecipePage';
 // import Footer from './components/Footer';
 // ROUTES
 import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom'
@@ -33,6 +35,7 @@ import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'rea
 import * as serviceWorker from './serviceWorker';
 import { ToastContainer, toast } from 'react-toastify';
 import authApi from './services/authApi';
+
 
 AuthApi.setup()
 
@@ -112,6 +115,15 @@ const Root = () => {
                         path="/ajouter-recette"
                         isAuthenticated={isConnected} 
                         component={AddRecipePage} 
+                    />
+                    <PrivateRoute 
+                        path="/recette/:id"
+                        isAuthenticated={isConnected} 
+                        component={RecipePage} 
+                    />
+                    <Route 
+                        path="/trouver-recette"
+                        component={ListRecipePage} 
                     />
                     <Route 
                         path='/modifier-annonce' 
