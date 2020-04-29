@@ -9,7 +9,8 @@ class ManageRecipes extends Component {
     state = { 
         recipes : [],
         loading : true,
-        currentPage : 1
+        currentPage : 1,
+        search : ""
     }
 
     componentDidMount() {
@@ -42,6 +43,11 @@ class ManageRecipes extends Component {
             });
     }
 
+    handleSearch = (event) => {
+        const value = event.currentTarget.value;
+        this.setState({ search : value, currentPage : 1 });
+    }
+
     handlePageChanged = (page) => {
         this.setState({ currentPage : page })
     }
@@ -50,16 +56,26 @@ class ManageRecipes extends Component {
 
         //Détermine les nombres d'annonces par page
         const itemsPerPage = 5;
+
+        const filteredRecipes = this.state.recipes.filter(
+            recipe =>
+                recipe.recipeTitle.toLowerCase().includes(this.state.search.toLowerCase()) ||
+                recipe.user.username.toLowerCase().includes(this.state.search.toLowerCase()) ||
+                recipe.id.toString().includes(this.state.search)
+            )
         
         const start = this.state.currentPage * itemsPerPage - itemsPerPage
-        const paginatedRecipes = this.state.recipes.slice(start, start + itemsPerPage)
+        const paginatedRecipes = filteredRecipes.slice(start, start + itemsPerPage)
 
         if (authApi.isAuthenticated()) {
             return (
                <div className="container">
                    {this.state.loading && <ListLoader /> }
                    <h2>Liste des recettes</h2>
-                   <table>
+                   <div>
+                       <input type="text" placeholder="Rechercher" className='input' onChange={this.handleSearch} value={this.state.search}/>
+                   </div>
+                   <table className="tableAdmin">
                        <thead>
                            <tr>
                                <th>ID.</th>
@@ -70,15 +86,18 @@ class ManageRecipes extends Component {
                            </tr>
                        </thead>
                        <tbody>
-                            
-                            {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
+                            {paginatedRecipes.length === 0 && 
+                                <tr>
+                                    <td> Aucun résultat </td>
+                                </tr>
+                            }
                             { !this.state.loading && paginatedRecipes.map(recipe => 
                                 <tr key={recipe.id}>
                                     <td>{recipe.id}</td>
                                     <td>{recipe.user.username}</td>
                                     <td>{recipe.creationDate}</td>
                                     <td>{recipe.recipeTitle}</td>
-                                    <td>
+                                    <td className="alignTabButton">
                                         <button className="btn" onClick={() => this.handleDelete(recipe.id)}>
                                             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M17.9933 6.49329L6.00034 18.5" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
@@ -90,7 +109,7 @@ class ManageRecipes extends Component {
                             )}
                        </tbody>
                    </table>
-                   <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={this.state.recipes.length} onPageChanged={this.handlePageChanged}/>
+                   <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={filteredRecipes.length} onPageChanged={this.handlePageChanged}/>
                </div>
             )
         }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import AlertMessage from '../AlertMessage';
 import { Link } from 'react-router-dom';
@@ -65,8 +65,10 @@ class RegistrationPage extends Component {
     }
 
     render() { 
+        const BackWithRouter = this.props.BackWithRouter
         return (
-            
+            <Fragment>
+                <BackWithRouter />
                 <div className="container container--registration">
                     <form className='form' onSubmit={this.handleSubmit}>
                         <input 
@@ -79,7 +81,7 @@ class RegistrationPage extends Component {
                             /*pattern="[A-Z][a-z]"*/
                             required 
                         />
-                         {this.state.error.lastname ? <AlertMessage message = {this.state.error.lastname}  /> : ""}
+                            {this.state.error.lastname ? <AlertMessage message = {this.state.error.lastname}  /> : ""}
                         <input 
                             name='firstname' 
                             value={this.state.firstname} 
@@ -139,7 +141,7 @@ class RegistrationPage extends Component {
                     </form>
                     <Link to="/login" className="psswrdForgotten">J'ai déjà un compte</Link>
                 </div>
-          
+            </Fragment>
         );
     }
 }
