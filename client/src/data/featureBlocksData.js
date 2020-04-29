@@ -25,7 +25,7 @@ const featureBlocksDataConnected = {
       isAnonym: false,
     },
     featureBlock5: {
-      title: 'Mes recettes favorites',
+      title: 'Mes favoris',
       icon: 'favorites.svg',
       route: '/mes-recettes-favorites',
       isAnonym: false,
@@ -33,7 +33,7 @@ const featureBlocksDataConnected = {
     featureBlock6: {
       title: 'Trouver une recette',
       icon: 'search-recipe.svg',
-      route: '/register',
+      route: '/trouver-recette',
       isAnonym: true,
     },
     featureBlock7: {

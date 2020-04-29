@@ -17,7 +17,7 @@ const MyRecipesPage = () => {
     const decoded = jwtDecode(token)
     const id = decoded.id
 
-    //Requête pour avoir les recettes qu'il a crées
+    //Requête pour avoir les recettes qu'il a crée
 		axios
       .get("http://localhost:8000/api/users/"+id+"/recipes/")
       .then(res => {
@@ -30,25 +30,23 @@ const MyRecipesPage = () => {
     //Fonction qui permet la suppression d'une recette, passée en props au composant inférieur : MyRecipes
     const handleDeleteRecipe = (id) => {
       const token = window.localStorage.getItem("authToken")
-      //on le met dans un header
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-    
       const OriginalRecipes = [...Recipes]
 
       setRecipes(Recipes.filter(recipe => recipe.id !== id))
 
       axios
-      .delete("http://localhost:8000/api/recipes/"+id, config)
-      .then(response => 
-          toast.info("👌 Votre recette a été supprimée avec succès")
-          )
-      .catch(error => {
-        setRecipes(OriginalRecipes);
-        console.log(error.response);
-        toast.error("😞 Oups, quelque chose s'est mal passé")
-      })
+        .delete("http://localhost:8000/api/recipes/"+id, config)
+        .then(response => 
+            toast.info("👌 Votre recette a été supprimée avec succès")
+            )
+        .catch(error => {
+          setRecipes(OriginalRecipes);
+          console.log(error.response);
+          toast.error("😞 Oups, quelque chose s'est mal passé")
+        })
     }
 
     return (

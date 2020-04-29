@@ -81,11 +81,11 @@ class ManageAds extends Component {
                        <thead>
                            <tr>
                                <th>ID.</th>
-                               <th>Crée par</th>
+                               <th>Annonce de</th>
                                <th>Code postal</th>
                                <th>Date de création</th>
                                <th>Date de modification</th>
-                               <th>Titre</th>
+                               <th>Titre de l'annonce</th>
                                <th /> 
                                <th />
                            </tr>

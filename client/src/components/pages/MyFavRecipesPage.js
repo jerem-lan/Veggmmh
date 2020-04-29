@@ -5,6 +5,7 @@ import MyFavRecipes from '../MyFavRecipes'
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import ListLoader from '../../loaders/ListLoader';
+import { toast } from 'react-toastify';
 
 
 const MyFavRecipesPages = () => {
@@ -27,12 +28,39 @@ const MyFavRecipesPages = () => {
           });
     }, [])
 
+    const handleDeleteFavRecipe = (id) => {
+      const token = window.localStorage.getItem("authToken")
+      //on le met dans un header
+      const config = {
+        headers: { Authorization: `Bearer ${token}` }
+      };
+      const decoded = jwtDecode(token)
+      const user = decoded.id
+      const OriginalRecipes = [...favRecipes]
+      const recipe = {
+        id: id
+      }
+      setFavRecipes(favRecipes.filter(recipe => recipe.id !== id))
+
+      axios
+      .put("http://localhost:8000/api/bookmarks/"+user+"/delete", recipe, config)
+      .then(response => 
+          toast.info("👌 Votre recette favorite a été supprimée avec succès")
+          )
+      .catch(error => {
+        setFavRecipes(OriginalRecipes);
+        console.log(error.response);
+        toast.error("😞 Oups, quelque chose s'est mal passé")
+      })
+    }
+
     return (
       <Fragment>
         {Loading && <ListLoader />}
-        {!Loading && <div className="container">
-          <MyFavRecipes favRecipes={favRecipes}/>
-        </div>}
+        {!Loading && 
+          <div className="container">
+            <MyFavRecipes favRecipes={favRecipes} handleDeleteFavRecipe={handleDeleteFavRecipe} />
+          </div>}
       </Fragment>
       );
 }

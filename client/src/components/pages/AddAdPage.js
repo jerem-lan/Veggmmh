@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import AlertMessage from '../AlertMessage';
@@ -61,51 +61,48 @@ class AddAdPage extends Component {
 
     render() {
         return (
-            <div className="container">
-                <form
-                    className='form'
-                    onSubmit= {this.handleSubmit}>
-                    <label>
-                        <h3>Titre de l'annonce</h3>
-
+            <Fragment>
+                <h2>Déposer une annonce</h2>
+                <div className="container">
+                    <form className='form' onSubmit= {this.handleSubmit}>
+                        <label className="label" htmlFor="title">Titre de mon annonce</label>
                         <input
+                            className='input'
                             name='title'
                             value={this.state.title}
                             onChange={this.handleChange}
                             type="text"
-                            required
-                        >
-                        </input>
+                            placeholder="ex : Botte de radis du potager"
+                            required />
                         {this.state.errors.title ? <AlertMessage message = { this.state.errors.title }  /> : ""}
-                        <h3>Description de l'annonce</h3>
 
+                        <label className="label" htmlFor="description">Description de mon annonce</label>
                         <textarea
+                            className="textarea textarea--adDescription"
                             name='content'
                             value={this.state.content}
                             onChange={this.handleChange}
                             type="text"
-                            rows="10" 
-                            cols="40"
+                            placeholder="Ex: Propose quelques bottes de radis provenant de mon potager, idéalement contre quelques pommes ou de la rhubarbe..."
                             required
                         />
                         {this.state.errors.content ? <AlertMessage message = { this.state.errors.content }  /> : ""}
-                        <h3>Localisation</h3>
 
+                        <label className="label" htmlFor="localisation">Localisation</label>
                         <input
+                            className='input'
                             name='postcode'
                             value={this.state.postcode}
                             onChange={this.handleChange}
                             type="text"
-                            required
-                        >
-                        </input>
+                            placeholder="ex : 59370"
+                            required />
                         {this.state.errors.postcode ? <AlertMessage message = { this.state.errors.postcode }  /> : ""}
-                    </label>
-                    <button className="btn" type='submit' >
-                        Envoyer!
-                    </button>
-                </form>
-            </div>
+
+                        <button className="btn btn--validate" type='submit' >Envoyer mon annonce</button>
+                    </form>
+                </div>
+            </Fragment>
         );
     }
 }
