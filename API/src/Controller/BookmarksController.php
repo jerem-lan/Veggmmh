@@ -14,7 +14,7 @@
         private $manager;
         private $repository;
 
-        public function __construct(EntityManagerInterface $manager, RecipeRepository $repository )
+        public function __construct(EntityManagerInterface $manager, RecipeRepository $repository)
         {
             $this->manager = $manager;
             $this->repository= $repository;

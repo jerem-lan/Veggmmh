@@ -57,4 +57,5 @@ security:
          - { path : ^/api/ads, roles : IS_AUTHENTICATED_FULLY, methods : [GET, POST, DELETE, PUT]}
          - { path : ^/api/ingredients, roles : IS_AUTHENTICATED_FULLY, methods : [GET]}
          - { path : ^/api/recipes, roles : IS_AUTHENTICATED_FULLY, methods : [GET, POST, DELETE, PUT]}
+         - { path : ^/api/bookmarks, roles : IS_AUTHENTICATED_FULLY, methods : [PUT]}
 

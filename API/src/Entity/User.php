@@ -24,11 +24,19 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *          "PUT", 
  *          "DELETE" = {"path" = "/admin/users/{id}"},
  *          "addBookmarks" = { 
- *                          "method"="POST",
- *                          "path"="{id}/bookmarks/", 
+ *                          "method"="PUT",
+ *                          "path"="/bookmarks/{id}/add", 
  *                          "controller"="App\Controller\BookmarksController",
  *                          "openapi_context"={
- *                                  "summary"="Add a recipe bookmarks"
+ *                                  "summary"="Add a recipe as a Bookmark for an User"
+ *                              }
+ *                            },
+ *          "removeBookmark" = { 
+ *                          "method"="PUT",
+ *                          "path"="/bookmarks/{id}/delete", 
+ *                          "controller"="App\Controller\DeleteBookmarkController",
+ *                          "openapi_context"={
+ *                                  "summary"="Modify the list of bookmarks of an User"
  *                              }
  *                            }
  *      },
