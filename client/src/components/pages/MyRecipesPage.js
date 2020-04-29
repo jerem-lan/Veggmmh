@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-
 import MyRecipes from '../MyRecipes'
-
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import ListLoader from '../../loaders/ListLoader';
@@ -54,13 +52,12 @@ const MyRecipesPage = () => {
     }
 
     return (
-        
-        <>
-          {Loading && <ListLoader />} 
-          {!Loading && <div className="container">
-            <MyRecipes Recipes={Recipes} handleDeleteRecipe={handleDeleteRecipe}/>
-          </div>}
-        </>
+      <>
+        {Loading && <ListLoader />} 
+        {!Loading && <div className="container">
+          <MyRecipes Recipes={Recipes} handleDeleteRecipe={handleDeleteRecipe}/>
+        </div>}
+      </>
     );
 }
 

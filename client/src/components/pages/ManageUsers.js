@@ -134,6 +134,7 @@ class ManageUsers extends Component {
                                         <NavLink to={{
                                             pathname: `/utilisateur/${user.id}`,
                                             props: {
+                                                id: `${user.id}`,
                                                 email: `${user.email}`,
                                                 username: `${user.username}`,
                                                 firstname: `${user.firstname}`,

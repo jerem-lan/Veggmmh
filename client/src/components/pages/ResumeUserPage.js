@@ -1,51 +1,128 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
+import ListLoader from '../../loaders/ListLoader';
+import { NavLink } from 'react-router-dom';
 
-const ResumeUserPage = (props) => {
-
-    const [Email, setEmail] = useState([]) // Mail de l'utilisateur
-    const [Username, setUsername] = useState([]) // Username de l'utilisateur
-    const [Firstname, setFirstname] = useState([]) // Prénom de l'utilisateur
-    const [Lastname, setLastname] = useState([]) // Nom de famille de l'utilisateur
-    const [Postcode, setPostcode] = useState([]) // Code postal de l'utilisateur
-    const [RegistrationDate, setRegistrationDate] = useState([]) // Date d'inscription de l'utilisateur
-
-    useEffect(() => { 
+class ResumeUserPage extends Component {
+    state = {
+        id : "",
+        email : "",
+        username : "",
+        firstname : "",
+        lastname : "",
+        postcode : "",
+        registrationDate : "",
+        ads : [],
+        recipes : [],
+        loading : true
+    }
+    
+    UNSAFE_componentWillMount() { 
         try {
-            window.localStorage.setItem("userEmail", props.location.props.email);
-            window.localStorage.setItem("userUsername", props.location.props.username);
-            window.localStorage.setItem("userFirstname", props.location.props.firstname);
-            window.localStorage.setItem("userLastname", props.location.props.lastname);
-            window.localStorage.setItem("userPostcode", props.location.props.postcode);
-            window.localStorage.setItem("userRegistrationDate", props.location.props.registrationDate);
-            setEmail(props.location.props.email)
-            setUsername(props.location.props.username);
-            setFirstname(props.location.props.firstname);
-            setLastname(props.location.props.lastname);
-            setPostcode(props.location.props.postcode);
-            setRegistrationDate(props.location.props.registrationDate);
+            this.setState({id : this.props.location.props.id})
+            this.setState({email : this.props.location.props.email})
+            this.setState({username : this.props.location.props.username});
+            this.setState({firstname : this.props.location.props.firstname});
+            this.setState({lastname : this.props.location.props.lastname});
+            this.setState({postcode : this.props.location.props.postcode});
+            this.setState({registrationDate : this.props.location.props.registrationDate});
+            window.localStorage.setItem("userId", this.props.location.props.id);
+            window.localStorage.setItem("userEmail", this.props.location.props.email);
+            window.localStorage.setItem("userUsername", this.props.location.props.username);
+            window.localStorage.setItem("userFirstname", this.props.location.props.firstname);
+            window.localStorage.setItem("userLastname", this.props.location.props.lastname);
+            window.localStorage.setItem("userPostcode", this.props.location.props.postcode);
+            window.localStorage.setItem("userRegistrationDate", this.props.location.props.registrationDate);
         } 
         catch(error) {
-            setEmail(window.localStorage.getItem("userEmail"));
-            setUsername(window.localStorage.getItem("userUsername"));
-            setFirstname(window.localStorage.getItem("userFirstname"));
-            setLastname(window.localStorage.getItem("userLastname"));
-            setPostcode(window.localStorage.getItem("userPostcode"));
-            setRegistrationDate(window.localStorage.getItem("userRegistrationDate"));
-        }
-    }, [props])
-    
-    return (
-        <div className="container">
-            <div>
-                <h2>{Username}</h2>
-                <p>Inscrit le {RegistrationDate}</p>
-                <p> Nom : {Lastname} </p>
-                <p> Prénom : {Firstname} </p>
-                <p> Email : {Email} </p>
-                <p> Code Postal : {Postcode} </p>
-            </div>
-        </div> 
-    );
+            this.setState({id : window.localStorage.getItem("userId")})
+            this.setState({email : window.localStorage.getItem("userEmail")});
+            this.setState({username : window.localStorage.getItem("userUsername")});
+            this.setState({firstname : window.localStorage.getItem("userFirstname")});
+            this.setState({lastname : window.localStorage.getItem("userLastname")});
+            this.setState({postcode : window.localStorage.getItem("userPostcode")});
+            this.setState({registrationDate : window.localStorage.getItem("userRegistrationDate")});
+        }   
+        
+        const id = window.localStorage.getItem("userId")
+        console.log(id)
+        const token = window.localStorage.getItem("authToken")
+        //on le met dans un header
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        axios
+            .get("http://localhost:8000/api/users/"+id+"/ads", config)
+            .then(res => {
+            const ads = res.data['hydra:member'];
+            this.setState({loading : false, ads : ads})
+        });
+        //Requête pour avoir les recettes qu'il a crée
+        axios
+            .get("http://localhost:8000/api/users/"+id+"/recipes", config)
+            .then(res => {
+            const recipes = res.data['hydra:member'];
+            this.setState({loading : false, recipes : recipes})
+        });
+    }
+
+    render() {
+        console.log(this.state.ads)
+        return (
+            <div className="container">
+                {this.state.loading && <ListLoader />}
+                {!this.state.loading &&
+                    <div>
+                        <h2>{this.state.username}</h2>
+                        <p>Inscrit le {this.state.registrationDate}</p>
+                        <p> Nom : {this.state.lastname} </p>
+                        <p> Prénom : {this.state.firstname} </p>
+                        <p> Email : {this.state.email} </p>
+                        <p> Code Postal : {this.state.postcode} </p>
+
+                        <h2>Liste des annonces</h2>
+                        { this.state.ads.map(ad =>
+                            <NavLink key={ad.id} to={{
+                                pathname: `/annonce/${ad.id}`,
+                                 props: {
+                                    title: `${ad.title}`,
+                                    postcode: `${ad.postcode}`,
+                                    creationDate: `${ad.creationDate}`,
+                                    modificationDate: `${ad.modificationDate}`,
+                                    content: `${ad.content}`,
+                                    username: `${this.state.username}`
+                                }
+                            }}>
+                                <div 
+                                className="Card"
+                                style={ { backgroundColor: '#e3fcf3'} } 
+                                >
+                                    <div className="CardTitle"> 
+                                        {ad.title}
+                                    </div>
+                                </div>
+                            </NavLink>			
+                        )}
+                        <h2>Liste des recettes</h2>
+                        { this.state.recipes.map(recipe =>
+                            <NavLink key={recipe.id} to={{
+                                //Navlink vers la page afficher recette individuelle
+                            }}>
+                                <div 
+                                className="Card"
+                                style={ { backgroundColor: '#e3fcf3'} } 
+                                >
+                                    <div className="CardTitle"> 
+                                        {recipe.recipeTitle}
+                                    </div>
+                                </div>
+                            </NavLink>
+                        )}
+                    </div>
+                }
+            </div> 
+        );
+    }
 };
 
 export default ResumeUserPage;

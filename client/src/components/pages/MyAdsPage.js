@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 
 import MyAds from '../MyAds'
-
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import ListLoader from '../../loaders/ListLoader';
@@ -12,7 +11,6 @@ const MyAdsPage = () => {
   // Un state pour chaque ressource avec la fonction qui permet de modifier le state
   const [Ads, setAds] = useState([]);
   const [Loading, setLoading] = useState(true)
-  // const [users, setUsers] = useState([]);
 
 	useEffect(() => {
     // Récupération du token et de l'id de l'utilisateur actuellement connecté
@@ -52,17 +50,19 @@ const MyAdsPage = () => {
       console.log(error.response);
       toast.error("😞 Oups, quelque chose s'est mal passé")
 		})
-	}
+  }
 
     return (
         <Fragment>
           {Loading && <ListLoader />} 
-          {!Loading && <div className="container">
-            <MyAds Ads={Ads} handleDeleteAds={handleDeleteAds} />
-          </div>}
+          {!Loading && 
+            <div className="container">
+              <MyAds Ads={Ads} handleDeleteAds={handleDeleteAds} />
+            </div>
+          }
         </Fragment>
     );
-  }
+}
 
 
 export default MyAdsPage;

@@ -1,7 +1,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const DisplayMyAds = ({ id, title, content, postcode, handleDeleteAds }) => {	
+
+const DisplayMyAds = ({ id, title, content, postcode, handleDeleteAds, creationDate, modificationDate, username }) => {	
 
 	return (
 		<div 
@@ -13,6 +14,25 @@ const DisplayMyAds = ({ id, title, content, postcode, handleDeleteAds }) => {
 				{title}
 			</div>
 			<div className="Tools">
+			<NavLink to={{
+					pathname: `/annonce/${id}`,
+					props: {
+					title : `${title}`,
+					postcode :  `${postcode}`,
+					creationDate :  `${creationDate}`,
+					content :  `${content}`,
+					username :  `${username}`,
+					modificationDate : `${modificationDate}`,
+                }
+            }}>
+                <button className="btn">
+                    <svg viewBox="0 0 31 31" width="31" height="31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="none" d="M.5 1h30v30H.5z"/><path d="M26.8 16s-5 7-11.3 7c-6.3 0-11.3-7-11.3-7s5-7 11.3-7c6.2 0 11.3 7 11.3 7z" stroke="#fff" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M15.5 20.6a4.6 4.6 0 100-9.2 4.6 4.6 0 000 9.2z" stroke="#fff" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M15.5 18a2 2 0 100-4 2 2 0 000 4z" fill="#fff"/>
+                    </svg>
+                </button>
+            </NavLink>
 			<NavLink to={{
                 pathname: `/modifier-annonce`,
                 props: {
