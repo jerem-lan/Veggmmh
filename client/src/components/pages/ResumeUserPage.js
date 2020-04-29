@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 const ResumeUserPage = (props) => {
 
-    const [Id, setId] = useState([]) // Id de l'utilisateur
     const [Email, setEmail] = useState([]) // Mail de l'utilisateur
     const [Username, setUsername] = useState([]) // Username de l'utilisateur
     const [Firstname, setFirstname] = useState([]) // Prénom de l'utilisateur
@@ -12,14 +11,12 @@ const ResumeUserPage = (props) => {
 
     useEffect(() => { 
         try {
-            window.localStorage.setItem("userId", props.location.props.id);
             window.localStorage.setItem("userEmail", props.location.props.email);
             window.localStorage.setItem("userUsername", props.location.props.username);
             window.localStorage.setItem("userFirstname", props.location.props.firstname);
             window.localStorage.setItem("userLastname", props.location.props.lastname);
             window.localStorage.setItem("userPostcode", props.location.props.postcode);
             window.localStorage.setItem("userRegistrationDate", props.location.props.registrationDate);
-            setId(props.location.props.id)
             setEmail(props.location.props.email)
             setUsername(props.location.props.username);
             setFirstname(props.location.props.firstname);
@@ -28,7 +25,6 @@ const ResumeUserPage = (props) => {
             setRegistrationDate(props.location.props.registrationDate);
         } 
         catch(error) {
-            setId(window.localStorage.getItem("userId"));
             setEmail(window.localStorage.getItem("userEmail"));
             setUsername(window.localStorage.getItem("userUsername"));
             setFirstname(window.localStorage.getItem("userFirstname"));
