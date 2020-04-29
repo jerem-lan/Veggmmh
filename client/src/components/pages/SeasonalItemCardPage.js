@@ -21,6 +21,10 @@ const SeasonalItemCardPage = (props) => {
             setIcon(window.localStorage.getItem("ingredientIcon"))
         }
     }, [props])
+    const months = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+    if(Season.includes(months[new Date().getMonth()])) {
+        document.querySelector(".fruitVegName h2").classList.add("disponible")
+    }
 
     // Affiche l'icone propre au fruit/légume sélectionné. 
     const requireIcon = Icon => {
@@ -46,6 +50,7 @@ const SeasonalItemCardPage = (props) => {
         }
     })
 
+    // Back Button Component
     const BackWithRouter = props.BackWithRouter
 
     return (
@@ -105,6 +110,10 @@ const SeasonalItemCardPage = (props) => {
                         <div className="name">déc</div>
                         <div className="number">12</div>
                     </div>
+                </div>
+                <div className="legend">
+                    <p className="available">Disponible</p>
+                    <p className="unavailable">Indisponible</p>
                 </div>
                 <div>
                     <h2>Conservation</h2>

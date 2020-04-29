@@ -28,6 +28,8 @@ class AddRecipePage extends Component {
                 this.setState({ ingredients });
             })
             .catch(error => console.log(error.response))
+
+            document.querySelector(".removeStep").style.display="none";
     }
 
     //Récupere et set la valeur de l'élément ciblé en fonction de son attribut name.
@@ -191,158 +193,161 @@ class AddRecipePage extends Component {
         };
 
         return (
-            <div className="container">
-                <form className='form' onSubmit= {this.handleSubmit}>
-                    <div>
-                        <label className="label" htmlFor="title">Titre de ma recette</label>
-                        <input
-                            className='input'
-                            name='title'
-                            value={this.state.title}
-                            onChange={this.handleChange}
-                            type="text"
-                            placeholder="ex : Lasagnes provençales"
-                            required />
-                    </div>
-
-                    <div className="input--group">
+            <Fragment>
+                <h2 className="pageTitle">Publier une recette</h2>
+                <div className="container">
+                    <form className='form' onSubmit= {this.handleSubmit}>
                         <div>
-                            <label className="label" htmlFor="preptime">Temps de préparation</label>
-                            <div className="input--time">
-                                <input 
-                                    className="input input--number"
-                                    name="preptime"
-                                    value={this.state.preptime}
-                                    onChange={this.handleChange}
-                                    type="number" 
-                                    placeholder="120"
-                                    required />
-                                <span>min</span>
-                            </div>
-                        </div>
-                        <div>
-                            <label className="label" htmlFor="servings">Nombre de portions</label>
-                            <div className="input--number">
-                                <button
-                                    className="btn--inputNumber btn--minus" 
-                                    name="minus" 
-                                    onClick={this.handleInputNumber}>
-                                    -
-                                </button>
-                                <input
-                                    id="inputServings"
-                                    name="servings" 
-                                    placeholder="0"
-                                    type="number"
-                                    min="1"/>
-                                <button 
-                                    className="btn--inputNumber btn--plus"
-                                    name="plus" 
-                                    onClick={this.handleInputNumber}>
-                                    +
-                                </button>
-                            </div>
-                        </div> 
-                    </div>
-                    
-                    <label className="label" htmlFor="ingredients">Ingrédients</label>
-                    { 
-                        this.state.ingredientsSelect.length > 0 ?
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        {
-                                            this.state.ingredientsSelect.map((item, index) =>
-                                                <div id={index} key={index} className="ingredientBlock">
-                                                    <img src={this.requireIcon(item)} alt={item}/>
-                                                    <p>{item}</p>
-                                                </div>
-                                            )
-                                        }
-                                    </td>
-                                    <td>
-                                        {
-                                            this.state.quantities.map((qty, index) =>
-                                                <div id={index} key={index} className="ingredientBlock ingredientBlock--quantity">
-                                                    <p>{qty}</p>
-                                                    <svg className="btn--delete" onClick={this.removeIngredient} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M18 6L6 18M6 6l12 12" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
-                                                    </svg>
-                                                </div>
-                                            )
-                                        }
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>: <Fragment/> 
-                    }
-
-                    <div className="input--group">
-                        <Autosuggest
-                            suggestions={suggestions}
-                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                            getSuggestionValue={this.getSuggestionValue}
-                            renderSuggestion={this.renderSuggestion}
-                            inputProps={inputProps}
-                            onSuggestionSelected={this.onSuggestionSelected}/>
-                        <input
-                            className='input'
-                            name='quantity'
-                            value={this.state.quantity}
-                            onChange={this.handleChange}
-                            type="text"
-                            placeholder="ex : 100gr"/>
-                        <button className="btn btn--add" onClick={this.handleIngredients}>+</button>
-                    </div>
-                        
-                    <label className="label" htmlFor="steps">Etapes</label> 
-                    {
-                        this.state.newSteps.map((newStep, idx)=> 
-                            <div className="steps">
-                                <textarea
-                                className="textarea--steps"
-                                name='steps'
-                                value={newStep}
-                                onChange={this.handleChangeSteps(idx)}
+                            <label className="label" htmlFor="title">Titre de ma recette</label>
+                            <input
+                                className='input'
+                                name='title'
+                                value={this.state.title}
+                                onChange={this.handleChange}
                                 type="text"
-                                placeholder="Découper les oignons et les faire revenir jusqu’à ce qu’ils soient fondants..."
+                                placeholder="ex : Lasagnes provençales"
                                 required />
-                                <svg className="btn--delete" onClick={this.handleRemoveStep(idx)} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M18 6L6 18M6 6l12 12" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
-                                </svg>
-                                {/* <button className="btn btn--add" onClick={this.handleRemoveStep(idx)}>-</button> */}
-                            </div>
-                        )
-                    }
-                    <button className="btn--addStep" onClick={this.handleAddStep}>+ ajouter une étape</button>
+                        </div>
 
+                        <div className="input--group">
+                            <div>
+                                <label className="label" htmlFor="preptime">Temps de préparation</label>
+                                <div className="input--time">
+                                    <input 
+                                        className="input input--number"
+                                        name="preptime"
+                                        value={this.state.preptime}
+                                        onChange={this.handleChange}
+                                        type="number" 
+                                        placeholder="120"
+                                        required />
+                                    <span>min</span>
+                                </div>
+                            </div>
+                            <div>
+                                <label className="label" htmlFor="servings">Nombre de portions</label>
+                                <div className="input--number">
+                                    <button
+                                        className="btn--inputNumber btn--minus" 
+                                        name="minus" 
+                                        onClick={this.handleInputNumber}>
+                                        -
+                                    </button>
+                                    <input
+                                        id="inputServings"
+                                        name="servings" 
+                                        placeholder="0"
+                                        type="number"
+                                        min="1"/>
+                                    <button 
+                                        className="btn--inputNumber btn--plus"
+                                        name="plus" 
+                                        onClick={this.handleInputNumber}>
+                                        +
+                                    </button>
+                                </div>
+                            </div> 
+                        </div>
                         
-                    <div>
-                        <label className="label" htmlFor="type">Tag</label>
-                        <div className="btn--radio">
-                            <div>
-                                <input type="radio" id="apero" name="type" value="Apero" onChange={this.handleChange}/>
-                                <label htmlFor="apero">Apéro</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="entree" name="type" value="Entree" onChange={this.handleChange}/>
-                                <label htmlFor="entree">Entrée</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="plat" name="type" value="Plat" onChange={this.handleChange}/>
-                                <label htmlFor="plat">Plat</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="dessert" name="type" value="Dessert" onChange={this.handleChange}/>
-                                <label htmlFor="dessert">Dessert</label>
+                        <label className="label" htmlFor="ingredients">Ingrédients</label>
+                        { 
+                            this.state.ingredientsSelect.length > 0 ?
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            {
+                                                this.state.ingredientsSelect.map((item, index) =>
+                                                    <div id={index} key={index} className="ingredientBlock">
+                                                        <img src={this.requireIcon(item)} alt={item}/>
+                                                        <p>{item}</p>
+                                                    </div>
+                                                )
+                                            }
+                                        </td>
+                                        <td>
+                                            {
+                                                this.state.quantities.map((qty, index) =>
+                                                    <div id={index} key={index} className="ingredientBlock ingredientBlock--quantity">
+                                                        <p>{qty}</p>
+                                                        <svg className="btn--delete" onClick={this.removeIngredient} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M18 6L6 18M6 6l12 12" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
+                                                        </svg>
+                                                    </div>
+                                                )
+                                            }
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>: <Fragment/> 
+                        }
+
+                        <div className="input--group">
+                            <Autosuggest
+                                suggestions={suggestions}
+                                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                getSuggestionValue={this.getSuggestionValue}
+                                renderSuggestion={this.renderSuggestion}
+                                inputProps={inputProps}
+                                onSuggestionSelected={this.onSuggestionSelected}/>
+                            <input
+                                className='input'
+                                name='quantity'
+                                value={this.state.quantity}
+                                onChange={this.handleChange}
+                                type="text"
+                                placeholder="ex : 100gr"/>
+                            <button className="btn btn--add" onClick={this.handleIngredients}>+</button>
+                        </div>
+                            
+                        <label className="label" htmlFor="steps">Etapes</label> 
+                        {
+                            this.state.newSteps.map((newStep, idx)=> 
+                                <div className="steps">
+                                    <textarea
+                                        className="textarea textarea--steps"
+                                        name='steps'
+                                        value={newStep}
+                                        onChange={this.handleChangeSteps(idx)}
+                                        type="text"
+                                        placeholder="Découper les oignons et les faire revenir jusqu’à ce qu’ils soient fondants..."
+                                        required />
+                                    <svg className="btn--delete removeStep" onClick={this.handleRemoveStep(idx)} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M18 6L6 18M6 6l12 12" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
+                                    </svg>
+                                    {/* <button className="btn btn--add" onClick={this.handleRemoveStep(idx)}>-</button> */}
+                                </div>
+                            )
+                        }
+                        <button className="btn--addStep" onClick={this.handleAddStep}>+ ajouter une étape</button>
+
+                            
+                        <div>
+                            <label className="label" htmlFor="type">Tag</label>
+                            <div className="btn--radio">
+                                <div>
+                                    <input type="radio" id="apero" name="type" value="Apero" onChange={this.handleChange}/>
+                                    <label htmlFor="apero">Apéro</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="entree" name="type" value="Entree" onChange={this.handleChange}/>
+                                    <label htmlFor="entree">Entrée</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="plat" name="type" value="Plat" onChange={this.handleChange}/>
+                                    <label htmlFor="plat">Plat</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="dessert" name="type" value="Dessert" onChange={this.handleChange}/>
+                                    <label htmlFor="dessert">Dessert</label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <button className="btn btn--validate" type='submit'>Soumettre ma recette</button>
-                </form>
-            </div>
+                        <button className="btn btn--validate" type='submit'>Soumettre ma recette</button>
+                    </form>
+                </div>
+            </Fragment>
         );
     }
 }

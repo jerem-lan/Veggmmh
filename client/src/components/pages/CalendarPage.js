@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import axios from "axios";
 import FruitVegBlock from '../FruitVegBlock'
 import IngredientLoader from '../../loaders/IngredientsLoader';
@@ -73,42 +73,45 @@ class CalendarPage extends Component {
     render() {
         const loading = this.state.loading
         return (
-            <div className="container">
-                <label className="label">Rechercher par aliment</label>
-                <input className="input input--search" type='text' onChange={this.handleChange} value={this.state.search} placeholder="tomate"/>
-                <div className="fruitVegBlocks">
-                    {loading && <IngredientLoader />} 
-                    {
-                        this.state.itemSelectionDeux.map((ingredient) => 
-                            !loading && <FruitVegBlock
-                                key={ingredient.id}
-                                id={ingredient.id}
-                                family={ingredient.family}
-                                name={ingredient.name}
-                                icon={ingredient.icon}
-                                season={ingredient.season}
-                            />)
-                    }   
-                </div>
+            <Fragment>
+                <h2 className="pageTitle">Calendrier des fruits et légumes locaux de saison</h2>
+                <div className="container">
+                    <label className="label">Rechercher par aliment</label>
+                    <input className="input input--search" type='text' onChange={this.handleChange} value={this.state.search} placeholder="tomate"/>
+                    <div className="fruitVegBlocks">
+                        {loading && <IngredientLoader />} 
+                        {
+                            this.state.itemSelectionDeux.map((ingredient) => 
+                                !loading && <FruitVegBlock
+                                    key={ingredient.id}
+                                    id={ingredient.id}
+                                    family={ingredient.family}
+                                    name={ingredient.name}
+                                    icon={ingredient.icon}
+                                    season={ingredient.season}
+                                />)
+                        }   
+                    </div>
 
-                <label className="label">Rechercher par mois</label>
-                <select name="month" id="month"  size="1" onChange={this.handleMonth}></select>   
-                <div className="fruitVegBlocks" >
-                    {loading && <IngredientLoader />} 
-                    {
-                        this.state.itemSelection.map((ingredient) => 
-                        !loading && <FruitVegBlock
-                                key={ingredient.id}
-                                id={ingredient.id}
-                                family={ingredient.family}
-                                name={ingredient.name}
-                                icon={ingredient.icon}
-                                season={ingredient.season}
-                            />
-                            )
-                    }
+                    <label className="label">Rechercher par mois</label>
+                    <select name="month" id="month"  size="1" onChange={this.handleMonth}></select>   
+                    <div className="fruitVegBlocks" >
+                        {loading && <IngredientLoader />} 
+                        {
+                            this.state.itemSelection.map((ingredient) => 
+                            !loading && <FruitVegBlock
+                                    key={ingredient.id}
+                                    id={ingredient.id}
+                                    family={ingredient.family}
+                                    name={ingredient.name}
+                                    icon={ingredient.icon}
+                                    season={ingredient.season}
+                                />
+                                )
+                        }
+                    </div>
                 </div>
-            </div>
+            </Fragment>
         )
     }    
 }

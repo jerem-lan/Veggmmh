@@ -81,7 +81,7 @@ class ManageIngredients extends Component {
                            <tr>
                                <th>ID.</th>
                                <th>Famille</th>
-                               <th>Nom</th>
+                               <th>Nom de l'ingrédient</th>
                                <th /> 
                                <th /> 
                            </tr>

@@ -79,9 +79,9 @@ class ManageRecipes extends Component {
                        <thead>
                            <tr>
                                <th>ID.</th>
-                               <th>Crée par</th>
+                               <th>Recette de</th>
                                <th>Date de création</th>
-                               <th>Titre</th>
+                               <th>Titre de la recette</th>
                                <th /> 
                            </tr>
                        </thead>

@@ -46,6 +46,7 @@ input::placeholder,
 textarea::placeholder {
   opacity: 1;
   font-family: 'Quicksand', sans-serif;
+  font-size: 1em;
 }
 input:focus,
 select:focus,
@@ -102,6 +103,13 @@ tr {
   max-width: 360px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   padding: 20px;
+}
+textarea {
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 1em;
+  font-family: 'Quicksand', sans-serif;
 }
 /* ----------------------------
 Footer
@@ -179,6 +187,40 @@ header {
 .btn:hover {
   transform: scale(1.05);
 }
+.adminBoardBtn {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 50px;
+  max-height: 30px;
+  transition: .5s;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+.adminBoardBtn > span {
+  transform : translateX(120%);
+  transition: .5s;
+  width: 0;
+  white-space: nowrap;
+  opacity: 1;
+  color: white;
+}
+.adminBoardBtn > .icon--header {
+  z-index: 1;
+  background-color: #aadac9;
+  box-shadow: none;
+}
+.adminBoardBtn:hover {
+  background-color: #aadac9;
+  padding-left: 15px;
+}
+.adminBoardBtn:hover > span {
+  transform: none;
+  opacity: 1;
+  width: 110px;
+}
+.adminBoardBtn:hover > .icon--header {
+  margin-left: 10px;
+}
 /* ----------------------------
 Bread Crumbs (bouton retour)
 ---------------------------- */
@@ -200,8 +242,13 @@ Bread Crumbs (bouton retour)
 } 
 .breadCrumbs--title {
   color: #FCFBF7;
-  font-size: 1.5em;
+  font-size: 1em;
   font-weight: 600;
+}
+
+.pageTitle {
+  background-color: #AADAC9;
+  font-size: 1.125em;
 }
 /* ----------------------------
 Index Page
@@ -497,7 +544,7 @@ Add Recipe Page
 }
 .label {
   margin-bottom: 10px;
-  font-size: 1.125em;
+  font-size: 1em;
   font-weight: 600;
 }
 .input--number::-webkit-inner-spin-button {
@@ -510,10 +557,12 @@ Add Recipe Page
 .input--time {
   width: 140px;
   display: flex;
+  margin-bottom: 15px;
 }
 .input--time > .input--number {
   width: 100%;
   border-radius: 25px 0 0 25px;
+  margin-bottom: 0;
 }
 .input--time > span {
   border: 1px solid #444;
@@ -556,9 +605,12 @@ Add Recipe Page
 .btn--add {
   align-self: flex-start;
 }
-.textarea--steps {
+.textarea {
   width: 520px;
   min-height: 105px;
+}
+.textarea--adDescription {
+  margin-bottom: 15px;
 }
 .ingredientBlock {
   display: flex;
@@ -603,10 +655,6 @@ Add Recipe Page
   font-weight: 600;
   border-radius: 10px;
   width: 520px;
-}
-.steps > .btn--delete {
-  /* visibility: hidden; */
-  background-color: red;
 }
 .btn--radio {
   display: flex;
@@ -670,6 +718,7 @@ Favorites Pages
 Calendar Page
 ---------------------------- */
 .input {
+  margin-bottom: 15px;
   padding: 7px  15px;
   font-size: 1em;
   border: 1px solid #444;
@@ -725,7 +774,17 @@ Calendar Page
 .fruitVegBlock span {
   max-width: 100px;
 }
-
+.disponible:after {
+  content:"Disponible";
+  background-color: #56B693;
+  padding: 5px 10px;
+  font-size: .5em;
+  border-radius: 25px;
+  color: white;
+  font-weight: 600;
+  margin-left: 15px;
+  vertical-align: 20%;
+}
 /* ----------------------------
 Seasonal Item Page
 ---------------------------- */
@@ -759,8 +818,50 @@ Seasonal Item Page
   background-color: #bddfd7;
   padding: 5px 0;
 }
-.calendar  .active {
+.calendar .active {
   background-color: #56B693;
+}
+.legend {
+  display: flex;
+}
+.legend > p {
+  display: flex;
+  align-items: center;
+}
+.legend > p:before {
+  content: "●";
+  font-size: 2em;
+}
+.available:before {
+  color: #56B693;
+}
+.unavailable:before {
+  color: #bddfd7;
+}
+/* ----------------------------
+List Ad Page
+---------------------------- */
+.adItem--container {
+  background-color: white;
+  -webkit-box-shadow: 1px 1px 8px 1px #e6ebef;
+  box-shadow: 1px 1px 8px 1px #e6ebef;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+.adItem--container:hover {
+  -webkit-box-shadow: 1px 1px 8px 1px #cad1d9;
+  box-shadow: 1px 1px 8px 1px #cad1d9;
+}
+.adItem--container > h3::first-letter,
+.adItem--container > p::first-letter {
+  text-transform: capitalize;
+}
+.adItem--container > p > span {
+  font-weight: 600;
+}
+.adItem--content {
+  font-style: italic;
+  color: #888;
 }
 /* ----------------------------
 A bouger

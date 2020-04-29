@@ -97,7 +97,7 @@ class ManageUsers extends Component {
                                <th>ID.</th>
                                <th>Email</th>
                                <th>Rôle</th>
-                               <th>Username</th>
+                               <th>Nom d'utilisateur</th>
                                <th>Nom</th>
                                <th>Prénom</th>
                                <th>Code postal</th>
