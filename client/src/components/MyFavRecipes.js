@@ -2,7 +2,7 @@ import React from 'react'
 import DisplayMyFavRecipe from './DisplayMyFavRecipe'
 
 
-const MyFavRecipes = ({ favRecipes }) => {
+const MyFavRecipes = ({ favRecipes, handleDeleteFavRecipe }) => {
 
 	
 	function showSectionFavRecipe() {
@@ -20,7 +20,7 @@ const MyFavRecipes = ({ favRecipes }) => {
 				Mes recettes favorites
 			</h2>
 			<div className="SectionContent">
-				<DisplayMyFavRecipe favRecipes={favRecipes} />
+				<DisplayMyFavRecipe favRecipes={favRecipes} handleDeleteFavRecipe={handleDeleteFavRecipe} />
 			</div>
 		</div>
 	)

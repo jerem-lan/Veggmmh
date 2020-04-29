@@ -124,9 +124,8 @@ const Root = () => {
                         isAuthenticated={isConnected} 
                         component={AddRecipePage} 
                     />
-                    <PrivateRoute 
+                    <Route 
                         path="/recette/:id"
-                        isAuthenticated={isConnected} 
                         component={RecipePage} 
                     />
                     <Route 

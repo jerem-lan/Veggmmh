@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { toast } from 'react-toastify';
+import authApi from '../../services/authApi';
 
 class RecipePage extends Component {
 
@@ -51,6 +52,9 @@ class RecipePage extends Component {
         axios
             .put("http://localhost:8000/api/bookmarks/"+id+"/add", recipe, config)
             toast.info("Une nouvelle recette dans vos favoris 👌")
+            .catch(error =>
+                toast.error("😞 Oups, quelque chose s'est mal passé")
+            )
     }   
     //fonction qui permet de rassembler la quantité et les ingredients ensemble et de les afficher
     affichage = () => {
@@ -78,7 +82,8 @@ class RecipePage extends Component {
                 <ol>
                     {steps}
                 </ol>
-                <button className="btn" type="submit" onClick={this.handleBookmarks}>Favoris</button>
+                {authApi.isAuthenticated() &&
+                <button className="btn" type="submit" onClick={this.handleBookmarks}>Favoris</button>}
             </div>
 
         );
