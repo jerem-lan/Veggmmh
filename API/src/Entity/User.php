@@ -57,7 +57,7 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({ "users_read", "recipe_read", "ads_read" })
+     * @Groups({ "users_read", "recipe_read", "ads_read", "ads_subresource" })
      */
     private $id;
 
@@ -65,7 +65,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Email(message="Le format d'adresse mail est invalide.")
      * @Assert\NotBlank(message="L'adresse mail est obligatoire")
-     * @Groups({ "users_read" })
+     * @Groups({ "users_read", "ads_read", "ads_subresource" })
      */
     private $email;
 
@@ -93,7 +93,7 @@ class User implements UserInterface
      *                  minMessage = "Le nom d'utilisateur doit contenir 3 caractères minimum",
      *                  maxMessage = "Le nom d'utilisateur doit contenir 20 caractères maximum")
      * @Assert\NotBlank(message="Le nom d'utilisateur est obligatoire")
-     * @Groups({ "users_read", "recipe_read", "ads_read" })
+     * @Groups({ "users_read", "recipe_read", "ads_read", "ads_subresource" })
      */
     private $username;
 

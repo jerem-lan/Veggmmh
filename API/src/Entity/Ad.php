@@ -83,7 +83,7 @@ class Ad
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="ad")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({ "ads_read" })
+     * @Groups({ "ads_read", "ads_subresource" })
      */
     private $user;
 
