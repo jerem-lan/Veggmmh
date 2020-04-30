@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode';
 function logout() {
     //recupere le token et l'efface
     window.localStorage.removeItem("authToken");
+    window.localStorage.removeItem("adCurrentIdUser")
     //efface l'autorization qui est necessaire
     delete axios.defaults.headers["Authorization"];
 }

@@ -713,6 +713,9 @@ Favorites Pages
   max-width: 220px;
   font-weight : 600;
 }
+.CardTitle:hover {
+  color : #009688;
+}
 
 /* ----------------------------
 Calendar Page

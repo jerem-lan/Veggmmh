@@ -12,6 +12,7 @@ const MyFavRecipesPages = () => {
     // Un state pour chaque ressource avec la fonction qui permet de modifier le state
     const [favRecipes, setFavRecipes] = useState([]);
     const [Loading, setLoading] = useState(true)
+    
     useEffect(() => {
     // Récupération du token et de l'id de l'utilisateur actuellement connecté
     	const token = window.localStorage.getItem("authToken")
@@ -22,7 +23,7 @@ const MyFavRecipesPages = () => {
       axios
         .get("http://localhost:8000/api/users/"+id+"/bookmarks/")
         .then(res => {
-          const data = res.data['hydra:member'];
+          const data = res.data['hydra:member'].reverse();
           setLoading(false)
           setFavRecipes(data)
           });

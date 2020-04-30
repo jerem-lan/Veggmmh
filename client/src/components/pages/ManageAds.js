@@ -5,6 +5,7 @@ import ListLoader from '../../loaders/AddLoader';
 import { toast } from 'react-toastify';
 import PaginationForTab from '../PaginationForTab'
 import { NavLink } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 
 class ManageAds extends Component {
     state = { 
@@ -51,6 +52,12 @@ class ManageAds extends Component {
 
     handlePageChanged = (page) => {
         this.setState({ currentPage : page })
+    }
+
+    getCurrentIdUser () {
+        const token = window.localStorage.getItem("authToken")
+        const decoded = jwtDecode(token)
+    	return decoded.id
     }
 
     render() { 
@@ -116,12 +123,16 @@ class ManageAds extends Component {
                                         <NavLink to={{
                                             pathname: `/annonce/${ad.id}`,
                                             props: {
+                                                id: `${ad.id}`,
+                                                idUser:`${ad.user.id}`,
                                                 title: `${ad.title}`,
                                                 postcode: `${ad.postcode}`,
                                                 creationDate: `${ad.creationDate}`,
                                                 modificationDate: `${ad.modificationDate}`,
                                                 content: `${ad.content}`,
-                                                username: `${ad.user.username}`
+                                                username: `${ad.user.username}`,
+                                                userEmail : `${ad.user.email}`,
+                                                currentIdUser : `${this.getCurrentIdUser()}`
                                             }
                                         }}>
                                             <button className="btn">
