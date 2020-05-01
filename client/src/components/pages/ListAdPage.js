@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import ListLoader from '../../loaders/AddLoader';
+import ListLoader from '../../loaders/ListLoader';
 import jwtDecode from 'jwt-decode';
 import authApi from '../../services/authApi';
 import { NavLink } from 'react-router-dom';

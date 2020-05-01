@@ -85,7 +85,6 @@ class ResumeAdPage extends Component {
     }
     
     render () {
-        console.log(this.state.role)
         return (
             <div className="container">
                 <div>
@@ -101,7 +100,7 @@ class ResumeAdPage extends Component {
 
                     {((this.state.idCurrentUser) && (this.state.idCurrentUser !== this.state.idUserAd)) && <a href={`mailto:${this.state.emailUserAd}`}><button className="btn" type="submit">Répondre</button></a>}
                     {/* Si le role de l'utilisateur est connecté est ADMIN, alors affiche le bouton supprimer */}
-                    {((this.state.role[0] === "ROLE_ADMIN") || (this.state.idCurrentUser === this.state.idUserAd) && this.state.idCurrentUser) && <button className="btn" onClick={() => this.handleDelete(this.state.id)}>Supprimer</button>}     
+                    {(((this.state.role[0] === "ROLE_ADMIN") || (this.state.idCurrentUser === this.state.idUserAd)) && this.state.idCurrentUser) && <button className="btn" onClick={() => this.handleDelete(this.state.id)}>Supprimer</button>}     
                 </div>
             </div> 
         );

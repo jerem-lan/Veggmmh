@@ -4,7 +4,6 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import ListLoader from '../../loaders/ListLoader';
 import { toast } from 'react-toastify';
-import ManageAds from './ManageAds';
 
 
 const MyRecipesPage = () => {

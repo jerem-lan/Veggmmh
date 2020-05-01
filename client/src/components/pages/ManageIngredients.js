@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import authApi from '../../services/authApi';
-import ListLoader from '../../loaders/AddLoader';
+import ListLoader from '../../loaders/ListLoader';
 import { toast } from 'react-toastify';
 import PaginationForTab from '../PaginationForTab'
 import { NavLink } from 'react-router-dom';
