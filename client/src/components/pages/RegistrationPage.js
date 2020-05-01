@@ -3,8 +3,7 @@ import axios from 'axios';
 import AlertMessage from '../AlertMessage';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
-
+import inputControls from '../../services/inputControls';
 
 class RegistrationPage extends Component {
 
@@ -15,7 +14,8 @@ class RegistrationPage extends Component {
         email: '',
         username: '',
         password: '',
-        error: ''
+        error: '',
+        errorFront: ''
     }
 
     //Récupere les informations tapées dans le formulaire
@@ -26,42 +26,45 @@ class RegistrationPage extends Component {
 
     handleSubmit = async event => {
         event.preventDefault()
+        if (inputControls.spaceVerif(this.state.lastname) && inputControls.spaceVerif(this.state.firstname)) {
+            const user = {
+                lastname: this.state.lastname,
+                firstname: this.state.firstname,
+                postcode: this.state.postcode,
+                email: this.state.email,
+                username: this.state.username,
+                password: this.state.password
+            };
 
-        const user = {
-            lastname: this.state.lastname,
-            firstname: this.state.firstname,
-            postcode: this.state.postcode,
-            email: this.state.email,
-            username: this.state.username,
-            password: this.state.password
-        };
-
-        try {await axios
-            .post('http://localhost:8000/api/users', user) 
-            this.setState({
-                lastname: '',
-                firstname: '',
-                postcode: '',
-                email: '',
-                username: '',
-                password: '',
-                error: ''    
-            })
-            toast.info("🌱 Bienvenue jeune pousse ! 🌱")
-            this.props.history.replace('/login')
-        } catch(error) {
-            const {violations} = error.response.data
-            if(violations){
-                const apiErrors = {};
-                violations.map(violation => 
-                    apiErrors[violation.propertyPath] = violation.message  
-                );     
+            try {await axios
+                .post('http://localhost:8000/api/users', user) 
                 this.setState({
-                    error: apiErrors
+                    lastname: '',
+                    firstname: '',
+                    postcode: '',
+                    email: '',
+                    username: '',
+                    password: '',
+                    error: ''    
                 })
-                toast.error("Champs manquants requis.")    
-            }     
-        };   
+                toast.info("🌱 Bienvenue jeune pousse ! 🌱")
+                this.props.history.replace('/login')
+            } catch(error) {
+                const {violations} = error.response.data
+                if(violations){
+                    const apiErrors = {};
+                    violations.map(violation => 
+                        apiErrors[violation.propertyPath] = violation.message  
+                    );     
+                    this.setState({
+                        error: apiErrors
+                    })
+                    toast.error("Champs manquants requis.")    
+                }     
+            };   
+        }else{
+            this.setState({errorFront : "Vous n'avez rentré que des espaces dans l'un des champs"})
+        }
     }
 
     render() { 
@@ -71,6 +74,7 @@ class RegistrationPage extends Component {
                 <BackWithRouter />
                 <div className="container container--registration">
                     <form className='form' onSubmit={this.handleSubmit}>
+                    {this.state.errorFront ? <AlertMessage message = {this.state.errorFront}  /> : ""}
                         <input 
                             name='lastname' 
                             value={this.state.lastname} 
