@@ -3,6 +3,7 @@ import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
 import { toast } from 'react-toastify';
 import AlertMessage from '../AlertMessage';
+import inputControls from '../../services/inputControls';
 
 class AddRecipePage extends Component {
 
@@ -18,7 +19,8 @@ class AddRecipePage extends Component {
         ingredientsSelect: [], //Ingrédients sélectionnés qui composent la recette
         quantity: '', //Quantité renseignée dans l'input quantité d'un ingrédient
         newSteps: [""], //Liste des étapes
-        errorFront: "" //Eventuelles erreurs
+        errorIngredients: "", //Eventuelles erreurs liées aux ingrédients
+        errorTitre: ""
     }
 
     //Récupère les données de Ingrédients issues de l'API. 
@@ -89,25 +91,29 @@ class AddRecipePage extends Component {
     handleIngredients = (event) => {
         event.preventDefault();
         const suggest = this.state.value;
-        const quantity = this.state.quantity;
+        const quantity = this.state.quantity
+        if (inputControls.spaceVerif(quantity) && inputControls.spaceVerif(suggest)) {
         //Verif que les champs ne soient pas vides
-        if (suggest && quantity !== "") {
-            //Verif que l'ingrédient choisi n'a pas encore été selectionné
-            if (!this.state.ingredientsSelect.includes(suggest)) {
-                this.setState(prevState => ({
-                    quantities: [...prevState.quantities, quantity],
-                    ingredientsSelect: [...prevState.ingredientsSelect, suggest]
-                }));
-                this.setState({
-                    value : '',
-                    quantity : '',
-                    errorFront: ''
-                });
-            }else {
-                this.setState({errorFront : "Vous avez déjà renseigné cet ingrédient"})
+            if (suggest && quantity !== "") {
+                //Verif que l'ingrédient choisi n'a pas encore été selectionné
+                if (!this.state.ingredientsSelect.includes(suggest)) {
+                    this.setState(prevState => ({
+                        quantities: [...prevState.quantities, quantity],
+                        ingredientsSelect: [...prevState.ingredientsSelect, suggest]
+                    }));
+                    this.setState({
+                        value : '',
+                        quantity : '',
+                        errorIngredients: ''
+                    });
+                }else {
+                    this.setState({errorIngredients : "Vous avez déjà renseigné cet ingrédient"})
+                }
+            }else{
+                this.setState({errorIngredients : "Vous n'avez pas entré d'ingrédient, sa quantité ou ni l'un ni l'autre"})
             }
         }else{
-            this.setState({errorFront : "Vous n'avez pas entré d'ingrédient, sa quantité ou ni l'un ni l'autre"})
+            this.setState({errorIngredients : "Vous n'avez rentré que des espaces dans l'un des champs"})
         }
     };
     // Ajoute l'icone correspondante au nom de l'ingredient selectionné
@@ -166,6 +172,13 @@ class AddRecipePage extends Component {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
+
+        //Permet la vérification des espaces dans les étapes
+        //Fonction renvoyant true si la valeur est supérieure à zéro
+        const arraySpace = (value) => value > 0
+        //Tableau contenant des valeurs équivalents au nombre de caractères de chaque étape
+        const testArray = this.state.newSteps.map(step => inputControls.spaceVerif(step))
+
         const recipe = {
             recipeTitle: this.state.title,
             preparationTime: this.state.preptime,
@@ -175,28 +188,31 @@ class AddRecipePage extends Component {
             steps: this.state.newSteps,
             type: this.state.type
         };
-        if (recipe.quantity && recipe.steps !== "") {
-            try { await axios.post( 
-                'http://localhost:8000/api/recipes',
-                recipe,
-                config
-                );
-                this.setState({
-                    title: '',
-                    preptime: '',
-                    servings: '',
-                    ingredientsSelect: [],
-                    quantities: [],
-                    newSteps: [],
-                    type: ''
-                });
-                toast.info("Votre recette a été créée avec succès 👌")
-                this.props.history.push('/dashboard')
-            }catch(error){
-                console.log(error);
-            }
+        //Teste chaque valeur de testArray, si une seule d'entre vaut 0, il n'y a pas d'autre caractère que des espaces, et renvoie false
+        if (inputControls.spaceVerif(recipe.recipeTitle) && testArray.every(arraySpace)) {
+            if (recipe.quantity && recipe.steps !== "") {
+                try { await axios.post( 
+                    'http://localhost:8000/api/recipes',
+                    recipe,
+                    config
+                    );
+                    this.setState({
+                        title: '',
+                        preptime: '',
+                        servings: '',
+                        ingredientsSelect: [],
+                        quantities: [],
+                        newSteps: [],
+                        type: ''
+                    });
+                    toast.info("Votre recette a été créée avec succès 👌")
+                    this.props.history.push('/dashboard')
+                }catch(error){
+                    console.log(error);
+                }
+            }  
         }else{
-            
+            this.setState({errorTitre : "Certains de vos champs ne comprennent que des espaces"})
         }
     }
 
@@ -217,6 +233,7 @@ class AddRecipePage extends Component {
                 <div className="container">
                     <form className='form' onSubmit= {this.handleSubmit}>
                         <div>
+                        {this.state.errorTitre ? <AlertMessage message = {this.state.errorTitre} />: "" }
                             <label className="label" htmlFor="title">Titre de ma recette</label>
                             <input
                                 className='input'
@@ -269,7 +286,7 @@ class AddRecipePage extends Component {
                         </div>
                         
                         <label className="label" htmlFor="ingredients">Ingrédients</label>
-                        {this.state.errorFront ? <AlertMessage message = {this.state.errorFront} />: "" }
+                        {this.state.errorIngredients ? <AlertMessage message = {this.state.errorIngredients} />: "" }
                         { 
                             this.state.ingredientsSelect.length > 0 ?
                             <table>
@@ -324,7 +341,7 @@ class AddRecipePage extends Component {
                         <label className="label" htmlFor="steps">Etapes</label> 
                         {
                             this.state.newSteps.map((newStep, idx)=> 
-                                <div className="steps">
+                                <div className="steps" key={idx}>
                                     <textarea
                                         className="textarea textarea--steps"
                                         name='steps'

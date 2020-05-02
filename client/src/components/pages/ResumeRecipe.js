@@ -5,7 +5,8 @@ import { toast } from 'react-toastify';
 import authApi from '../../services/authApi';
 import IngredientBlock from '../IngredientBlock';
 
-class RecipePage extends Component {
+class ResumeRecipe extends Component {
+
     state = {
         ingredients: [],
         steps: [],
@@ -51,7 +52,7 @@ class RecipePage extends Component {
         const config = {headers: { Authorization: `Bearer ${token}` }}
         axios
             .put("http://localhost:8000/api/bookmarks/"+id+"/add", recipe, config)
-            toast.info("Une nouvelle recette dans vos favoris 👌")
+            .then(toast.info("Une nouvelle recette dans vos favoris 👌"))
             .catch(error =>
                 toast.error("😞 Oups, quelque chose s'est mal passé")
             )
@@ -143,4 +144,4 @@ class RecipePage extends Component {
     }
 }
 
-export default RecipePage;
+export default ResumeRecipe;

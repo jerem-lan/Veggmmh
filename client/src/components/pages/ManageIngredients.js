@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import authApi from '../../services/authApi';
-import ListLoader from '../../loaders/AddLoader';
+import ListLoader from '../../loaders/ListLoader';
 import { toast } from 'react-toastify';
 import PaginationForTab from '../PaginationForTab'
 import { NavLink } from 'react-router-dom';
+import inputControls from '../../services/inputControls';
 
 
 class ManageIngredients extends Component {
@@ -63,11 +64,12 @@ class ManageIngredients extends Component {
         this.state.ingredients.map(ingredient =>
             ingredients.push(ingredient.name)
         )
+        //Retire les espaces du nom de l'ingrédient, et retire les majuscules pour respecter la mise en forme de la BDD pour la vérification
+        const name = inputControls.truncString(this.state.name).toLowerCase()
         
-        if(!ingredients.includes(this.state.name)) {
-            
+        if(!ingredients.includes(name)) {
             const data = {
-                name: this.state.name,
+                name: name,
                 family: this.state.family,
                 conservation: this.state.conservation,
                 season : this.state.season
@@ -84,7 +86,7 @@ class ManageIngredients extends Component {
                     conservation: '',
                     season : []
                 })
-                toast.info("Votre ingrédient a été créée avec succès 👌")
+                toast.info("Votre ingrédient a été créé avec succès 👌")
                 document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
             }catch (error) {
                 console.log(error.response.data) 

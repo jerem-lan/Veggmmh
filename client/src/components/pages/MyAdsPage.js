@@ -22,7 +22,7 @@ const MyAdsPage = () => {
     axios
       .get("http://localhost:8000/api/users/"+id+"/ads/")
       .then(res => {
-        const data = res.data['hydra:member'];
+        const data = res.data['hydra:member'].reverse();
         setLoading(false)
         setAds(data)
       });

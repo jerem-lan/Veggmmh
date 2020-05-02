@@ -745,8 +745,11 @@ Favorites Pages
   max-width: 220px;
   font-weight : 600;
 }
+.CardTitle:hover {
+  color : #009688;
+}
 /* ----------------------------
-Recipe Page
+Resume Recipe Page
 ---------------------------- */
 .recipeTitle::first-letter {
   text-transform: capitalize;
@@ -862,6 +865,8 @@ Recipe Page
 .recipeInfos {
   padding: 0 20px 0 20px;
 }
+
+
 /* ----------------------------
 Calendar Page
 ---------------------------- */

@@ -21,7 +21,7 @@ const MyRecipesPage = () => {
 		axios
       .get("http://localhost:8000/api/users/"+id+"/recipes/")
       .then(res => {
-        const data = res.data['hydra:member'];
+        const data = res.data['hydra:member'].reverse();
         setLoading(false)
         setRecipes(data)
       });
@@ -48,7 +48,7 @@ const MyRecipesPage = () => {
           toast.error("😞 Oups, quelque chose s'est mal passé")
         })
     }
-
+    
     return (
       <>
         {Loading && <ListLoader />} 

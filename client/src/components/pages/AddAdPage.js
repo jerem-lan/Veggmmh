@@ -2,13 +2,15 @@ import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import AlertMessage from '../AlertMessage';
+import inputControls from '../../services/inputControls';
 
 class AddAdPage extends Component {
     state = {
         title: '',
         content: '',
         postcode: '',
-        errors: ''
+        errors: '',
+        errorFront: ''
     }
 
     handleChange = event => {
@@ -24,38 +26,42 @@ class AddAdPage extends Component {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        const ad = {
-            title: this.state.title,
-            content: this.state.content,
-            postcode: this.state.postcode
-        };
-        //on donne le header et les données à axios
-        try { await axios.post( 
-            'http://localhost:8000/api/ads',
-            ad,
-            config
-          );
+        if (inputControls.spaceVerif(this.state.title) && inputControls.spaceVerif(this.state.content) && inputControls.spaceVerif(this.state.postcode)) {
+            const ad = {
+                title: this.state.title,
+                content: this.state.content,
+                postcode: this.state.postcode
+            };
+            //on donne le header et les données à axios
+            try { await axios.post( 
+                'http://localhost:8000/api/ads',
+                ad,
+                config
+            );
 
-            this.setState({
-                title: '',
-                content: '',
-                postcode: ''
-            })
-            toast.info("Votre annonce a été créée avec succès 👌")
-            this.props.history.replace("/liste-annonces");
-        }catch (error) {
-            const {violations} = error.response.data
-            if(violations){
-                const apiErrors = {};
-                violations.map(violation => 
-                    apiErrors[violation.propertyPath] = violation.message
-                    
-                );     
                 this.setState({
-                    errors: apiErrors
+                    title: '',
+                    content: '',
+                    postcode: ''
                 })
-                toast.error("Des erreurs dans votre formulaire !!")    
-            } 
+                toast.info("Votre annonce a été créée avec succès 👌")
+                this.props.history.replace("/liste-annonces");
+            }catch (error) {
+                const {violations} = error.response.data
+                if(violations){
+                    const apiErrors = {};
+                    violations.map(violation => 
+                        apiErrors[violation.propertyPath] = violation.message
+                        
+                    );     
+                    this.setState({
+                        errors: apiErrors
+                    })
+                    toast.error("Des erreurs dans votre formulaire !!")    
+                } 
+            }
+        }else {
+            this.setState({errorFront : "Vous n'avez rentré que des espaces dans l'un des champs"})
         }
     }
 
@@ -67,6 +73,7 @@ class AddAdPage extends Component {
                 </div>
                 <div className="container">
                     <form className='form' onSubmit= {this.handleSubmit}>
+                    {this.state.errorFront ? <AlertMessage message = {this.state.errorFront}  /> : ""}
                         <label className="label" htmlFor="title">Titre de mon annonce</label>
                         <input
                             className='input'

@@ -27,7 +27,7 @@ import ManageAds from './components/pages/ManageAds';
 import ManageIngredients from './components/pages/ManageIngredients';
 import ManageUsers from './components/pages/ManageUsers';
 import NotFound from './components/pages/NotFound';
-import RecipePage from './components/pages/RecipePage';
+import ResumeRecipe from './components/pages/ResumeRecipe';
 import ListRecipePage from './components/pages/ListRecipePage';
 // import Footer from './components/Footer';
 // ROUTES
@@ -126,7 +126,7 @@ const Root = () => {
                     />
                     <Route 
                         path="/recette/:id"
-                        component={RecipePage} 
+                        component={ResumeRecipe} 
                     />
                     <Route 
                         path="/trouver-recette"

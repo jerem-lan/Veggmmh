@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
+import { NavLink } from 'react-router-dom'
 
-const DisplayMyRecipe = ({id, title, handleDeleteRecipe, username}) => {	
+const DisplayMyRecipe = ({id, title, handleDeleteRecipe}) => {	
 
 	return (	
 		<Fragment>
@@ -9,9 +10,16 @@ const DisplayMyRecipe = ({id, title, handleDeleteRecipe, username}) => {
 				className="Card"
 				style={ { backgroundColor: '#e3fcf3'} } 
 			>
-				<div className="CardTitle"> 
-					{title}
-				</div>
+				<NavLink to={{
+					pathname: `/recette/${id}`,
+					props: {
+					id : `${id}`
+					}
+				}}>
+					<div className="CardTitle"> 
+						{title}
+					</div>
+				</NavLink>
 				{/* <p>	{"Crée le "+recipe.creationDate} </p> */}	
 				<div className="Tools">
 					<button className="btn">
