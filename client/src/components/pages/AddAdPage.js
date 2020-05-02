@@ -62,7 +62,9 @@ class AddAdPage extends Component {
     render() {
         return (
             <Fragment>
-                <h2>Déposer une annonce</h2>
+                <div className="container--pageTitle">
+                    <h2 className="pageTitle">Déposer une annonce</h2>
+                </div>
                 <div className="container">
                     <form className='form' onSubmit= {this.handleSubmit}>
                         <label className="label" htmlFor="title">Titre de mon annonce</label>

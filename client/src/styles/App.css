@@ -25,10 +25,14 @@ body {
   justify-content: center;
   align-items: center;
   margin: 0;
+  counter-reset: section;
 }
 h1,h2,h3,h4,h5,h6 {
   margin: 0;
   padding: 0;
+}
+h3::first-letter {
+  text-transform: capitalize;
 }
 a,
 a:link,
@@ -96,6 +100,7 @@ tr {
 }
 .container {
   width: 1000px;
+  margin: 20px 0 20px 0;
 }
 .container--index,
 .container--registration,
@@ -184,6 +189,26 @@ header {
   border-radius: 50px;
   align-self: flex-end;  
 }
+.btn--favorite {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+.btn--favorite > svg > circle {
+  /* fill: #FCFBF7; */
+  fill: #96E5C9;
+  opacity: .5;
+}
+.btn--favorite > svg > path {
+  fill: #96E5C9;
+}
+/* .btn--favorite:hover > svg > circle {
+  fill: #56B693;
+  opacity: 1;
+}
+.btn--favorite:hover > svg > path {
+  fill: #FCFBF7;
+} */
 .btn:hover {
   transform: scale(1.05);
 }
@@ -245,10 +270,17 @@ Bread Crumbs (bouton retour)
   font-size: 1em;
   font-weight: 600;
 }
-
+.container--pageTitle {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .pageTitle {
-  background-color: #AADAC9;
-  font-size: 1.125em;
+    font-size: 1.125em;
+    width: 1000px;
+    align-items: center;
+    padding: 15px;
+    font-weight: 600;
 }
 /* ----------------------------
 Index Page
@@ -612,25 +644,25 @@ Add Recipe Page
 .textarea--adDescription {
   margin-bottom: 15px;
 }
-.ingredientBlock {
+.ingredientRow {
   display: flex;
   align-items: center;
   height: 65px;
 }
-.ingredientBlock:not(:last-child) {
+.ingredientRow:not(:last-child) {
   border-bottom: 1px solid #ECF4EE;
 }
-.ingredientBlock--quantity {
+.ingredientRow--quantity {
   justify-content: flex-end;
 }
-.ingredientBlock > img {
+.ingredientRow > img {
   background-color: #ECF4EE;
   border: 1px solid #ECF4EE;
   border-radius: 10px;
   padding: 6px;
   margin-right: 15px;
 }
-.ingredientBlock > p::first-letter {
+.ingredientRow > p::first-letter {
   text-transform: capitalize;
 }
 .btn--delete {
@@ -713,7 +745,123 @@ Favorites Pages
   max-width: 220px;
   font-weight : 600;
 }
-
+/* ----------------------------
+Recipe Page
+---------------------------- */
+.recipeTitle::first-letter {
+  text-transform: capitalize;
+}
+.ingredientBlocks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.ingredientBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 150px;
+  min-width: 150px;
+  margin: 0 15px 15px 0;
+  font-size: 1em;
+  border-radius: 10px;
+  padding: 15px;
+  border: 1px solid #AADAC9;
+}
+.ingredientBlock .icon {
+  margin-bottom: 15px;
+}
+.ingredientBlock span {
+  max-width: 100px;
+}
+/* .step::before {
+  counter-increment: section;
+  content: counter(section);
+} */
+.steps {
+  list-style: none;
+  padding: 0;
+  margin:0;
+}
+.step {
+  display: flex;
+  align-items: center;
+}
+.stepNumber {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #AADAC9;
+  color: #FCFBF7;
+  font-weight: 600;
+  width: 25px;
+  height: 25px;
+  margin-right: 15px;
+  border-radius: 50%;
+  padding: 15px;
+}
+.step p {
+  max-width: 70%;
+  padding: 15px 0;
+  margin: 10px 0;
+}
+.step:not(:last-child) {
+  border-bottom: 1px solid #AADAC9;
+}
+.step > p::first-letter {
+  text-transform: capitalize;
+}
+.ingredientBlockText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.ingredientBlockText {
+  color: #826489;
+}
+.recipeType {
+  display: flex;
+  margin-bottom: 15px;
+  justify-content: space-between;
+}
+.recipeType > p {
+  line-height: 1.5em;
+  background-color: #AADAC9;
+  padding: 5px 10px;
+  font-size: 1em;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  margin: 0;
+}
+.recipeType > p::first-letter {
+  text-transform: capitalize;
+}
+.timeServing {
+  display: flex;
+  align-items: center;
+}
+.timeServing svg {
+  margin-right: 10px;
+}
+.timeServing svg:not(:first-child) {
+  margin-left: 10px;
+}
+.cooker > span {
+  font-weight: 600;
+}
+.recipeDetails {
+  padding: 45px 20px 0 20px;
+  border: 1px solid #96E5C9;
+  border-radius: 50px 0 50px 0;
+}
+.recipeDetails > h3 {
+  padding-bottom: 20px;
+}
+.recipeInfos {
+  padding: 0 20px 0 20px;
+}
 /* ----------------------------
 Calendar Page
 ---------------------------- */

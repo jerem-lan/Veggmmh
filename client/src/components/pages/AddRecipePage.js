@@ -211,7 +211,9 @@ class AddRecipePage extends Component {
 
         return (
             <Fragment>
-                <h2 className="pageTitle">Publier une recette</h2>
+                <div className="container--pageTitle">
+                    <h2 className="pageTitle">Publier une recette</h2>
+                </div>
                 <div className="container">
                     <form className='form' onSubmit= {this.handleSubmit}>
                         <div>
@@ -276,7 +278,7 @@ class AddRecipePage extends Component {
                                         <td>
                                             {
                                                 this.state.ingredientsSelect.map((item, index) =>
-                                                    <div id={index} key={index} className="ingredientBlock">
+                                                    <div id={index} key={index} className="ingredientRow">
                                                         <img src={this.requireIcon(item)} alt={item}/>
                                                         <p>{item}</p>
                                                     </div>
@@ -286,7 +288,7 @@ class AddRecipePage extends Component {
                                         <td>
                                             {
                                                 this.state.quantities.map((qty, index) =>
-                                                    <div id={index} key={index} className="ingredientBlock ingredientBlock--quantity">
+                                                    <div id={index} key={index} className="ingredientRow ingredientRow--quantity">
                                                         <p>{qty}</p>
                                                         <svg className="btn--delete" onClick={this.removeIngredient} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <path d="M18 6L6 18M6 6l12 12" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
