@@ -5,9 +5,10 @@ import { toast } from 'react-toastify';
 import AlertMessage from '../AlertMessage';
 import inputControls from '../../services/inputControls';
 
-class AddRecipePage extends Component {
+class EditRecipePage extends Component {
 
     state = {
+        id : this.props.match.params.id,
         ingredients: [], //Données de Ingredients récupérées depuis l'API
         title: '', //Titre de la recette
         preptime: '', //Temps de préparation en minute
@@ -34,6 +35,21 @@ class AddRecipePage extends Component {
             .catch(error => console.log(error.response))
 
             document.querySelector(".removeStep").style.display="none";
+        
+        axios.get("http://127.0.0.1:8000/api/recipes/"+ this.state.id)
+            .then(res => {
+                const recipe = res.data
+                this.setState({ 
+                    newSteps : recipe.steps,
+                    title : recipe.recipeTitle,
+                    preptime : recipe.preparationTime,
+                    servings : recipe.nbServings,
+                    quantities : recipe.quantity,
+                    type : recipe.type,
+                    ingredientsSelect : recipe.ingredients
+                });
+            })
+            .catch(error => console.log(error.response))
     }
 
     //Récupere et set la valeur de l'élément ciblé en fonction de son attribut name.
@@ -76,7 +92,7 @@ class AddRecipePage extends Component {
         const inputValue = value.trim().toLowerCase();
         const inputLength = inputValue.length;  
         return inputLength === 0 ? [] : this.state.ingredients.filter(ingredient =>
-          ingredient.name.toLowerCase().slice(0, inputLength) === inputValue
+        ingredient.name.toLowerCase().slice(0, inputLength) === inputValue
         );
     };
     //Rempli l'entrée basée sur la suggestion cliquée. Calcule la valeur d'entrée pour chaque suggestion donnée.
@@ -191,8 +207,8 @@ class AddRecipePage extends Component {
         //Teste chaque valeur de testArray, si une seule d'entre vaut 0, il n'y a pas d'autre caractère que des espaces, et renvoie false
         if (inputControls.spaceVerif(recipe.recipeTitle) && testArray.every(arraySpace)) {
             if (recipe.quantity && recipe.steps !== "") {
-                try { await axios.post( 
-                    'http://localhost:8000/api/recipes',
+                try { await axios.put( 
+                    'http://localhost:8000/api/recipes/'+ this.state.id,
                     recipe,
                     config
                     );
@@ -205,10 +221,11 @@ class AddRecipePage extends Component {
                         newSteps: [],
                         type: ''
                     });
-                    toast.info("Votre recette a été créée avec succès 👌")
+                    toast.info("Votre recette a été modifiée avec succès 👌")
                     this.props.history.push('/dashboard')
                 }catch(error){
                     console.log(error);
+                    toast.error("😞 Oups, quelque chose s'est mal passé")
                 }
             }  
         }else{
@@ -228,7 +245,7 @@ class AddRecipePage extends Component {
         return (
             <Fragment>
                 <div className="container--pageTitle">
-                    <h2 className="pageTitle">Publier une recette</h2>
+                    <h2 className="pageTitle">Editer une recette</h2>
                 </div>
                 <div className="container">
                     <form className='form' onSubmit= {this.handleSubmit}>
@@ -272,8 +289,9 @@ class AddRecipePage extends Component {
                                     <input
                                         id="inputServings"
                                         name="servings" 
-                                        onChange={this.handleChange}
+                                        value= {this.state.servings}
                                         placeholder="0"
+                                        onChange={this.handleChange}
                                         type="number"
                                         min="1"/>
                                     <button 
@@ -390,4 +408,4 @@ class AddRecipePage extends Component {
     }
 }
 
-export default AddRecipePage;
+export default EditRecipePage;

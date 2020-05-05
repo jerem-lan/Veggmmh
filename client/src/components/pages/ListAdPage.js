@@ -70,7 +70,7 @@ class ListAdPage extends Component {
                     <h2>Annonces</h2>
                     <div className="container">
 
-                    <input type="text" placeholder="Rechercher" className='input' onChange={this.handleSearch} value={this.state.search}/>
+                        <input type="text" placeholder="Rechercher" className='input' onChange={this.handleSearch} value={this.state.search}/>
 
                         {this.state.loading && <ListLoader /> }
                             {paginatedAds.length === 0 && 
@@ -80,37 +80,37 @@ class ListAdPage extends Component {
                             }
                         {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
                         { !this.state.loading && paginatedAds.map(ad =>
-                                <div className="adItem--container" key={ad.id}> 
-                                    <NavLink to={{
-                                        pathname: `/annonce/${ad.id}`,
-                                        props: {
-                                            id: `${ad.id}`,
-                                            idUser:`${ad.user.id}`,
-                                            title: `${ad.title}`,
-                                            postcode: `${ad.postcode}`,
-                                            creationDate: `${ad.creationDate}`,
-                                            modificationDate: `${ad.modificationDate}`,
-                                            content: `${ad.content}`,
-                                            username: `${ad.user.username}`,
-                                            userEmail : `${ad.user.email}`,
-                                            currentIdUser : `${idUser}`
-                                        }
-                                    }}>
-                                        <h3 className="CardTitle">{ad.title}</h3>
-                                        <p>Le {ad.creationDate} par <span>{ad.user.username}</span></p>
-                                        <p className="adItem--content">{this.text_truncate(ad.content, 80)}</p>
-                                        <p>{ad.postcode}</p>
-                                    </NavLink>
-                                </div>
-                            )}
-                            <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={filteredAds.length} onPageChanged={this.handlePageChanged}/>
+                            <div className="adItem--container" key={ad.id}> 
+                                <NavLink to={{
+                                    pathname: `/annonce/${ad.id}`,
+                                    props: {
+                                        id: `${ad.id}`,
+                                        idUser:`${ad.user.id}`,
+                                        title: `${ad.title}`,
+                                        postcode: `${ad.postcode}`,
+                                        creationDate: `${ad.creationDate}`,
+                                        modificationDate: `${ad.modificationDate}`,
+                                        content: `${ad.content}`,
+                                        username: `${ad.user.username}`,
+                                        userEmail : `${ad.user.email}`,
+                                        currentIdUser : `${idUser}`
+                                    }
+                                }}>
+                                    <h3 className="CardTitle">{ad.title}</h3>
+                                    <p>Le {ad.creationDate} par <span>{ad.user.username}</span></p>
+                                    <p className="adItem--content">{this.text_truncate(ad.content, 80)}</p>
+                                    <p>{ad.postcode}</p>
+                                </NavLink>
+                            </div>
+                        )}
+                        <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={filteredAds.length} onPageChanged={this.handlePageChanged}/>
                     </div>
-            </Fragment>
+                </Fragment>
             )
         } else { 
             return (
                 <Fragment>
-                    <h2>Annonces</h2>
+                    <h2 className="SectionTitle">Annonces</h2>
                     <div className="container">
                         {this.state.loading && <ListLoader /> }
                         {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}

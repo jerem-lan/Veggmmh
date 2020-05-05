@@ -21,6 +21,7 @@ import AddRecipePage from './components/pages/AddRecipePage';
 import MyFavRecipesPage from './components/pages/MyFavRecipesPage';
 import MyAdsPage from './components/pages/MyAdsPage';
 import EditAdPage from './components/pages/EditAdPage';
+import EditRecipePage from './components/pages/EditRecipePage';
 import AdminDashboard from './components/pages/AdminDashboard';
 import ManageRecipes from './components/pages/ManageRecipes';
 import ManageAds from './components/pages/ManageAds';
@@ -140,6 +141,10 @@ const Root = () => {
                     <Route 
                         path='/modifier-annonce' 
                         component={EditAdPage} 
+                    />
+                    <Route 
+                        path='/modifier-recette/:id' 
+                        component={EditRecipePage} 
                     />
                     <Route 
                         path='/carte-ingredient/:name'

@@ -30,7 +30,8 @@ const MyRecipes = ({ Recipes, handleDeleteRecipe }) => {
 
 	const filteredRecipes = Recipes.filter(
 		recipe =>
-			recipe.recipeTitle.toLowerCase().includes(Search.toString().toLowerCase())
+			recipe.recipeTitle.toLowerCase().includes(Search.toString().toLowerCase()) ||
+			recipe.type.toLowerCase().includes(Search.toString().toLowerCase())
 		)
 
 	const start = CurrentPage * itemsPerPage - itemsPerPage
@@ -53,6 +54,7 @@ const MyRecipes = ({ Recipes, handleDeleteRecipe }) => {
 								id={recipe.id}
 								key={recipe.id}
 								title={recipe.recipeTitle}
+								type={recipe.type}
 								username={getUsername()}
 								handleDeleteRecipe={handleDeleteRecipe} />
 						)}
