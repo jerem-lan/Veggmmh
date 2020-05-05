@@ -202,13 +202,14 @@ header {
 .btn--favorite > svg > path {
   fill: #96E5C9;
 }
-/* .btn--favorite:hover > svg > circle {
+
+.btn--favorite.active > svg > circle {
   fill: #56B693;
   opacity: 1;
 }
-.btn--favorite:hover > svg > path {
+.btn--favorite.active > svg > path {
   fill: #FCFBF7;
-} */
+}
 .btn:hover {
   transform: scale(1.05);
 }
