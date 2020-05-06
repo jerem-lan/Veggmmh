@@ -3,18 +3,18 @@ import { NavLink } from 'react-router-dom';
 import AuthApi from '../services/authApi';
 import { toast } from 'react-toastify';
 
-const Header = ({isConnected, onLogout, history}) => {
+const Header = ({history}) => {
 
     const handleLogout = () => {
         AuthApi.logout();
-        onLogout(false);
         toast.info("À très vite ! 🍃 ")
         history.push("/");
     } 
 
     const isAdmin = AuthApi.isAdmin();
+
     return (
-        <> {isConnected ? (<header>
+        <> {AuthApi.isAuthenticated() ? (<header>
             <div className="header">
                 <NavLink to="/dashboard" className="header--iconGroup" title="Accueil">
                     <svg className='icon--header' viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
