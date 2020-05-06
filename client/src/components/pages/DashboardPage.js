@@ -105,7 +105,7 @@ class DashboardPage extends Component {
             <div className="container container--dashboard"> 
 
                 {loading && <DashBoardLoader />}      
-                {!loading && authApi.isAuthenticated()  && <>
+                {((!loading) && (authApi.isAuthenticated()))  && <>
                     <ProfilCartouche isConnected={true} username={username}/>
                     <div className="edit--prsonnalInfos">
                         {/* <div className="title">
@@ -135,7 +135,7 @@ class DashboardPage extends Component {
                         </div>
                     </div> </>}
 
-            {!loading && !authApi.isAuthenticated() && <>
+            {((!loading) && (!authApi.isAuthenticated())) && <>
                     <ProfilCartouche isConnected={false} username="jeune pousse !"/>
                     <div className="profilNav">
                         <div className="featureBlocks">

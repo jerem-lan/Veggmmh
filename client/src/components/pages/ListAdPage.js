@@ -65,17 +65,19 @@ class ListAdPage extends Component {
             const decoded = jwtDecode(window.localStorage.getItem("authToken"))
             const idUser = decoded.id
             return (    
-                    <div className="container">
-                        <h2 className="SectionTitle">Annonces</h2>
-                        <input type="text" placeholder="Rechercher" className='input' onChange={this.handleSearch} value={this.state.search}/>
-                        {this.state.loading && <ListLoader /> }
-                        {paginatedAds.length === 0 && 
-                                    <div>
-                                        <p> Aucun résultat </p>
-                                    </div>
-                        }
-                        {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
-                        { !this.state.loading && paginatedAds.map(ad =>
+                <div className="container">
+                    <h2 className="SectionTitle">Annonces</h2>
+                    <input type="text" placeholder="Rechercher" className='input' onChange={this.handleSearch} value={this.state.search}/>
+                    {this.state.loading && <ListLoader /> }
+                    {/* {paginatedAds.length === 0 && 
+                                <div>
+                                    <p> Aucun résultat </p>
+                                </div>
+                    } */}
+                    {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
+                    { !this.state.loading && 
+                        <>
+                            {paginatedAds.map(ad =>
                                 <div className="adItem--container" key={ad.id}> 
                                     <NavLink to={{
                                         pathname: `/annonce/${ad.id}`,
@@ -98,9 +100,11 @@ class ListAdPage extends Component {
                                         <p>{ad.postcode}</p>
                                     </NavLink>
                                 </div>
-                        )}
-                        <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={filteredAds.length} onPageChanged={this.handlePageChanged}/>
-                    </div>
+                            )}
+                            <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={filteredAds.length} onPageChanged={this.handlePageChanged}/>
+                        </>
+                    }
+                </div>
             )
 
         } else { 
