@@ -126,7 +126,11 @@ const Root = () => {
                     />
                     <Route 
                         path="/recette/:id"
-                        component={ResumeRecipe} 
+                        render={(props) => 
+                            <ResumeRecipe
+                                BackWithRouter={BackWithRouter}
+                                {...props}
+                            />}
                     />
                     <Route 
                         path="/trouver-recette"
@@ -150,8 +154,12 @@ const Root = () => {
                         />}
                     />
                     <Route 
-                        path='/annonce/:id' 
-                        component={ResumeAdPage} 
+                        path='/annonce/:id'
+                        render={(props) => 
+                            <ResumeAdPage
+                                BackWithRouter={BackWithRouter}
+                                {...props}
+                            />}
                     />
                     {/*ROUTE ADMIN*/}
                     <AdminRoute 

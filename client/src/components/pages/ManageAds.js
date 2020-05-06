@@ -82,21 +82,20 @@ class ManageAds extends Component {
                     {this.state.loading && <ListLoader /> }
                     {!this.state.loading && 
                         <>
-                            <h2>Liste des annonces</h2>
+                            <h2 className="SectionTitle">Liste des annonces</h2>
                             <div>
-                                <input type="text" placeholder="Rechercher" className='input' onChange={this.handleSearch} value={this.state.search}/>
+                                <input type="text" placeholder="Rechercher" className='input input--search' onChange={this.handleSearch} value={this.state.search}/>
                             </div>
-                            <table className="tableAdmin">
+                            <table className="tableAdmin tableAdmin--ads">
                                 <thead>
                                     <tr>
                                         <th>ID.</th>
-                                        <th>Annonce de</th>
+                                        <th>Titre</th>
                                         <th>Code postal</th>
+                                        <th>Annonce de</th>
                                         <th>Date de création</th>
                                         <th>Date de modification</th>
-                                        <th>Titre de l'annonce</th>
                                         <th /> 
-                                        <th />
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -108,19 +107,11 @@ class ManageAds extends Component {
                                     {paginatedAds.map(ad => 
                                         <tr key={ad.id}>
                                             <td>{ad.id}</td>
-                                            <td>{ad.user.username}</td>
+                                            <td><strong>{ad.title}</strong></td>
                                             <td>{ad.postcode}</td>
+                                            <td>{ad.user.username}</td>
                                             <td>{ad.creationDate}</td>
                                             <td>{ad.modificationDate}</td>
-                                            <td>{ad.title}</td>
-                                            <td className="alignTabButton">
-                                                <button className="btn" onClick={() => this.handleDelete(ad.id)}>
-                                                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M17.9933 6.49329L6.00034 18.5" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
-                                                        <path d="M5.99316 6.49329L17.6059 18.1061" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
-                                                    </svg>
-                                                </button>
-                                            </td>
                                             <td className="alignTabButton">
                                                 <NavLink to={{
                                                     pathname: `/annonce/${ad.id}`,
@@ -137,15 +128,14 @@ class ManageAds extends Component {
                                                         currentIdUser : `${this.getCurrentIdUser()}`
                                                     }
                                                 }}>
-                                                    <button className="btn">
-                                                        <svg viewBox="0 0 31 31" width="31" height="31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fill="none" d="M.5 1h30v30H.5z"/><path d="M26.8 16s-5 7-11.3 7c-6.3 0-11.3-7-11.3-7s5-7 11.3-7c6.2 0 11.3 7 11.3 7z" stroke="#fff" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                                                        <path d="M15.5 20.6a4.6 4.6 0 100-9.2 4.6 4.6 0 000 9.2z" stroke="#fff" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                                                        <path d="M15.5 18a2 2 0 100-4 2 2 0 000 4z" fill="#fff"/>
-                                                        </svg>
-                                                    </button>
+                                                    <svg  viewBox="0 0 31 31" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill="none" d="M.5 1h30v30H.5z"/><path d="M26.8 16s-5 7-11.3 7c-6.3 0-11.3-7-11.3-7s5-7 11.3-7c6.2 0 11.3 7 11.3 7z" stroke="#56B693" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/><path d="M15.5 20.6a4.6 4.6 0 100-9.2 4.6 4.6 0 000 9.2z" stroke="#56B693" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/><path d="M15.5 18a2 2 0 100-4 2 2 0 000 4z" fill="#56B693"/>
+                                                    </svg>
                                                 </NavLink>
-                                            </td>  
+                                                <svg className="btn--delete" onClick={() => this.handleDelete(ad.id)} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M18 6L6 18M6 6l12 12" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
+                                                </svg>
+                                            </td>
                                         </tr>
                                     )}
                                 </tbody>

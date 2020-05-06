@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import ListLoader from '../../loaders/ListLoader';
@@ -21,29 +21,24 @@ class ListRecipePage extends Component {
     render() {
         const loading = this.state.loading
         return (
-            <Fragment>
-                <div className="container--pageTitle">
-                    <h2 className="pageTitle">Trouver une recette</h2>
-                </div>
-                <div className="container">
-                    {loading && <ListLoader />}
-                    
-                    {!loading && 
-                <>  
-                        <h2>Recettes</h2>
-                        {this.state.recipes.map(recipe => 
-                        <div 
-                            className="Card"
-                            style={ { backgroundColor: '#e3fcf3'}} 
-                            key={recipe.id}
-                        >  
-                            <Link to={"/recette/" + recipe.id} className="CardTitle"> 
-                                {recipe.recipeTitle}
-                            </Link> 
-                        </div>
-                    )} </> }
-                </div>
-            </Fragment>
+            <div className="container">
+                {loading && <ListLoader />}
+                
+                {!loading && 
+            <>  
+                    <h2>Recettes</h2>
+                    {this.state.recipes.map(recipe => 
+                    <div 
+                        className="Card"
+                        style={ { backgroundColor: '#e3fcf3'}} 
+                        key={recipe.id}
+                    >  
+                        <Link to={"/recette/" + recipe.id} className="CardTitle"> 
+                            {recipe.recipeTitle}
+                        </Link> 
+                    </div>
+                )} </> }
+            </div>
         );
     }
 }
