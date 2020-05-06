@@ -765,7 +765,7 @@ Favorites Pages
   transform: translateX(5px);
 }
 .CardTitle {
-  max-width: 300px;
+  max-width: 350px;
   font-weight : 600;
 }
 .CardTitle:hover {
