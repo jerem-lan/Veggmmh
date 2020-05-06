@@ -16,11 +16,36 @@ class ResumeRecipe extends Component {
         times: "",
         title: "",
         user: "",
-        id: this.props.match.params.id
+        id: this.props.match.params.id,
+        userFav: [],
+        isFav: false,
     }
     //dés que la page s'ouvre je charge les données de la recette
     componentDidMount() {
+        this.requests()
+    }
+
+    requests = async event => { 
+        const token = window.localStorage.getItem("authToken")
+        const decoded = jwtDecode(token)
+        const idUser = decoded.id
         const id = this.state.id
+        await
+        axios
+        .get("http://127.0.0.1:8000/api/users/" + idUser + "/bookmarks")
+        .then(res => {
+            const favs = res.data['hydra:member'].map(fav =>
+            fav.id)
+            this.setState({
+                userFav : favs
+            })
+            if(this.state.userFav.includes(+this.state.id)){
+                this.setState({
+                    isFav : true
+                })
+            }
+        })
+        await
         axios
         .get("http://127.0.0.1:8000/api/recipes/" + id)
         .then(res => {
@@ -40,6 +65,15 @@ class ResumeRecipe extends Component {
             console.log(error.response);
         });
     }
+
+    isFav() {
+        if(this.state.isFav) {
+            return "btn btn--favorite active"
+        }else {
+            return "btn btn--favorite"
+        }
+    }
+
     //fonction qui ajoute la recette en favoris
     handleBookmarks = (event) => {
         event.preventDefault()
@@ -50,12 +84,33 @@ class ResumeRecipe extends Component {
         const decoded = jwtDecode(token)
         const id = decoded.id
         const config = {headers: { Authorization: `Bearer ${token}` }}
+
+        if(!this.state.isFav){
         axios
             .put("http://localhost:8000/api/bookmarks/"+id+"/add", recipe, config)
             .then(toast.info("Une nouvelle recette dans vos favoris 👌"))
             .catch(error =>
                 toast.error("😞 Oups, quelque chose s'est mal passé")
             )
+        this.setState(prevState => ({
+            userFav: [...prevState.userFav, recipe.id],
+            isFav: true
+            }))
+
+        }else{
+            axios
+            .put("http://localhost:8000/api/bookmarks/"+id+"/delete", recipe, config)
+            .then(toast.info("Vous avez bien retiré cette recette de vos favoris 👌"))
+            .catch(error =>
+                toast.error("😞 Oups, quelque chose s'est mal passé")
+            )
+            this.setState({
+                // userFav: this.state.userFav.filter(function(fav) {
+                //     return fav !== id
+                // } ),
+                isFav: false
+            })
+        }
     }
 
     render() {

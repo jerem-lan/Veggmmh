@@ -268,7 +268,8 @@ class AddRecipePage extends Component {
                                 </button>
                                 <input
                                     id="inputServings"
-                                    name="servings" 
+                                    name="servings"
+                                    onChange={this.handleChange} 
                                     placeholder="0"
                                     type="number"
                                     min="1"/>

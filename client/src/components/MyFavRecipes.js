@@ -31,7 +31,8 @@ const MyFavRecipes = ({ favRecipes, handleDeleteFavRecipe }) => {
 
 	const filteredFavRecipes = favRecipes.filter(
 		favRecipe =>
-			favRecipe.recipeTitle.toLowerCase().includes(Search.toString().toLowerCase())
+			favRecipe.recipeTitle.toLowerCase().includes(Search.toString().toLowerCase()) ||
+			favRecipe.type.toLowerCase().includes(Search.toString().toLowerCase())
 		)
 
 	const start = CurrentPage * itemsPerPage - itemsPerPage
@@ -49,6 +50,7 @@ const MyFavRecipes = ({ favRecipes, handleDeleteFavRecipe }) => {
 							id={recipe.id}
 							key={recipe.id}
 							title={recipe.recipeTitle}
+							type={recipe.type}
 							username={getUsername()}
 							handleDeleteFavRecipe={handleDeleteFavRecipe} />
 					)}

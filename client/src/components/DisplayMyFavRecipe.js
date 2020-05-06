@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import FavButton from './FavButton'
 import { NavLink } from 'react-router-dom'
 
-const DisplayFavRecipe = ({ id, title, handleDeleteFavRecipe }) => {	
+const DisplayFavRecipe = ({ id, title, type, handleDeleteFavRecipe }) => {	
  
 	return (
 		
@@ -13,6 +13,7 @@ const DisplayFavRecipe = ({ id, title, handleDeleteFavRecipe }) => {
 					style={ { backgroundColor: '#e3fcf3'} } 
 				>
 					<FavButton />
+                    <p class="recipeTypeTag recipeTypeTag--table">{type}</p>
 					<NavLink to={{
 						pathname: `/recette/${id}`,
 						props: {
