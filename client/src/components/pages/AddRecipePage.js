@@ -220,7 +220,7 @@ class AddRecipePage extends Component {
         const { value, suggestions } = this.state;
         // Autosuggest passe toutes ces props à l'input
         const inputProps = {
-            placeholder: 'ex : tomate',
+            placeholder: 'Ex : tomate',
             value,
             onChange: this.onChange
         };
@@ -238,7 +238,7 @@ class AddRecipePage extends Component {
                             value={this.state.title}
                             onChange={this.handleChange}
                             type="text"
-                            placeholder="ex : Lasagnes provençales"
+                            placeholder="Ex : Lasagnes provençales"
                             required />
                     </div>
 
@@ -332,7 +332,7 @@ class AddRecipePage extends Component {
                             value={this.state.quantity}
                             onChange={this.handleChange}
                             type="text"
-                            placeholder="ex : 70gr, 1càs, à convenance..."/>
+                            placeholder="Ex : 70gr, 1càs, à convenance..."/>
                         <button className="btn btn--add" onClick={this.handleIngredients}>+</button>
                     </div>
                         
@@ -351,7 +351,6 @@ class AddRecipePage extends Component {
                                 <svg className="btn--delete removeStep" onClick={this.handleRemoveStep(idx)} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M18 6L6 18M6 6l12 12" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
                                 </svg>
-                                {/* <button className="btn btn--add" onClick={this.handleRemoveStep(idx)}>-</button> */}
                             </div>
                         )
                     }

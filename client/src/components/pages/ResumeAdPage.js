@@ -92,14 +92,14 @@ class ResumeAdPage extends Component {
                 <div className="container">
                     <div>
                         <div className="adInfos">
-                            <h2>{this.state.title}</h2>
+                            <h2 className="capitalize">{this.state.title}</h2>
                             <p className="adDate">{this.state.creationDate}</p>
                             {this.state.modificationDate !== "null" && <p>{this.state.modificationDate}</p> }
                             <p className="adAuthor">Postée par <span>{this.state.username}</span></p>
                         </div>
                         <div className="adContainer">
                             <h3>Description</h3>
-                            <p>{this.state.content}</p>
+                            <p className="capitalize">{this.state.content}</p>
                             <h3>
                                 <svg className="icon--localisation" viewBox="0 0 24 24" width="15px" height="15px">
                                     <path d="M12 0a8.81 8.81 0 00-9 8.63c0 5.14 5.68 12.23 8 14.93a1.32 1.32 0 002 0c2.33-2.7 8-9.79 8-14.93A8.81 8.81 0 0012 0zm0 11.71a3.15 3.15 0 01-3.21-3.08A3.15 3.15 0 0112 5.55a3.15 3.15 0 013.21 3.08A3.15 3.15 0 0112 11.71z">

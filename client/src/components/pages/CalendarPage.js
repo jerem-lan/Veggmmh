@@ -56,7 +56,7 @@ class CalendarPage extends Component {
     handleChange = (event) => {
         this.setState({ search: event.target.value, loading: true })
         const itemSelectionDeux = this.state.fruitsAndVeggies.filter(item => 
-            item.name.includes(this.state.search)
+            item.name.toLowerCase().includes(this.state.search.toLowerCase())
         )
         this.setState({ itemSelectionDeux, loading: false }) 
     }
@@ -76,7 +76,7 @@ class CalendarPage extends Component {
             <div className="container">
                 <h2 className="SectionTitle">Calendrier des fruits et légumes locaux de saison</h2>
                 <label className="label">Rechercher par aliment</label>
-                <input className="input input--search" type='text' onChange={this.handleChange} value={this.state.search} placeholder="tomate"/>
+                <input className="input input--search" type='text' onChange={this.handleChange} value={this.state.search} placeholder="Ex: tomate"/>
                 <div className="fruitVegBlocks">
                     {loading && <IngredientLoader />} 
                     {

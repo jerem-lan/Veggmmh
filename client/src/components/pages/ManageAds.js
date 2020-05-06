@@ -107,7 +107,7 @@ class ManageAds extends Component {
                                     {paginatedAds.map(ad => 
                                         <tr key={ad.id}>
                                             <td>{ad.id}</td>
-                                            <td><strong>{ad.title}</strong></td>
+                                            <td><strong className="capitalize">{ad.title}</strong></td>
                                             <td>{ad.postcode}</td>
                                             <td>{ad.user.username}</td>
                                             <td>{ad.creationDate}</td>
