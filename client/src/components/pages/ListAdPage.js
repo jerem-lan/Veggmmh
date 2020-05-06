@@ -94,7 +94,7 @@ class ListAdPage extends Component {
                                     }}>
                                         <h3 className="CardTitle">{ad.title}</h3>
                                         <p>Le {ad.creationDate} par <span>{ad.user.username}</span></p>
-                                        <p className="adItem--content">{this.text_truncate(ad.content, 80)}</p>
+                                        <p className="adItem--content  capitalize">{this.text_truncate(ad.content, 80)}</p>
                                         <p>{ad.postcode}</p>
                                     </NavLink>
                                 </div>
@@ -127,7 +127,7 @@ class ListAdPage extends Component {
                             }}>
                                 <h3>{ad.title}</h3>
                                 <p>Le {ad.creationDate} par <span>{ad.user.username}</span></p>
-                                <p className="adItem--content">{this.text_truncate(ad.content, 80)}</p>
+                                <p className="adItem--content capitalize">{this.text_truncate(ad.content, 80)}</p>
                                 <p>{ad.postcode}</p>
                             </NavLink>
                         </div>

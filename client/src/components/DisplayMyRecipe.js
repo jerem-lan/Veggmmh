@@ -10,7 +10,7 @@ const DisplayMyRecipe = ({id, title, type, handleDeleteRecipe}) => {
 				className="Card"
 				style={ { backgroundColor: '#e3fcf3'} } 
 			>
-				<p class="recipeTypeTag recipeTypeTag--table">{type}</p>
+				<p className="recipeTypeTag recipeTypeTag--table">{type}</p>
 				<NavLink to={{
 					pathname: `/recette/${id}`,
 					props: {

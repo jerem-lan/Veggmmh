@@ -81,7 +81,7 @@ class AddAdPage extends Component {
                             value={this.state.title}
                             onChange={this.handleChange}
                             type="text"
-                            placeholder="ex : Botte de radis du potager"
+                            placeholder="Ex : Botte de radis du potager"
                             required />
                         {this.state.errors.title ? <AlertMessage message = { this.state.errors.title }  /> : ""}
 
@@ -104,7 +104,7 @@ class AddAdPage extends Component {
                             value={this.state.postcode}
                             onChange={this.handleChange}
                             type="text"
-                            placeholder="ex : 59370"
+                            placeholder="Ex : 59370"
                             required />
                         {this.state.errors.postcode ? <AlertMessage message = { this.state.errors.postcode }  /> : ""}
                     </span>
