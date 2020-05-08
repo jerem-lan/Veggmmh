@@ -803,10 +803,9 @@ Resume Recipe Page
 .ingredientBlock span {
   max-width: 100px;
 }
-/* .step::before {
-  counter-increment: section;
-  content: counter(section);
-} */
+.ingredientBlock--button {
+  padding: 75px 15px 15px 15px;
+}
 .steps {
   list-style: none;
   padding: 0;

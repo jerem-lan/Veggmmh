@@ -43,7 +43,7 @@ class ManageIngredients extends Component {
 
         this.setState({ ingredients: ingredients })
 
-        axios.delete("http://127.0.0.1:8000/api/ingredients/" + id, config)
+        axios.delete("http://127.0.0.1:8000/api/admin/ingredients/" + id, config)
             .then(response => toast.info("👌 L'ingredient a été supprimé avec succès"))
             .catch(error => {
                 this.setState({ ingredients: original });
@@ -174,7 +174,7 @@ class ManageIngredients extends Component {
                                             value={this.state.family}
                                             required
                                         >
-                                            <option value="" disabled selected>Famille de l'aliment</option>
+                                            <option defaultValue hidden>Famille de l'aliment</option>
                                             <option value="Matière Grasse">Matière grasse</option>
                                             <option value="légumineuses">Légumineuses</option>
                                             <option value="légumes">Légumes</option>
