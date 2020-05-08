@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import ListLoader from '../../loaders/ListLoader';
 import jwtDecode from 'jwt-decode';
@@ -64,22 +64,20 @@ class ListAdPage extends Component {
             //Récupération du role et de l'id de l'utilisateur connecté 
             const decoded = jwtDecode(window.localStorage.getItem("authToken"))
             const idUser = decoded.id
-
-            return (
-                <Fragment>
-                    <h2>Annonces</h2>
-                    <div className="container">
-
+            return (    
+                <div className="container">
+                    <h2 className="SectionTitle">Annonces</h2>
                     <input type="text" placeholder="Rechercher" className='input' onChange={this.handleSearch} value={this.state.search}/>
-
-                        {this.state.loading && <ListLoader /> }
-                            {paginatedAds.length === 0 && 
-                                        <div>
-                                            <p> Aucun résultat </p>
-                                        </div>
-                            }
-                        {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
-                        { !this.state.loading && paginatedAds.map(ad =>
+                    {this.state.loading && <ListLoader /> }
+                    {/* {paginatedAds.length === 0 && 
+                                <div>
+                                    <p> Aucun résultat </p>
+                                </div>
+                    } */}
+                    {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
+                    { !this.state.loading && 
+                        <>
+                            {paginatedAds.map(ad =>
                                 <div className="adItem--container" key={ad.id}> 
                                     <NavLink to={{
                                         pathname: `/annonce/${ad.id}`,
@@ -98,23 +96,24 @@ class ListAdPage extends Component {
                                     }}>
                                         <h3 className="CardTitle">{ad.title}</h3>
                                         <p>Le {ad.creationDate} par <span>{ad.user.username}</span></p>
-                                        <p className="adItem--content">{this.text_truncate(ad.content, 80)}</p>
+                                        <p className="adItem--content  capitalize">{this.text_truncate(ad.content, 80)}</p>
                                         <p>{ad.postcode}</p>
                                     </NavLink>
                                 </div>
                             )}
                             <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={filteredAds.length} onPageChanged={this.handlePageChanged}/>
-                    </div>
-            </Fragment>
+                        </>
+                    }
+                </div>
             )
+
         } else { 
             return (
-                <Fragment>
-                    <h2>Annonces</h2>
-                    <div className="container">
-                        {this.state.loading && <ListLoader /> }
-                        {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
-                        { !this.state.loading && paginatedAds.map(ad =>
+                <div className="container">
+                    <h2 className="SectionTitle">Annonces</h2>
+                    {this.state.loading && <ListLoader /> }
+                    {/*.reverse sur le state pour afficher les annonces les plus récentes en premier */}
+                    { !this.state.loading && paginatedAds.map(ad =>
                         <div className="adItem--container" key={ad.id}> 
                             <NavLink to={{
                                 pathname: `/annonce/${ad.id}`,
@@ -132,13 +131,13 @@ class ListAdPage extends Component {
                             }}>
                                 <h3>{ad.title}</h3>
                                 <p>Le {ad.creationDate} par <span>{ad.user.username}</span></p>
-                                <p className="adItem--content">{this.text_truncate(ad.content, 80)}</p>
+                                <p className="adItem--content capitalize">{this.text_truncate(ad.content, 80)}</p>
                                 <p>{ad.postcode}</p>
                             </NavLink>
-                        </div>)}
-                        <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={filteredAds.length} onPageChanged={this.handlePageChanged}/>
-                    </div>
-                </Fragment>
+                        </div>
+                    )}
+                    <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={filteredAds.length} onPageChanged={this.handlePageChanged}/>
+                </div>
             )
         }
     }

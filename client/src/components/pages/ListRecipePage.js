@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import ListLoader from '../../loaders/ListLoader';
@@ -58,7 +58,7 @@ class ListRecipePage extends Component {
             )
         })
         return (
-            <Fragment>
+            <>
                 <div className="container--pageTitle">
                     <h2 className="pageTitle">Trouver une recette</h2>
                 </div>
@@ -83,7 +83,7 @@ class ListRecipePage extends Component {
                         </div>
                     )} </> }
                 </div>
-            </Fragment>
+            </>
         );
     }
 }

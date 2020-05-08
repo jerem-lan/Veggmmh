@@ -89,23 +89,23 @@ class ManageUsers extends Component {
                     {this.state.loading && <ListLoader /> }
                     {!this.state.loading &&
                         <>
-                            <h2>Liste des utilisateurs</h2>
+                            <h2 className="SectionTitle">Liste des utilisateurs</h2>
                             <div>
-                                <input type="text" placeholder="Rechercher" className='input' onChange={this.handleSearch} value={this.state.search}/>
+                                <input type="text" placeholder="Rechercher" className='input input--search' onChange={this.handleSearch} value={this.state.search}/>
                             </div>
-                            <table className="tableAdmin">
+                            <div className="scrollable-table">
+                            <table className="tableAdmin tableAdmin--users">
                                 <thead>
-                                    <tr>
+                                    <tr >
                                     <th>ID.</th>
-                                    <th>Email</th>
                                     <th>Rôle</th>
                                     <th>Nom d'utilisateur</th>
+                                    <th>Email</th>
+                                    <th>Date d'inscription</th>
                                     <th>Nom</th>
                                     <th>Prénom</th>
                                     <th>Code postal</th>
-                                    <th>Date d'inscription</th>
-                                    <th /> 
-                                    <th />
+                                    <th/> 
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -117,21 +117,13 @@ class ManageUsers extends Component {
                                     {paginatedUsers.map(user => 
                                         <tr key={user.id}>
                                             <td>{user.id}</td>
-                                            <td>{user.email}</td>
                                             <td>{user.roles.map(role => <div key={role}>{role}</div>)}</td>
-                                            <td>{user.username}</td>
+                                            <td><strong>{user.username}</strong></td>
+                                            <td><strong>{user.email}</strong></td>
+                                            <td>{user.registrationDate}</td>
                                             <td>{user.lastname}</td>
                                             <td>{user.firstname}</td>
                                             <td>{user.postcode}</td>
-                                            <td>{user.registrationDate}</td>
-                                            <td className="alignTabButton">
-                                                <button className="btn" onClick={() => this.handleDelete(user.id)}>
-                                                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M17.9933 6.49329L6.00034 18.5" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
-                                                        <path d="M5.99316 6.49329L17.6059 18.1061" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
-                                                    </svg>
-                                                </button>    
-                                            </td>
                                             <td className="alignTabButton">
                                                 <NavLink to={{
                                                     pathname: `/utilisateur/${user.id}`,
@@ -145,19 +137,19 @@ class ManageUsers extends Component {
                                                         registrationDate: `${user.registrationDate}`,
                                                     }
                                                 }}>
-                                                    <button className="btn">
-                                                        <svg viewBox="0 0 31 31" width="31" height="31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fill="none" d="M.5 1h30v30H.5z"/><path d="M26.8 16s-5 7-11.3 7c-6.3 0-11.3-7-11.3-7s5-7 11.3-7c6.2 0 11.3 7 11.3 7z" stroke="#fff" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                                                        <path d="M15.5 20.6a4.6 4.6 0 100-9.2 4.6 4.6 0 000 9.2z" stroke="#fff" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                                                        <path d="M15.5 18a2 2 0 100-4 2 2 0 000 4z" fill="#fff"/>
-                                                        </svg>
-                                                    </button>
-                                                </NavLink>
+                                                    <svg  viewBox="0 0 31 31" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill="none" d="M.5 1h30v30H.5z"/><path d="M26.8 16s-5 7-11.3 7c-6.3 0-11.3-7-11.3-7s5-7 11.3-7c6.2 0 11.3 7 11.3 7z" stroke="#56B693" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/><path d="M15.5 20.6a4.6 4.6 0 100-9.2 4.6 4.6 0 000 9.2z" stroke="#56B693" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/><path d="M15.5 18a2 2 0 100-4 2 2 0 000 4z" fill="#56B693"/>
+                                                    </svg>
+                                                </NavLink>    
+                                                <svg className="btn--delete" onClick={() => this.handleDelete(user.id)} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M18 6L6 18M6 6l12 12" stroke="#E94C4C" strokeWidth="2" strokeLinecap="round"/>
+                                                </svg>
                                             </td>
                                         </tr>
                                     )}
                                 </tbody>
                             </table>
+                            </div>
                             <PaginationForTab currentPage={this.state.currentPage} itemsPerPage={itemsPerPage} length={filteredUsers.length} onPageChanged={this.handlePageChanged}/>
                         </>
                     }

@@ -21,6 +21,7 @@ import AddRecipePage from './components/pages/AddRecipePage';
 import MyFavRecipesPage from './components/pages/MyFavRecipesPage';
 import MyAdsPage from './components/pages/MyAdsPage';
 import EditAdPage from './components/pages/EditAdPage';
+import EditRecipePage from './components/pages/EditRecipePage';
 import AdminDashboard from './components/pages/AdminDashboard';
 import ManageRecipes from './components/pages/ManageRecipes';
 import ManageAds from './components/pages/ManageAds';
@@ -35,7 +36,6 @@ import SearchRecipePage from './components/pages/SearchRecipePage';
 import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import { ToastContainer, toast } from 'react-toastify';
-import authApi from './services/authApi';
 import ResumeAdPage from './components/pages/ResumeAdPage';
 import ResumeUserPage from './components/pages/ResumeUserPage';
 
@@ -43,33 +43,38 @@ import ResumeUserPage from './components/pages/ResumeUserPage';
 
 AuthApi.setup()
 
-const PrivateRoute = ({path, isAuthenticated, component}) => {
-    return isAuthenticated ? (<Route path={path} component={component} />) :
+const PrivateRoute = ({path, component}) => {
+    const isConnect = AuthApi.isAuthenticated()
+    return isConnect ? (<Route path={path} component={component} />) :
     (toast.info("Tu as été déconnecté ⌛"), 
     <Redirect to="/login" />)
 }
 
-const AdminRoute = ({path, isAuthenticated, component, isAdmin}) => {
-    return isAuthenticated && isAdmin ? (<Route path={path} component={component} />) : 
+const AdminRoute = ({path, component}) => {
+    const isConnectAdmin = AuthApi.isAuthenticated()
+    const isAdmin = AuthApi.isAdmin();
+    return isConnectAdmin && isAdmin ? (<Route path={path} component={component} />) : 
     (<Redirect to="/dashboard" />)
 }
 
 const Root = () => {
 
     const [isConnected, setIsConnected] = useState(AuthApi.isAuthenticated());
-    const isAdmin = authApi.isAdmin();
+    const isAdmin = AuthApi.isAdmin();
     const HeaderWithRouter = withRouter(Header);
     const BackWithRouter = withRouter(BreadCrumbs);
     // const FooterWithRouter = withRouter(Footer);
 
     return (
         <Router>
-            <HeaderWithRouter isConnected={isConnected} onLogout={setIsConnected} isAdmin={isAdmin} />
+            <HeaderWithRouter />
                 <Switch>
+                    {/* Route accessible par tout le monde */}
                     <Route 
                         exact path='/' 
                         component={IndexPage} 
                     />
+                    
                     <Route  
                         path='/login'
                         render={(props) => 
@@ -79,6 +84,7 @@ const Root = () => {
                             {...props}
                         />} 
                     />
+
                     <Route 
                         path='/register' 
                         render={(props) => 
@@ -87,33 +93,67 @@ const Root = () => {
                             {...props}
                         />}
                     />
+
                     <Route
                         path='/dashboard'
                         component={DashboardPage} 
                     />
+
                     <Route 
                         path='/calendrier-des-saisons'
                         component={CalendarPage}
                     />
+
                     <Route
                         path="/liste-annonces"
                         component={ListAdPage}
                     />
-                    
+
+                    <Route 
+                        path='/carte-ingredient/:name'
+                        render={(props) => 
+                        <SeasonalItemCardPage
+                            BackWithRouter={BackWithRouter}
+                            {...props}
+                        />}
+                    />
+
+                    <Route 
+                        path='/annonce/:id'
+                        render={(props) => 
+                            <ResumeAdPage
+                                BackWithRouter={BackWithRouter}
+                                {...props}
+                            />}
+                    />
+
+                    <Route 
+                        path="/recette/:id"
+                        render={(props) => 
+                            <ResumeRecipe
+                            BackWithRouter={BackWithRouter}
+                            {...props}
+                            />}
+                    />
+
+                    <Route 
+                        path="/trouver-recette"
+                        component={ListRecipePage}
+                    />
+
+                    {/* ROUTE UTILISATEUR CONNECTE */}
+
                     <PrivateRoute
                         path="/ajouter-annonce"
-                        isAuthenticated={isConnected}
                         component={AddAdPage}
                     />
                     
                     <PrivateRoute 
                         path="/mes-recettes" 
-                        isAuthenticated={isConnected}
                         component={MyRecipesPage} 
                     />
                     <PrivateRoute 
                         path="/mes-recettes-favorites" 
-                        isAuthenticated={isConnected}
                         component={MyFavRecipesPage} 
                     />
                     <PrivateRoute 
@@ -123,7 +163,6 @@ const Root = () => {
                     />
                     <PrivateRoute 
                         path="/ajouter-recette"
-                        isAuthenticated={isConnected} 
                         component={AddRecipePage} 
                     />
                     <Route 
@@ -138,58 +177,50 @@ const Root = () => {
                         path="/liste-recette"
                         component={ListRecipePage}
                     />
-                    <Route
+                    <PrivateRoute
                         path="/utilisateur/:id"
-                        isAuthenticated={isConnected}
                         component={ResumeUserPage}
                     />
-                    <Route 
+                    <PrivateRoute 
                         path='/modifier-annonce' 
                         component={EditAdPage} 
                     />
-                    <Route 
-                        path='/carte-ingredient/:name'
-                        render={(props) => 
-                        <SeasonalItemCardPage
-                            BackWithRouter={BackWithRouter}
-                            {...props}
-                        />}
-                    />
-                    <Route 
-                        path='/annonce/:id' 
-                        component={ResumeAdPage} 
+                    <PrivateRoute 
+                        path='/modifier-recette/:id' 
+                        component={EditRecipePage} 
                     />
                     {/*ROUTE ADMIN*/}
                     <AdminRoute 
                         path="/admin/dashboard"
-                        isAuthenticated={isConnected}
                         isAdmin={isAdmin}
                         component={AdminDashboard}
                     />
+
                     <AdminRoute 
                         path="/admin/gerer-recettes"
-                        isAuthenticated={isConnected}
                         isAdmin={isAdmin}
                         component={ManageRecipes}
                     />
+
                     <AdminRoute 
                         path="/admin/gerer-annonces"
-                        isAuthenticated={isConnected}
                         isAdmin={isAdmin}
                         component={ManageAds}
                     />
+
                     <AdminRoute 
                         path="/admin/gerer-ingredients"
-                        isAuthenticated={isConnected}
                         isAdmin={isAdmin}
                         component={ManageIngredients}
                     />
+
                     <AdminRoute 
                         path="/admin/gerer-utilisateurs"
-                        isAuthenticated={isConnected}
                         isAdmin={isAdmin}
                         component={ManageUsers}
                     />
+
+                    {/* ROUTE NOT FOUND A LAISSER EN BAS DE PAGE !! */}
                     <Route component={NotFound} />
                 </Switch>
                 <ToastContainer 
@@ -198,12 +229,13 @@ const Root = () => {
                 {/* <FooterWithRouter/> */}
         </Router>
         
-    )
-}
-  
-ReactDOM.render(<Root />, document.getElementById('root'))
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+        )
+    }
+    
+    ReactDOM.render(<Root />, document.getElementById('root'))
+    
+    // If you want your app to work offline and load faster, you can change
+    // unregister() to register() below. Note this comes with some pitfalls.
+    // Learn more about service workers: https://bit.ly/CRA-PWA
+    serviceWorker.unregister();
+    

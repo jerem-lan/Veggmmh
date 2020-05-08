@@ -116,7 +116,7 @@ const SeasonalItemCardPage = (props) => {
                     <p className="unavailable">Indisponible</p>
                 </div>
                 <div>
-                    <h2>Conservation</h2>
+                    <h3>Conservation</h3>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id sit dolor obcaecati soluta earum, ut aspernatur atque aperiam provident, maxime ratione perspiciatis eligendi ab molestias debitis ipsum quos reprehenderit. Tenetur?</p>
                 </div>
             </div>

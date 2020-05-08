@@ -30,7 +30,8 @@ const MyRecipes = ({ Recipes, handleDeleteRecipe }) => {
 
 	const filteredRecipes = Recipes.filter(
 		recipe =>
-			recipe.recipeTitle.toLowerCase().includes(Search.toString().toLowerCase())
+			recipe.recipeTitle.toLowerCase().includes(Search.toString().toLowerCase()) ||
+			recipe.type.toLowerCase().includes(Search.toString().toLowerCase())
 		)
 
 	const start = CurrentPage * itemsPerPage - itemsPerPage
@@ -38,13 +39,8 @@ const MyRecipes = ({ Recipes, handleDeleteRecipe }) => {
 
 	return (
 		<div className="SectionMyRecipe">
-			<h2 className="SectionTitle">
-				<svg className="iconArrow" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M11.5 5L7 9L2.5 5" stroke="#444444" strokeWidth="1.5" strokeLinecap="round"/>
-				</svg>
-				Mes recettes
-			</h2>
-			<input type="text" placeholder="Rechercher" className='input' onChange={handleSearch} value={Search}/>
+			<h2 className="SectionTitle">Mes recettes</h2>
+			<input type="text" placeholder="Rechercher" className='input input--search' onChange={handleSearch} value={Search}/>
 			{Recipes.length < 1 ? <p>Vous n'avez pas de recette(s) enregistrée(s)</p> : 
 				<>
 					<div className="SectionContent">
@@ -53,6 +49,7 @@ const MyRecipes = ({ Recipes, handleDeleteRecipe }) => {
 								id={recipe.id}
 								key={recipe.id}
 								title={recipe.recipeTitle}
+								type={recipe.type}
 								username={getUsername()}
 								handleDeleteRecipe={handleDeleteRecipe} />
 						)}

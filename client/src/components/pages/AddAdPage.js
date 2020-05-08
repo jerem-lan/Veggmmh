@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import AlertMessage from '../AlertMessage';
@@ -67,13 +67,13 @@ class AddAdPage extends Component {
 
     render() {
         return (
-            <Fragment>
-                <div className="container--pageTitle">
-                    <h2 className="pageTitle">Déposer une annonce</h2>
-                </div>
-                <div className="container">
-                    <form className='form' onSubmit= {this.handleSubmit}>
-                    {this.state.errorFront ? <AlertMessage message = {this.state.errorFront}  /> : ""}
+            <div className="container">
+                <h2 className="SectionTitle">Déposer une annonce</h2>
+                <form className='form' onSubmit= {this.handleSubmit}>
+                {this.state.errorFront ? <AlertMessage message = {this.state.errorFront}  /> : ""}
+                    <span>
+
+
                         <label className="label" htmlFor="title">Titre de mon annonce</label>
                         <input
                             className='input'
@@ -81,7 +81,7 @@ class AddAdPage extends Component {
                             value={this.state.title}
                             onChange={this.handleChange}
                             type="text"
-                            placeholder="ex : Botte de radis du potager"
+                            placeholder="Ex : Botte de radis du potager"
                             required />
                         {this.state.errors.title ? <AlertMessage message = { this.state.errors.title }  /> : ""}
 
@@ -104,14 +104,13 @@ class AddAdPage extends Component {
                             value={this.state.postcode}
                             onChange={this.handleChange}
                             type="text"
-                            placeholder="ex : 59370"
+                            placeholder="Ex : 59370"
                             required />
                         {this.state.errors.postcode ? <AlertMessage message = { this.state.errors.postcode }  /> : ""}
-
-                        <button className="btn btn--validate" type='submit' >Envoyer mon annonce</button>
-                    </form>
-                </div>
-            </Fragment>
+                    </span>
+                    <button className="btn btn--validate" type='submit' >Envoyer mon annonce</button>
+                </form>
+            </div>
         );
     }
 }
