@@ -30,6 +30,7 @@ import ManageUsers from './components/pages/ManageUsers';
 import NotFound from './components/pages/NotFound';
 import ResumeRecipe from './components/pages/ResumeRecipe';
 import ListRecipePage from './components/pages/ListRecipePage';
+import SearchRecipePage from './components/pages/SearchRecipePage';
 // import Footer from './components/Footer';
 // ROUTES
 import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
@@ -37,6 +38,7 @@ import * as serviceWorker from './serviceWorker';
 import { ToastContainer, toast } from 'react-toastify';
 import ResumeAdPage from './components/pages/ResumeAdPage';
 import ResumeUserPage from './components/pages/ResumeUserPage';
+
 
 
 AuthApi.setup()
@@ -162,6 +164,18 @@ const Root = () => {
                     <PrivateRoute 
                         path="/ajouter-recette"
                         component={AddRecipePage} 
+                    />
+                    <Route 
+                        path="/recette/:id"
+                        component={ResumeRecipe} 
+                    />
+                    <Route 
+                        path="/trouver-recette"
+                        component={SearchRecipePage}
+                    />
+                    <Route 
+                        path="/liste-recette"
+                        component={ListRecipePage}
                     />
                     <PrivateRoute
                         path="/utilisateur/:id"
