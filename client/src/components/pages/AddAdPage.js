@@ -28,9 +28,9 @@ class AddAdPage extends Component {
         };
         if (inputControls.spaceVerif(this.state.title) && inputControls.spaceVerif(this.state.content) && inputControls.spaceVerif(this.state.postcode)) {
             const ad = {
-                title: this.state.title,
-                content: this.state.content,
-                postcode: this.state.postcode
+                title: inputControls.inputVerif(this.state.title),
+                content: inputControls.inputVerif(this.state.content),
+                postcode: inputControls.inputVerif(this.state.postcode)
             };
             //on donne le header et les données à axios
             try { await axios.post( 
@@ -57,7 +57,7 @@ class AddAdPage extends Component {
                     this.setState({
                         errors: apiErrors
                     })
-                    toast.error("Des erreurs dans votre formulaire !!")    
+                    toast.error("😞 Il y a des erreurs dans votre formulaire ")    
                 } 
             }
         }else {

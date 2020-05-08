@@ -10,8 +10,26 @@ function spaceVerif(str){
     return str.replace(/\s/g, '').length
 }
 
+function specialVerif(str) {
+    const verify = str.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gi,''); 
+    return verify;
+}
+
+function passwordVerif(str) {
+    const verify = str.replace(/[`~#^&()|=?;:'",<>{}[\]\\/]/gi,''); 
+    return verify;
+}
+
+function inputVerif(str) {
+    const verify = str.replace(/[`~#()|=<>{}[\]\\/]/gi,''); 
+    return verify;
+}
+
 export default {
     truncString,
-    spaceVerif
+    spaceVerif,
+    specialVerif,
+    passwordVerif,
+    inputVerif
 };
 

@@ -21,15 +21,20 @@ class RegistrationPage extends Component {
     //Récupere les informations tapées dans le formulaire
     handleChange = ({ currentTarget }) => {
         const { name, value } = currentTarget;
-        this.setState({ [name]: value })
+        if(name === "password") {
+            this.setState({ [name]: inputControls.passwordVerif(value) })
+        } else {
+            this.setState({ [name]: value })
+        }
+
     }
 
     handleSubmit = async event => {
         event.preventDefault()
         if (inputControls.spaceVerif(this.state.lastname) && inputControls.spaceVerif(this.state.firstname)) {
             const user = {
-                lastname: this.state.lastname,
-                firstname: this.state.firstname,
+                lastname: inputControls.truncString(this.state.lastname),
+                firstname: inputControls.truncString(this.state.firstname),
                 postcode: this.state.postcode,
                 email: this.state.email,
                 username: this.state.username,
@@ -59,7 +64,7 @@ class RegistrationPage extends Component {
                     this.setState({
                         error: apiErrors
                     })
-                    toast.error("Champs manquants requis.")    
+                    toast.error("😞 Il y a des erreurs dans votre formulaire.")    
                 }     
             };   
         }else{
@@ -82,7 +87,6 @@ class RegistrationPage extends Component {
                             className="subscriptionInput" 
                             type="text" 
                             placeholder="Nom" 
-                            /*pattern="[A-Z][a-z]"*/
                             required 
                         />
                             {this.state.error.lastname ? <AlertMessage message = {this.state.error.lastname}  /> : ""}
@@ -93,7 +97,6 @@ class RegistrationPage extends Component {
                             className="subscriptionInput" 
                             type="text" 
                             placeholder="Prénom" 
-                            /*pattern='[A-Za-z-]{1,}'*/ 
                             required
                         />
                         {this.state.error.firstname ? <AlertMessage message = { this.state.error.firstname }  /> : ""}
@@ -104,7 +107,6 @@ class RegistrationPage extends Component {
                             className="subscriptionInput" 
                             type="text" 
                             placeholder="Code postal" 
-                            // pattern="[0-9]{5}"
                             required
                         />
                         {this.state.error.postcode ? <AlertMessage message = { this.state.error.postcode }  /> : ""}
@@ -125,7 +127,6 @@ class RegistrationPage extends Component {
                             className="subscriptionInput" 
                             type="text" 
                             placeholder="Nom d'utilisateur" 
-                            pattern='[A-Za-z-]{1,}' 
                             required
                         />
                         {this.state.error.username ? <AlertMessage message = { this.state.error.username }  /> : ""}
@@ -135,10 +136,14 @@ class RegistrationPage extends Component {
                             onChange={this.handleChange} 
                             className="subscriptionInput" 
                             type="password" 
+                            pattern= "^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,})$"
                             placeholder="Mot de passe" 
-                            /*pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"*/ 
                             required
                         />
+                        <p>- Votre mot de passe doit contenir au moins 8 caractères.</p>
+                        <p>- Votre mot de passe doit contenir au moins une minuscule.</p>
+                        <p>- Votre mot de passe doit contenir au moins une majuscule.</p>
+                        <p>- Votre mot de passe doit contenir au moins un caractère spécial parmis : $ @ % * + - _ !</p>
                         {this.state.error.password ? <AlertMessage message = { this.state.error.password }  /> : ""}
                         
                             <button className="btn" type="submit">Créer un compte</button> 

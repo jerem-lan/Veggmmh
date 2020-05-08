@@ -180,7 +180,7 @@ class AddRecipePage extends Component {
         const testArray = this.state.newSteps.map(step => inputControls.spaceVerif(step))
 
         const recipe = {
-            recipeTitle: this.state.title,
+            recipeTitle: inputControls.inputVerif(this.state.title),
             preparationTime: this.state.preptime,
             nbServings: this.state.servings,
             ingredients: this.state.ingredientsSelect,

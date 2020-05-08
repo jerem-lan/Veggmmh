@@ -23,6 +23,10 @@ class ManageIngredients extends Component {
 
 
     componentDidMount() {
+        this.fetchData()
+    }
+    
+    fetchData() {
         axios.get('http://localhost:8000/api/ingredients')
              .then(res => {
                 const ingredients = res.data['hydra:member'].reverse();
@@ -43,7 +47,7 @@ class ManageIngredients extends Component {
 
         this.setState({ ingredients: ingredients })
 
-        axios.delete("http://127.0.0.1:8000/api/ingredients/" + id, config)
+        axios.delete("http://127.0.0.1:8000/api/admin/ingredients/" + id, config)
             .then(response => toast.info("👌 L'ingredient a été supprimé avec succès"))
             .catch(error => {
                 this.setState({ ingredients: original });
@@ -69,9 +73,9 @@ class ManageIngredients extends Component {
         
         if(!ingredients.includes(name)) {
             const data = {
-                name: name,
+                name: inputControls.inputVerif(name),
                 family: this.state.family,
-                conservation: this.state.conservation,
+                conservation: inputControls.inputVerif(this.state.conservation),
                 season : this.state.season
             };
             //on donne le header et les données à axios
@@ -88,12 +92,13 @@ class ManageIngredients extends Component {
                 })
                 toast.info("Votre ingrédient a été créé avec succès 👌")
                 document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
+                this.fetchData()
             }catch (error) {
                 console.log(error.response.data) 
-                toast.error("Il y a des erreurs dans le formulaire")    
+                toast.error("😞 Il y a des erreurs dans le formulaire")    
             }
         } else {
-            toast.error("L'ingrédient existe déjà") 
+            toast.error("😞 L'ingrédient existe déjà") 
         }
     }
 
@@ -174,7 +179,7 @@ class ManageIngredients extends Component {
                                             value={this.state.family}
                                             required
                                         >
-                                            <option value="" disabled selected>Famille de l'aliment</option>
+                                            <option defaultValue hidden>Famille de l'aliment</option>
                                             <option value="Matière Grasse">Matière grasse</option>
                                             <option value="légumineuses">Légumineuses</option>
                                             <option value="légumes">Légumes</option>
