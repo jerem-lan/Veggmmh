@@ -28,7 +28,7 @@ class SearchRecipePage extends Component {
         event.preventDefault();
         const value = event.target.value;
         const ingredient = this.state.ingTampon.find(item => item.name === value)
-        const select = this.state.ingSelect.filter(item => item !== value)
+        const select = this.state.ingSelect.filter(item => item.name !== value)
         this.setState(prevState =>({
             ingredients: [...prevState.ingredients, ingredient],
         })
@@ -46,8 +46,9 @@ class SearchRecipePage extends Component {
     handleAdd = (event) => {
         event.preventDefault()
         const value = event.target.value
+        const ingredient = this.state.ingTampon.find(item => item.name === value)
         this.setState(prevState => ({
-            ingSelect: [...prevState.ingSelect, value],
+            ingSelect: [...prevState.ingSelect, ingredient]
         }));
         const ingByFamily = this.state.ingByFamily.filter(item => item.name !== value)
         const ingredients = this.state.ingredients.filter(item => item.name !== value)
@@ -128,12 +129,12 @@ class SearchRecipePage extends Component {
                         {
                             this.state.ingSelect.map((ingredientName) => 
                                 <IngredientBlockButton
-                                    key={ingredientName}
-                                    id={ingredientName}
-                                    family={ingredientName}
-                                    name={ingredientName}
-                                    icon={ingredientName}
-                                    value={ingredientName}
+                                    key={ingredientName.id}
+                                    id={ingredientName.id}
+                                    family={ingredientName.family}
+                                    name={ingredientName.name}
+                                    icon={ingredientName.icon}
+                                    value={ingredientName.name}
                                     handleAdd={this.handleDelete}
                                 />
                             )

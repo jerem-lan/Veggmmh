@@ -126,6 +126,16 @@ const Root = () => {
                                 {...props}
                             />}
                     />
+                    
+                    <Route 
+                        path="/trouver-recette"
+                        component={SearchRecipePage}
+                    />
+
+                    <Route 
+                        path="/liste-recette"
+                        component={ListRecipePage}
+                    />
 
                     <Route 
                         path="/recette/:id"
@@ -134,11 +144,6 @@ const Root = () => {
                             BackWithRouter={BackWithRouter}
                             {...props}
                             />}
-                    />
-
-                    <Route 
-                        path="/trouver-recette"
-                        component={ListRecipePage}
                     />
 
                     {/* ROUTE UTILISATEUR CONNECTE */}
@@ -165,18 +170,7 @@ const Root = () => {
                         path="/ajouter-recette"
                         component={AddRecipePage} 
                     />
-                    <Route 
-                        path="/recette/:id"
-                        component={ResumeRecipe} 
-                    />
-                    <Route 
-                        path="/trouver-recette"
-                        component={SearchRecipePage}
-                    />
-                    <Route 
-                        path="/liste-recette"
-                        component={ListRecipePage}
-                    />
+                   
                     <PrivateRoute
                         path="/utilisateur/:id"
                         component={ResumeUserPage}

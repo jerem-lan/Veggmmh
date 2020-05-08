@@ -22,30 +22,12 @@ class ResumeRecipe extends Component {
     }
     //dés que la page s'ouvre je charge les données de la recette
     componentDidMount() {
-        this.requests()
-    }
-
-    requests = async event => { 
-        const token = window.localStorage.getItem("authToken")
-        const decoded = jwtDecode(token)
-        const idUser = decoded.id
+        if(authApi.isAuthenticated()){
+            this.requests()
+        }
+        
         const id = this.state.id
-        await
-        axios
-        .get("http://127.0.0.1:8000/api/users/" + idUser + "/bookmarks")
-        .then(res => {
-            const favs = res.data['hydra:member'].map(fav =>
-            fav.id)
-            this.setState({
-                userFav : favs
-            })
-            if(this.state.userFav.includes(+this.state.id)){
-                this.setState({
-                    isFav : true
-                })
-            }
-        })
-        await
+
         axios
         .get("http://127.0.0.1:8000/api/recipes/" + id)
         .then(res => {
@@ -64,6 +46,28 @@ class ResumeRecipe extends Component {
         .catch(error => {
             console.log(error.response);
         });
+    }
+
+    requests = async event => { 
+        const token = window.localStorage.getItem("authToken")
+        const decoded = jwtDecode(token)
+        const idUser = decoded.id
+
+        await axios
+        .get("http://127.0.0.1:8000/api/users/" + idUser + "/bookmarks")
+        .then(res => {
+            const favs = res.data['hydra:member'].map(fav =>
+            fav.id)
+            this.setState({
+                userFav : favs
+            })
+            if(this.state.userFav.includes(+this.state.id)){
+                this.setState({
+                    isFav : true
+                })
+            }
+        })
+
     }
 
     isFav() {
