@@ -27,7 +27,7 @@ class PutPassword implements EventSubscriberInterface {
         {
             return [
                 
-                KernelEvents::VIEW=> ['PutNewPassword', EventPriorities::PRE_VALIDATE]
+                KernelEvents::VIEW=> ['PutNewPassword', EventPriorities::POST_VALIDATE]
             ];
         }
 

@@ -22,6 +22,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      itemOperations={
  *          "GET", 
  *          "PUT", 
+ *          "PATCH",
  *          "DELETE" = {"path" = "/admin/users/{id}"},
  *          "addBookmarks" = { 
  *                          "method"="PUT",
@@ -92,6 +93,11 @@ class User implements UserInterface
      *                  max = 20,
      *                  minMessage = "Le nom d'utilisateur doit contenir 3 caractères minimum",
      *                  maxMessage = "Le nom d'utilisateur doit contenir 20 caractères maximum")
+     * @Assert\Regex(
+     *                  pattern= "/^[a-zA-Z0-9]+$/",
+     *                  htmlPattern= "^[a-zA-Z0-9]+$",
+     *                  message = "Votre username ne peut contenir que des chiffres et des lettres sans espaces ni accents ni caractères spéciaux."
+     * )
      * @Assert\NotBlank(message="Le nom d'utilisateur est obligatoire")
      * @Groups({ "users_read", "recipe_read", "ads_read", "ads_subresource" })
      */
@@ -101,9 +107,14 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(
      *                  min = 2,
-     *                  max = 20,
+     *                  max = 35,
      *                  minMessage = "Le prénom doit contenir 2 caractères minimum",
-     *                  maxMessage = "Le prénom doit contenir 20 caractères maximum")
+     *                  maxMessage = "Le prénom doit contenir 35 caractères maximum")
+     * @Assert\Regex(
+     *                  pattern= "/^[a-zàâéèëêïîôùüÿçœ\'’ -]{1,}$/i",
+     *                  htmlPattern= "/^[a-zàâéèëêïîôùüÿçœ\'’ -]{1,}$/i",
+     *                  message = "Votre prénom ne peut contenir que des lettres avec ou sans accents, des tirets et des espaces."
+     * )
      * @Assert\NotBlank(message="Le prénom est obligatoire")
      * @Groups({ "users_read" })
      */
@@ -113,9 +124,14 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(
      *                  min = 2,
-     *                  max = 20,
+     *                  max = 35,
      *                  minMessage = "Le nom doit contenir 2 caractères minimum",
-     *                  maxMessage = "Le nom doit contenir 20 caractères maximum")
+     *                  maxMessage = "Le nom doit contenir 35 caractères maximum")
+     * @Assert\Regex(
+     *                  pattern= "/^[a-zàâéèëêïîôùüÿçœ\'’ -]{1,}$/i",
+     *                  htmlPattern= "/^[a-zàâéèëêïîôùüÿçœ\'’ -]{1,}$/i",
+     *                  message = "Votre nom ne peut contenir que des lettres avec ou sans accents, des tirets et des espaces."
+     * )
      * @Assert\NotBlank(message="Le nom est obligatoire")
      * @Groups({ "users_read" })
      */
@@ -128,7 +144,7 @@ class User implements UserInterface
      *                  min = 5,
      *                  max = 5,
      *                  exactMessage = "Le code postal doit contenir 5 caractères")
-     * @Assert\Type(type="numeric", message="le code postal doit contenir des chiffres")
+     * @Assert\Type(type="numeric", message="Le code postal doit contenir exactement 5 chiffres.")
      * @Assert\NotBlank(message="Le code postal est obligatoire")
      * @Groups({ "users_read" })
      */
