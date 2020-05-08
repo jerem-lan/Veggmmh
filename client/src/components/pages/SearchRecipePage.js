@@ -6,6 +6,7 @@ class SearchRecipePage extends Component {
     state = { 
         ingredients: [], //Données de Ingredients récupérées depuis l'API
         ingTampon: [],
+        ingList: [],
         ingByFamily: [], //Tableau des ingrédients en fonction du choix du type
         ingSelect: [], //Selection effectuée par l'utilisateur
         select: '' //Ingrédient selectionné actuellement
@@ -29,11 +30,12 @@ class SearchRecipePage extends Component {
         const value = event.target.value;
         const ingredient = this.state.ingTampon.find(item => item.name === value)
         const select = this.state.ingSelect.filter(item => item.name !== value)
+        const ingList = this.state.ingList.filter(item => item.name !== value)
         this.setState(prevState =>({
-            ingredients: [...prevState.ingredients, ingredient],
+            ingredients: [...prevState.ingredients, ingredient]
         })
         );
-        this.setState({ ingSelect : select })
+        this.setState({ ingSelect : select, ingList: ingList })
         if(ingredient.family === this.state.select){
             this.setState(prevState =>({
                 ingByFamily: [...prevState.ingByFamily, ingredient],
@@ -48,7 +50,8 @@ class SearchRecipePage extends Component {
         const value = event.target.value
         const ingredient = this.state.ingTampon.find(item => item.name === value)
         this.setState(prevState => ({
-            ingSelect: [...prevState.ingSelect, ingredient]
+            ingSelect: [...prevState.ingSelect, ingredient],
+            ingList: [...prevState.ingList, value]
         }));
         const ingByFamily = this.state.ingByFamily.filter(item => item.name !== value)
         const ingredients = this.state.ingredients.filter(item => item.name !== value)
@@ -58,11 +61,11 @@ class SearchRecipePage extends Component {
     //Envoie tous les ingrédients selectionnés afin de faire la recherche
     handleSubmit = (event) => {
         event.preventDefault()
-        const ingSelect = this.state.ingSelect
+        const ingList = this.state.ingList
         this.props.history.push({
             pathname: `/liste-recette`,
             props: {
-                ingredients :ingSelect
+                ingredients :ingList
             }
         })
         
