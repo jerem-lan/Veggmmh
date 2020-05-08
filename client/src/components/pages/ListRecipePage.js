@@ -10,7 +10,21 @@ class ListRecipePage extends Component {
         recipes: [],
         ingredients:[],
         recipeSelect: [],
-        type: [],
+        filters: {
+                apero: false,
+                entrée: false, 
+                plat: false, 
+                dessert: false
+                },
+        filteredItems: [],
+        isCheck: [
+            {
+                apero: false,
+                entrée: false, 
+                plat: false, 
+                dessert: false
+            }
+        ],
         loading: true
     }
 
@@ -36,27 +50,67 @@ class ListRecipePage extends Component {
                         const ingSelect = this.state.ingredients
                         //on compare ces ingrédients avec ceux des recttes et tout celles qui ont des ingrédients en commun sont stockées dans la variable
                         const recipeSelect = this.state.recipes.filter(item => item.ingredients.some(i => ingSelect.indexOf(i) !== -1))
-                        this.setState({ recipeSelect: recipeSelect })
+                        this.setState({ recipeSelect })
                     })
     }
 
     handleCheck  = (event)  => {
+        const value = event.target.name
+        const checked = event.target.checked
+        // const check = JSON.parse(this.state.filters)
+        // this.setState(prevState => ([{...prevState.isCheck, [value]: checked }]))
+        this.setState(prevState => {
+            const filters = {
+                ...prevState.filters,
+                [value]: checked
+
+            };
+            
+            const activeFilterTypes = Object.keys(filters).filter(
+                filterType => filters[filterType]
+            );
+            
+            const filteredItems = prevState.recipeSelect.filter(item =>
+                activeFilterTypes.some(
+                  activeFilterType => activeFilterType === item.type
+                )
+              );
+            return {
+            filters,
+            filteredItems
+            };
+             
+        })
         
-     }
+    }
+
+    renderCheckboxes() {
+        return Object.keys(this.state.filters).map((type, index) => {
+          return (
+            <label key={index}>
+              <input
+                onChange={this.handleCheck}
+                type="checkbox"
+                checked={this.state.filters[type]}
+                name={type}
+              />
+              {type}
+            </label>
+          );
+        });
+      }
 
     render() {
+        const isCheck = (test) => {
+            if(test === false)
+               { return true}
+        }
         const loading = this.state.loading
-        const recipeSelect = this.state.recipeSelect
-        const type = ['Apero', 'Entrée', 'Plat', 'Dessert'].map((type, ind) => {
-            return (
-                <div key={ind}>
-                    <label>
-                        <input type="checkbox" name={type} value={type} 
-                        onChange={this.handleCheck} />{type}
-                    </label>
-                </div>
-            )
-        })
+        const items = this.state.filteredItems.length || isCheck(Object.values(this.state.filters).every(isCheck))
+            ? this.state.filteredItems
+            : this.state.recipeSelect
+           
+        
         return (
             <>
                 <div className="container--pageTitle">
@@ -67,11 +121,9 @@ class ListRecipePage extends Component {
 
                     {!loading && 
                     <>      
-                        <div>
-                            {type}
-                        </div>
+                        <div>{this.renderCheckboxes()}</div>
                         <h2>Recettes</h2>
-                        {recipeSelect.length === 0 ? <p>Aucune recette trouvée</p>  : recipeSelect.map(recipe => 
+                        {!items.length ? <p>Aucune recette trouvée</p>  : items.map(recipe => 
                         <div 
                             className="Card"
                             style={{ backgroundColor: '#e3fcf3' }} 
