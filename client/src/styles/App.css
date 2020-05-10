@@ -74,7 +74,7 @@ select {
   outline: 0;
   box-shadow: none;
   border: 0 !important;
-  background: #FCFBF7;
+  background: transparent;
   background-image: none;
 }
 select::-ms-expand {
@@ -84,7 +84,7 @@ select::-ms-expand {
   border: 1px solid #444;
   position: relative;
   display: flex;
-  /* width: 250px; */
+  max-width: fit-content;
   line-height: 3;
   overflow: hidden;
   border-radius: 25px;
@@ -95,7 +95,7 @@ select {
   font-size: 1em;
   font-weight: 600;
   flex: 1;
-  padding: 7px 15px;;
+  padding: 7px 50px 7px 15px;
   color: #444;
   cursor: pointer;
 }
@@ -108,7 +108,7 @@ select {
   top: 0;
   right: 0;
   padding: 0 15px;
-  background: #FCFBF7;
+  background: transparent;
   cursor: pointer;
   pointer-events: none;
 }
@@ -769,6 +769,7 @@ Add Recipe Page
 .btn--recipeSearch {
   margin: 0 auto;
   display: block;
+  margin-bottom: 40px;
 }
 .btn--contact {
   margin-right: 15px;

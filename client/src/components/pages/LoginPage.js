@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import AlertMessage from '../AlertMessage';
 import AuthApi from '../../services/authApi';
 import { toast } from 'react-toastify';
+import inputControls from '../../services/inputControls';
 
 
 class LoginPage extends Component {
@@ -16,11 +17,11 @@ class LoginPage extends Component {
 
     goToApp = async event => {
         event.preventDefault() //evite le rechargement de page
-        try {
+            try {
             this.setState ({ validation: await AuthApi.authenticate(this.state) });
             this.props.onLogin(true)
             toast.success( `Heureux de te voir 🥑`)
-            this.props.history.replace("/dashboard") 
+            this.props.history.replace("/dashboard")
         } catch  {
             this.setState({ error: "Identifiants incorrects." });
             toast.error("😞 Identifiants incorrects.");
@@ -29,7 +30,11 @@ class LoginPage extends Component {
     //Récupere les informations tapées dans le formulaire
     handleChange = (event) => {
         const { name, value } = event.target
-        this.setState({ [name]: value })
+        if(name !== "username") {
+            this.setState({ [name]: inputControls.passwordVerif(value) })
+        } else {
+            this.setState({ [name]: inputControls.specialVerif(value) })
+        }
     }
 
     render() {
@@ -46,7 +51,7 @@ class LoginPage extends Component {
                             className={"subscriptionInput" + (this.state.error && " is-invalid")}
                             type="text" 
                             placeholder="Nom d'utilisateur" 
-                            //pattern='[A-Za-z-]{1,}' 
+                            // pattern= "^[a-zA-Z0-9]+$"
                             required/>
 
                         <input 

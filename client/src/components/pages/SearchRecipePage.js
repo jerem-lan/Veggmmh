@@ -107,30 +107,32 @@ class SearchRecipePage extends Component {
                 <h2 className="SectionTitle">Trouver une recette</h2>
                 <form onSubmit= {this.handleSubmit} value={this.state.ingByFamily}>
 
-                    <label className="label">Mes ingrédients</label>
-                    <div className="fruitVegBlocks" > 
-                    {
-                        this.state.ingSelect.map((ingredientName) => 
-                            <IngredientBlockButton
-                                key={ingredientName.id}
-                                id={ingredientName.id}
-                                family={ingredientName.family}
-                                name={ingredientName.name}
-                                icon={ingredientName.icon}
-                                value={ingredientName.name}
-                                handleAdd={this.handleDelete}
-                                style={ingredientName.family}
-                            />
-                        )
-                    }
-                    </div>
-                    <button className="btn btn--validate btn--recipeSearch">Lancer la recherche</button>
-                    
-
-                    <label className="label">Rechercher un ingrédient</label>
+                    {this.state.ingSelect.length === 0 ? <> </> : 
+                    <>
+                        <label className="label">Mes ingrédients</label>
+                        <div className="fruitVegBlocks" > 
+                        {
+                            this.state.ingSelect.map((ingredientName) => 
+                                <IngredientBlockButton
+                                    key={ingredientName.id}
+                                    id={ingredientName.id}
+                                    family={ingredientName.family}
+                                    name={ingredientName.name}
+                                    icon={ingredientName.icon}
+                                    value={ingredientName.name}
+                                    handleAdd={this.handleDelete}
+                                    style={ingredientName.family}
+                                />
+                            )
+                        }
+                        </div>
+                        <button className="btn btn--validate btn--recipeSearch">Lancer la recherche</button>
+                    </>}
+                
+                    {/* <label className="label">Rechercher un ingrédient</label> */}
                     <div class="select">
                         <select name="family" id="family" size="1" onChange={this.handleFamily}>
-                            <option hidden>Choisir une famille d'ingrédient</option>
+                            <option hidden>Rechercher un ingrédient</option>
                             <option value="féculents">Féculents</option>
                             <option value="légumes">Légumes</option>
                             <option value="légumineuses">Légumineuses</option>

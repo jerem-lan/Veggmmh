@@ -23,6 +23,10 @@ class ManageIngredients extends Component {
 
 
     componentDidMount() {
+        this.fetchData()
+    }
+    
+    fetchData() {
         axios.get('http://localhost:8000/api/ingredients')
              .then(res => {
                 const ingredients = res.data['hydra:member'].reverse();
@@ -69,9 +73,9 @@ class ManageIngredients extends Component {
         
         if(!ingredients.includes(name)) {
             const data = {
-                name: name,
+                name: inputControls.inputVerif(name),
                 family: this.state.family,
-                conservation: this.state.conservation,
+                conservation: inputControls.inputVerif(this.state.conservation),
                 season : this.state.season
             };
             //on donne le header et les données à axios
@@ -88,12 +92,13 @@ class ManageIngredients extends Component {
                 })
                 toast.info("Votre ingrédient a été créé avec succès 👌")
                 document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
+                this.fetchData()
             }catch (error) {
                 console.log(error.response.data) 
-                toast.error("Il y a des erreurs dans le formulaire")    
+                toast.error("😞 Il y a des erreurs dans le formulaire")    
             }
         } else {
-            toast.error("L'ingrédient existe déjà") 
+            toast.error("😞 L'ingrédient existe déjà") 
         }
     }
 
@@ -167,22 +172,23 @@ class ManageIngredients extends Component {
                                             onChange={this.handleChange}
                                             value= {this.state.name}
                                         />
-                                        <select 
-                                            className="input" 
-                                            name="family" 
-                                            onChange={this.handleChange}
-                                            value={this.state.family}
-                                            required
-                                        >
-                                            <option defaultValue hidden>Famille de l'aliment</option>
-                                            <option value="Matière Grasse">Matière grasse</option>
-                                            <option value="légumineuses">Légumineuses</option>
-                                            <option value="légumes">Légumes</option>
-                                            <option value="aliments sucrés">Aliments sucrés</option>
-                                            <option value="féculents">Féculents</option>
-                                            <option value="fruits">Fruits</option>
-                                            <option value="Boisson">Boisson</option>
-                                        </select>
+                                        <div class="select select--manageIngredients">
+                                            <select 
+                                                name="family" 
+                                                onChange={this.handleChange}
+                                                value={this.state.family}
+                                                required
+                                            >
+                                                <option defaultValue hidden>Famille de l'aliment</option>
+                                                <option value="Matière Grasse">Matière grasse</option>
+                                                <option value="légumineuses">Légumineuses</option>
+                                                <option value="légumes">Légumes</option>
+                                                <option value="aliments sucrés">Aliments sucrés</option>
+                                                <option value="féculents">Féculents</option>
+                                                <option value="fruits">Fruits</option>
+                                                <option value="Boisson">Boisson</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <textarea 
                                         className="textarea textarea--steps"

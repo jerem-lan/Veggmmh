@@ -134,7 +134,11 @@ const Root = () => {
 
                     <Route 
                         path="/liste-recette"
-                        component={ListRecipePage}
+                        render={(props) => 
+                            <ListRecipePage
+                                BackWithRouter={BackWithRouter}
+                                {...props}
+                            />}
                     />
 
                     <Route 

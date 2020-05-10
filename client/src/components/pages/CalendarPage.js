@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import axios from "axios";
 import FruitVegBlock from '../FruitVegBlock'
-import IngredientLoader from '../../loaders/IngredientsLoader';
+import DefaultLoader from '../../loaders/DefaultLoader';
 
 class CalendarPage extends Component {
    
@@ -10,7 +10,7 @@ class CalendarPage extends Component {
         itemSelection: [], // les fruits/legumes trouvés après recherche par mois de disponibilité
         itemSelectionDeux: [], // les fruits/legumes trouvés après recherche par saisie de nom
         search: '', // le mot que l'on saisi dans l'input pour chercher un item
-        loading: false
+        loading: true
     }
 
     // recupère les fruits/légumes dans Ingredient issu des données de l'API
@@ -29,7 +29,8 @@ class CalendarPage extends Component {
                     return 0;
                 })
                 this.setState({ 
-                    fruitsAndVeggies: fruitsAndVeggies
+                    fruitsAndVeggies: fruitsAndVeggies,
+                    loading : false
                 })
                 //Affiche les fruits/légumes du mois courant dès le premier rendu
                 const now = new Date();
@@ -54,11 +55,7 @@ class CalendarPage extends Component {
 
     // recherche item par son nom
     handleChange = (event) => {
-        this.setState({ search: event.target.value, loading: true })
-        const itemSelectionDeux = this.state.fruitsAndVeggies.filter(item => 
-            item.name.toLowerCase().includes(this.state.search.toLowerCase())
-        )
-        this.setState({ itemSelectionDeux, loading: false }) 
+        this.setState({ search: event.target.value})
     }
 
     // recherche items par mois
@@ -72,46 +69,55 @@ class CalendarPage extends Component {
     
     render() {
         const loading = this.state.loading
-        return (
-            <div className="container">
-                <h2 className="SectionTitle">Calendrier des fruits et légumes locaux de saison</h2>
-                <label className="label">Rechercher par aliment</label>
-                <input className="input input--search" type='text' onChange={this.handleChange} value={this.state.search} placeholder="Ex: tomate"/>
-                <div className="fruitVegBlocks">
-                    {loading && <IngredientLoader />} 
-                    {
-                        this.state.itemSelectionDeux.map((ingredient) => 
-                            !loading && <FruitVegBlock
-                                key={ingredient.id}
-                                id={ingredient.id}
-                                family={ingredient.family}
-                                name={ingredient.name}
-                                icon={ingredient.icon}
-                                season={ingredient.season}
-                            />)
-                    }   
-                </div>
-
-                <label className="label">Rechercher par mois</label>
-                <div class="select"><select name="month" id="month"  size="1" onChange={this.handleMonth}></select></div>   
-                <div className="fruitVegBlocks" >
-                    {loading && <IngredientLoader />} 
-                    {
-                        this.state.itemSelection.map((ingredient) => 
-                        !loading && <FruitVegBlock
-                                key={ingredient.id}
-                                id={ingredient.id}
-                                family={ingredient.family}
-                                name={ingredient.name}
-                                icon={ingredient.icon}
-                                season={ingredient.season}
-                            />
-                            )
-                    }
-                </div>
-            </div>
+        const itemSelectionDeux = this.state.fruitsAndVeggies.filter(item => 
+            item.name.toLowerCase().includes(this.state.search.toLowerCase())
         )
-    }    
+
+        return (
+            <Fragment>
+                {loading && <DefaultLoader />} 
+                {!loading && <>
+                    <div className="container">
+                        <h2 className="SectionTitle">Calendrier des fruits et légumes locaux de saison</h2>
+                        <label className="label">Rechercher par aliment</label>
+                        <input className="input input--search" type='text' onChange={this.handleChange} value={this.state.search} placeholder="Ex: tomate"/>
+                        <div className="fruitVegBlocks">
+                            {this.state.search === "" ? <></> : 
+                                itemSelectionDeux.length === 0 ? <> Aucun résultat </> : itemSelectionDeux.map((ingredient) => 
+                                    <FruitVegBlock
+                                        key={ingredient.id}
+                                        id={ingredient.id}
+                                        family={ingredient.family}
+                                        name={ingredient.name}
+                                        icon={ingredient.icon}
+                                        season={ingredient.season}
+                                    />)
+                            } 
+                        </div>
+
+                        <label className="label">Rechercher par mois</label>
+                        <div class="select">
+                            <select name="month" id="month" size="1" onChange={this.handleMonth}/>
+                        </div>   
+                        <div className="fruitVegBlocks" >
+                            {
+                                this.state.itemSelection.map((ingredient) => 
+                                !loading && <FruitVegBlock
+                                        key={ingredient.id}
+                                        id={ingredient.id}
+                                        family={ingredient.family}
+                                        name={ingredient.name}
+                                        icon={ingredient.icon}
+                                        season={ingredient.season}
+                                    />
+                                )
+                            }
+                        </div>
+                    </div>
+                </>}
+            </Fragment>
+        )
+    }
 }
 
 export default CalendarPage;
