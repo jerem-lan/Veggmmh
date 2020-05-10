@@ -108,16 +108,14 @@ class DashboardPage extends Component {
                 {((!loading) && (authApi.isAuthenticated()))  && <>
                     <ProfilCartouche isConnected={true} username={username}/>
                     <div className="edit--prsonnalInfos">
-                        {/* <div className="title">
-                            <p className='title--category'>Modifier mes informations</p>
-                        </div> */}
                         <form className='form'>
                             <input name='postcode' value={this.state.postcode} onChange={this.handleChange} className="subscriptionInput" type="text" placeholder={this.state.postcode}  pattern="[0-9]{5}" required/>
                             <input name='email' value={this.state.email} onChange={this.handleChange} className="subscriptionInput" type="email" placeholder={this.state.email} required/>
                             <button className="btn" type="submit" onClick={this.changePersonnalInfo}>Valider les changements</button>
                         </form>
                         <form className='form'>
-                            <input name='password' value={this.state.password} onChange={this.handleChange} className="subscriptionInput" type="password" placeholder="Nouveau mot de passe" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" />
+                            <input name='password' value={this.state.password} onChange={this.handleChange} className="subscriptionInput password" type="password" placeholder="Nouveau mot de passe" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" />
+                            <p className="passwordWarning">Votre mot de passe doit contenir au moins 8 caractères dont une minuscule, une  majuscule et un caractère spécial parmis $ @ % * + - _ !</p>
                             <input name='confirmPassword' value={this.state.confirmPassword} onChange={this.handleChange} className="subscriptionInput" type="password" placeholder="Confirmer le mot de passe" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" />
                             {this.state.error && <p className="invalid-feedback">{this.state.error}</p>}
                             <button className="btn" type="submit" onClick={this.changePassword}>Modifier mon mot de passe</button>

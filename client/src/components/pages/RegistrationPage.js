@@ -83,9 +83,8 @@ class RegistrationPage extends Component {
                             type="text" 
                             placeholder="Nom" 
                             /*pattern="[A-Z][a-z]"*/
-                            required 
-                        />
-                            {this.state.error.lastname ? <AlertMessage message = {this.state.error.lastname}  /> : ""}
+                            required />
+                        {this.state.error.lastname ? <AlertMessage message = {this.state.error.lastname}  /> : ""}
                         <input 
                             name='firstname' 
                             value={this.state.firstname} 
@@ -94,8 +93,7 @@ class RegistrationPage extends Component {
                             type="text" 
                             placeholder="Prénom" 
                             /*pattern='[A-Za-z-]{1,}'*/ 
-                            required
-                        />
+                            required/>
                         {this.state.error.firstname ? <AlertMessage message = { this.state.error.firstname }  /> : ""}
                         <input 
                             name='postcode' 
@@ -105,8 +103,7 @@ class RegistrationPage extends Component {
                             type="text" 
                             placeholder="Code postal" 
                             // pattern="[0-9]{5}"
-                            required
-                        />
+                            required/>
                         {this.state.error.postcode ? <AlertMessage message = { this.state.error.postcode }  /> : ""}
                         <input 
                             name='email' 
@@ -115,8 +112,7 @@ class RegistrationPage extends Component {
                             className="subscriptionInput inputBottomMargin" 
                             type="email" 
                             placeholder="Adresse mail"
-                            required
-                        />
+                            required/>
                         {this.state.error.email ? <AlertMessage message = { this.state.error.email }  /> : ""}
                         <input 
                             name='username' 
@@ -126,22 +122,20 @@ class RegistrationPage extends Component {
                             type="text" 
                             placeholder="Nom d'utilisateur" 
                             pattern='[A-Za-z-]{1,}' 
-                            required
-                        />
+                            required/>
                         {this.state.error.username ? <AlertMessage message = { this.state.error.username }  /> : ""}
                         <input 
                             name='password' 
                             value={this.state.password} 
                             onChange={this.handleChange} 
-                            className="subscriptionInput" 
+                            className="subscriptionInput password" 
                             type="password" 
                             placeholder="Mot de passe" 
                             /*pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"*/ 
-                            required
-                        />
+                            required/>
+                        <p className="passwordWarning">Votre mot de passe doit contenir au moins 8 caractères dont une minuscule, une  majuscule et un caractère spécial parmis $ @ % * + - _ !</p>
                         {this.state.error.password ? <AlertMessage message = { this.state.error.password }  /> : ""}
-                        
-                            <button className="btn" type="submit">Créer un compte</button> 
+                        <button className="btn" type="submit">Créer un compte</button> 
                     </form>
                     <Link to="/login" className="psswrdForgotten">J'ai déjà un compte</Link>
                 </div>

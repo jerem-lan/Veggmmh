@@ -93,8 +93,8 @@ class ResumeAdPage extends Component {
                     <div>
                         <div className="adInfos">
                             <h2 className="capitalize">{this.state.title}</h2>
-                            <p className="adDate">{this.state.creationDate}</p>
-                            {this.state.modificationDate !== "null" && <p>{this.state.modificationDate}</p> }
+                            <p className="adDate">Ajoutée le {this.state.creationDate}</p>
+                            {this.state.modificationDate !== "null" && <p>Mise à jour le {this.state.modificationDate}</p> }
                             <p className="adAuthor">Postée par <span>{this.state.username}</span></p>
                         </div>
                         <div className="adContainer">
@@ -112,9 +112,9 @@ class ResumeAdPage extends Component {
                         {/* Est-ce que l'id de l'utilisateur connecté est différent de celui qui a ajouté l'annonce? 
                             Si oui : Affiche le bouton Répondre
                         */}
-                        {((this.state.idCurrentUser) && (this.state.idCurrentUser !== this.state.idUserAd)) && <a href={`mailto:${this.state.emailUserAd}`}><button className="btn" type="submit">Contacter par mail</button></a>}
+                        {((this.state.idCurrentUser) && (this.state.idCurrentUser !== this.state.idUserAd)) && <a href={`mailto:${this.state.emailUserAd}`}><button className="btn btn--contact" type="submit">Contacter par mail</button></a>}
                         {/* Si le role de l'utilisateur est connecté est ADMIN, alors affiche le bouton supprimer */}
-                        {(((this.state.role[0] === "ROLE_ADMIN") || (this.state.idCurrentUser === this.state.idUserAd)) && this.state.idCurrentUser) && <button className="btn" onClick={() => this.handleDelete(this.state.id)}>Supprimer</button>}
+                        {(((this.state.role[0] === "ROLE_ADMIN") || (this.state.idCurrentUser === this.state.idUserAd)) && this.state.idCurrentUser) && <button className="btn" onClick={() => this.handleDelete(this.state.id)}>Supprimer l'annonce</button>}
 
                     </div>
                 </div>

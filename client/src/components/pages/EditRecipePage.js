@@ -244,7 +244,7 @@ class EditRecipePage extends Component {
 
         return (
             <div className="container">
-                <h2 className="SectionTitle">Editer une recette</h2>
+                <h2 className="SectionTitle">Modifier ma recette</h2>
                 <form className='form' onSubmit= {this.handleSubmit}>
                     <div>
                     {this.state.errorTitre ? <AlertMessage message = {this.state.errorTitre} />: "" }

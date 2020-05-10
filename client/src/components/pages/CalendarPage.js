@@ -93,7 +93,7 @@ class CalendarPage extends Component {
                 </div>
 
                 <label className="label">Rechercher par mois</label>
-                <select name="month" id="month"  size="1" onChange={this.handleMonth}></select>   
+                <div class="select"><select name="month" id="month"  size="1" onChange={this.handleMonth}></select></div>   
                 <div className="fruitVegBlocks" >
                     {loading && <IngredientLoader />} 
                     {

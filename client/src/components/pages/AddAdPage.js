@@ -72,8 +72,6 @@ class AddAdPage extends Component {
                 <form className='form' onSubmit= {this.handleSubmit}>
                 {this.state.errorFront ? <AlertMessage message = {this.state.errorFront}  /> : ""}
                     <span>
-
-
                         <label className="label" htmlFor="title">Titre de mon annonce</label>
                         <input
                             className='input'

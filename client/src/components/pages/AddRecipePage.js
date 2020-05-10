@@ -294,7 +294,7 @@ class AddRecipePage extends Component {
                                         {
                                             this.state.ingredientsSelect.map((item, index) =>
                                                 <div id={index} key={index} className="ingredientRow">
-                                                    <img src={this.requireIcon(item)} alt={item}/>
+                                                    <img src={this.requireIcon(item.normalize("NFD").replace(/\s/g, '-').replace(/[\u0300-\u036f]/g, ""))} alt={item}/>
                                                     <p>{item}</p>
                                                 </div>
                                             )

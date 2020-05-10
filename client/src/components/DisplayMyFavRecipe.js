@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import FavButton from './FavButton'
+// import FavButton from './FavButton'
 import { NavLink } from 'react-router-dom'
 
 const DisplayFavRecipe = ({ id, title, type, handleDeleteFavRecipe }) => {	
