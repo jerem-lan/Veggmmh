@@ -13,7 +13,6 @@ const DefaultLoader = (props
             speed={2}
             backgroundColor= "#aadac9"
             foregroundColor= "#009688"
-            alignItems = "center"
             {...props}
         >
     <circle cx="150" cy="86" r="8" />

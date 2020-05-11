@@ -143,7 +143,7 @@ class ListRecipePage extends Component {
                             style={{ backgroundColor: '#e3fcf3' }} 
                             key={recipe.id}
                         >
-                            <p class="recipeTypeTag recipeTypeTag--table">{recipe.type}</p> 
+                            <p className="recipeTypeTag recipeTypeTag--table">{recipe.type}</p> 
                             <Link to={"/recette/" + recipe.id} className="CardTitle"> 
                                 {recipe.recipeTitle}
                             </Link> 

@@ -172,7 +172,7 @@ class ManageIngredients extends Component {
                                             onChange={this.handleChange}
                                             value= {this.state.name}
                                         />
-                                        <div class="select select--manageIngredients">
+                                        <div className="select select--manageIngredients">
                                             <select 
                                                 name="family" 
                                                 onChange={this.handleChange}
