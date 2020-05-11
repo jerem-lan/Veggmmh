@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import PaginationForTab from '../PaginationForTab'
 import { NavLink } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
+import { ADS_URL } from '../../services/config';
 
 class ManageAds extends Component {
     state = { 
@@ -16,7 +17,7 @@ class ManageAds extends Component {
      }
 
     componentDidMount() {
-        axios.get('http://localhost:8000/api/ads')
+        axios.get(ADS_URL)
              .then(res => {
                 const ads = res.data['hydra:member'].reverse();
                 this.setState({ ads, loading: false });
@@ -36,7 +37,7 @@ class ManageAds extends Component {
 
         this.setState({ ads: ads })
 
-        axios.delete("http://127.0.0.1:8000/api/ads/" + id, config)
+        axios.delete(ADS_URL + '/' + id, config)
             .then(response => toast.info("👌 L'annonce a été supprimée avec succès"))
             .catch(error => {
                 this.setState({ ads: original });

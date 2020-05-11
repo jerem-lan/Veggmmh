@@ -4,6 +4,8 @@ import AlertMessage from '../AlertMessage';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import inputControls from '../../services/inputControls';
+import { USERS_URL } from '../../services/config';
+
 
 class RegistrationPage extends Component {
 
@@ -42,7 +44,7 @@ class RegistrationPage extends Component {
             };
 
             try {await axios
-                .post('http://localhost:8000/api/users', user) 
+                .post(USERS_URL, user) 
                 this.setState({
                     lastname: '',
                     firstname: '',

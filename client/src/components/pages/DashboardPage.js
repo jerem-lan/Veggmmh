@@ -9,6 +9,7 @@ import DashBoardLoader from '../../loaders/DashBoardLoader';
 import { toast } from 'react-toastify';
 import AlertMessage from '../AlertMessage';
 import inputControls from '../../services/inputControls';
+import { USERS_URL } from '../../services/config';
 
 class DashboardPage extends Component {
 
@@ -32,7 +33,7 @@ class DashboardPage extends Component {
             const decoded = jwtDecode(token)
             const id = decoded.id     
             axios
-                .get("http://127.0.0.1:8000/api/users/"+id)
+                .get(USERS_URL + '/' + id)
                 .then(res => {
                     const user = res.data;
                     this.setState({ 
@@ -67,7 +68,7 @@ class DashboardPage extends Component {
             };
 
             axios.put(
-                "http://127.0.0.1:8000/api/users/"+id,
+                USERS_URL + '/' + id,
                 {
                 postcode : this.state.postcode,
                 email: this.state.email            
@@ -104,7 +105,7 @@ class DashboardPage extends Component {
                     };
 
                     axios.put(
-                         "http://127.0.0.1:8000/api/users/"+id,
+                        USERS_URL + '/' + id,
                         {password : this.state.password},
                         config
                     ).then((response) => {

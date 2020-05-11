@@ -5,6 +5,7 @@ import jwtDecode from 'jwt-decode';
 import authApi from '../../services/authApi';
 import { NavLink } from 'react-router-dom';
 import PaginationForTab from '../PaginationForTab'
+import { ADS_URL } from '../../services/config';
 
 class ListAdPage extends Component {
     state = {
@@ -15,7 +16,7 @@ class ListAdPage extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8000/api/ads')
+        axios.get(ADS_URL)
              .then(res => {
                 const ads = res.data['hydra:member'].reverse();
                 this.setState({ ads, loading: false });

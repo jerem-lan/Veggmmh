@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import PaginationForTab from '../PaginationForTab'
 import { NavLink } from 'react-router-dom';
 import inputControls from '../../services/inputControls';
+import { INGREDIENTS_URL, INGREDIENTS_ADMIN_URL } from '../../services/config';
 
 
 class ManageIngredients extends Component {
@@ -27,7 +28,7 @@ class ManageIngredients extends Component {
     }
     
     fetchData() {
-        axios.get('http://localhost:8000/api/ingredients')
+        axios.get(INGREDIENTS_URL)
              .then(res => {
                 const ingredients = res.data['hydra:member'].reverse();
                 this.setState({ ingredients, loading: false });
@@ -47,7 +48,7 @@ class ManageIngredients extends Component {
 
         this.setState({ ingredients: ingredients })
 
-        axios.delete("http://127.0.0.1:8000/api/admin/ingredients/" + id, config)
+        axios.delete(INGREDIENTS_ADMIN_URL + '/' + id, config)
             .then(response => toast.info("👌 L'ingredient a été supprimé avec succès"))
             .catch(error => {
                 this.setState({ ingredients: original });
@@ -80,7 +81,7 @@ class ManageIngredients extends Component {
             };
             //on donne le header et les données à axios
             try { await axios.post( 
-                'http://localhost:8000/api/admin/ingredients',
+                INGREDIENTS_ADMIN_URL,
                 data,
                 config
               );

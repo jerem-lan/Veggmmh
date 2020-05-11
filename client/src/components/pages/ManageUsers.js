@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import jwtDecode from 'jwt-decode';
 import PaginationForTab from '../PaginationForTab'
 import { NavLink } from 'react-router-dom';
+import { USERS_ADMIN_URL } from '../../services/config';
 
 class ManageUsers extends Component {
     state = { 
@@ -22,7 +23,7 @@ class ManageUsers extends Component {
             headers: { Authorization: `Bearer ${token}` }
         };
 
-        axios.get('http://localhost:8000/api/admin/users', config)
+        axios.get(USERS_ADMIN_URL, config)
              .then(res => {
                 const users = res.data['hydra:member'].reverse();
                 this.setState({ users, loading: false });
@@ -44,7 +45,7 @@ class ManageUsers extends Component {
 
             this.setState({ users: users })
 
-            axios.delete("http://127.0.0.1:8000/api/admin/users/" + id, config)
+            axios.delete(USERS_ADMIN_URL + '/' + id, config)
                 .then(response => toast.info("👌 L'utilisateur a été supprimé avec succès"))
                 .catch(error => {
                     this.setState({ users: original });

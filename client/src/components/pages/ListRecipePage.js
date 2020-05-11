@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'
 import ListLoader from '../../loaders/ListLoader';
 import PaginationForTab from '../PaginationForTab';
+import { RECIPES_URL } from '../../services/config';
 
 //recherche les recettes en fonction des ingrédients sélectionnés précédemment
 class ListRecipePage extends Component {
@@ -44,7 +45,7 @@ class ListRecipePage extends Component {
 
         }
         //on appelle l'API pour récupérer toute les recettes
-        axios.get('http://localhost:8000/api/recipes')
+        axios.get(RECIPES_URL)
              .then(res => {
                         const recipes = res.data['hydra:member']
                         this.setState({ recipes, loading: false });

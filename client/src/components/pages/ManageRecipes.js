@@ -5,6 +5,7 @@ import ListLoader from '../../loaders/ListLoader';
 import { toast } from 'react-toastify';
 import PaginationForTab from '../PaginationForTab'
 import { NavLink } from 'react-router-dom';
+import { RECIPES_URL } from '../../services/config';
 
 class ManageRecipes extends Component {
     state = { 
@@ -15,7 +16,7 @@ class ManageRecipes extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8000/api/recipes')
+        axios.get(RECIPES_URL)
              .then(res => {
                 const recipes = res.data['hydra:member'].reverse();
                 this.setState({ recipes, loading: false });
@@ -35,7 +36,7 @@ class ManageRecipes extends Component {
 
         this.setState({ recipes: recipes })
 
-        axios.delete("http://127.0.0.1:8000/api/recipes/" + id, config)
+        axios.delete(RECIPES_URL + '/' + id, config)
             .then(response => toast.info("👌 La recette a été supprimée avec succès"))
             .catch(error => {
                 this.setState({ recipes: original });

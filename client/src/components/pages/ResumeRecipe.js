@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import authApi from '../../services/authApi';
 import IngredientBlock from '../IngredientBlock';
 import DefaultLoader from '../../loaders/DefaultLoader';
+import { BOOKMARKS_URL, RECIPES_URL, USERS_URL } from '../../services/config';
 
 class ResumeRecipe extends Component {
 
@@ -31,7 +32,7 @@ class ResumeRecipe extends Component {
         const id = this.state.id
 
         axios
-        .get("http://127.0.0.1:8000/api/recipes/" + id)
+        .get(RECIPES_URL + '/' + id)
         .then(res => {
             const recipe = res.data;
             this.setState({ 
@@ -57,7 +58,7 @@ class ResumeRecipe extends Component {
         const idUser = decoded.id
 
         await axios
-        .get("http://127.0.0.1:8000/api/users/" + idUser + "/bookmarks")
+        .get(USERS_URL + '/' + idUser + "/bookmarks")
         .then(res => {
             const favs = res.data['hydra:member'].map(fav =>
             fav.id)
@@ -94,7 +95,7 @@ class ResumeRecipe extends Component {
 
         if(!this.state.isFav){
         axios
-            .put("http://localhost:8000/api/bookmarks/"+id+"/add", recipe, config)
+            .put(BOOKMARKS_URL + '/' + id + "/add", recipe, config)
             .then(toast.info("Une nouvelle recette dans vos favoris 👌"))
             .catch(error =>
                 toast.error("😞 Oups, quelque chose s'est mal passé")
@@ -106,7 +107,7 @@ class ResumeRecipe extends Component {
 
         }else{
             axios
-            .put("http://localhost:8000/api/bookmarks/"+id+"/delete", recipe, config)
+            .put(BOOKMARKS_URL + '/' + id + "/delete", recipe, config)
             .then(toast.info("Vous avez bien retiré cette recette de vos favoris 👌"))
             .catch(error =>
                 toast.error("😞 Oups, quelque chose s'est mal passé")

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import AlertMessage from '../AlertMessage';
 import inputControls from '../../services/inputControls';
+import { ADS_URL } from '../../services/config';
 
 class AddAdPage extends Component {
     state = {
@@ -34,7 +35,7 @@ class AddAdPage extends Component {
             };
             //on donne le header et les données à axios
             try { await axios.post( 
-                'http://localhost:8000/api/ads',
+                ADS_URL,
                 ad,
                 config
             );

@@ -3,6 +3,7 @@ import jwtDecode from 'jwt-decode';
 import { Component, Fragment } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { ADS_URL } from '../../services/config';
 
 
 class ResumeAdPage extends Component {
@@ -73,7 +74,7 @@ class ResumeAdPage extends Component {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.delete("http://127.0.0.1:8000/api/ads/" + id, config)
+        axios.delete(ADS_URL + '/' + id, config)
         
             .then(response => 
                 toast.info("👌 L'annonce a été supprimée avec succès"),

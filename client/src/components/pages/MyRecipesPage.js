@@ -4,6 +4,7 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import ListLoader from '../../loaders/ListLoader';
 import { toast } from 'react-toastify';
+import { RECIPES_URL, USERS_URL } from '../../services/config';
 
 
 const MyRecipesPage = () => {
@@ -19,7 +20,7 @@ const MyRecipesPage = () => {
 
     //Requête pour avoir les recettes qu'il a crée
 		axios
-      .get("http://localhost:8000/api/users/"+id+"/recipes/")
+      .get(USERS_URL + '/' + id + "/recipes/")
       .then(res => {
         const data = res.data['hydra:member'].reverse();
         setLoading(false)
@@ -38,7 +39,7 @@ const MyRecipesPage = () => {
       setRecipes(Recipes.filter(recipe => recipe.id !== id))
 
       axios
-        .delete("http://localhost:8000/api/recipes/"+id, config)
+        .delete(RECIPES_URL + '/' + id, config)
         .then(response => 
             toast.info("👌 Votre recette a été supprimée avec succès")
             )

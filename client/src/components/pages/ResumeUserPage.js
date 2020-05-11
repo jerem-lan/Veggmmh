@@ -3,6 +3,7 @@ import axios from 'axios';
 import ListLoader from '../../loaders/ListLoader';
 import { NavLink } from 'react-router-dom';
 import PaginationForTab from '../PaginationForTab'
+import { USERS_URL } from '../../services/config';
 
 class ResumeUserPage extends Component {
     state = {
@@ -57,14 +58,14 @@ class ResumeUserPage extends Component {
             headers: { Authorization: `Bearer ${token}` }
         };
         axios
-            .get("http://localhost:8000/api/users/"+id+"/ads", config)
+            .get(USERS_URL + '/' + id + "/ads", config)
             .then(res => {
             const ads = res.data['hydra:member'];
             this.setState({loading : false, ads : ads})
         });
         //Requête pour avoir les recettes qu'il a crée
         axios
-            .get("http://localhost:8000/api/users/"+id+"/recipes", config)
+            .get(USERS_URL + '/' + id + "/recipes", config)
             .then(res => {
             const recipes = res.data['hydra:member'];
             this.setState({loading : false, recipes : recipes})

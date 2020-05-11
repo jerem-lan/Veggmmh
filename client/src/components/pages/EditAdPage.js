@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import AlertMessage from '../AlertMessage';
+import { ADS_URL } from '../../services/config';
 
 const EditAdPage = (props) => {
 
@@ -53,10 +54,9 @@ const EditAdPage = (props) => {
             content: Content,
             postcode: Postcode
         };
-        console.log(ad)
         //on donne le header et les données à axios
         try { await axios.put( 
-            'http://localhost:8000/api/ads/'+Id,
+            ADS_URL + '/' + Id,
             ad,
             config
           );

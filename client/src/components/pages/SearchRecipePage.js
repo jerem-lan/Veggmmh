@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from "axios";
 import IngredientBlockButton from '../IngredientBlockButton';
+import DefaultLoader from '../../loaders/DefaultLoader';
+import { INGREDIENTS_URL } from '../../services/config';
 
 class SearchRecipePage extends Component {
     state = { 
@@ -9,16 +11,18 @@ class SearchRecipePage extends Component {
         ingList: [],
         ingByFamily: [], //Tableau des ingrédients en fonction du choix du type
         ingSelect: [], //Selection effectuée par l'utilisateur
-        select: '' //Ingrédient selectionné actuellement
+        select: '', //Ingrédient selectionné actuellement
+        loading: true
     }
     
     //Récupère les données de l'API et remplit le State ingredients
     componentDidMount() {
-        try { axios.get("http://127.0.0.1:8000/api/ingredients")
+        try { axios.get(INGREDIENTS_URL)
             .then(res => {
                 this.setState({ 
                     ingredients: res.data["hydra:member"],
-                    ingTampon: res.data["hydra:member"]
+                    ingTampon: res.data["hydra:member"],
+                    loading : false
                 })
             })
         }catch(error) {console.log(error.response)}
@@ -103,63 +107,68 @@ class SearchRecipePage extends Component {
         //     )})
 
         return (
-            <div className="container">
-                <h2 className="SectionTitle">Trouver une recette</h2>
-                <form onSubmit= {this.handleSubmit} value={this.state.ingByFamily}>
+            <Fragment>
+                {this.state.loading && <DefaultLoader />} 
+                {!this.state.loading && <>
+                    <div className="container">
+                        <h2 className="SectionTitle">Trouver une recette</h2>
+                        <form onSubmit= {this.handleSubmit} value={this.state.ingByFamily}>
 
-                    {this.state.ingSelect.length === 0 ? <> </> : 
-                    <>
-                        <label className="label">Mes ingrédients</label>
-                        <div className="fruitVegBlocks" > 
-                        {
-                            this.state.ingSelect.map((ingredientName) => 
-                                <IngredientBlockButton
-                                    key={ingredientName.id}
-                                    id={ingredientName.id}
-                                    family={ingredientName.family}
-                                    name={ingredientName.name}
-                                    icon={ingredientName.icon}
-                                    value={ingredientName.name}
-                                    handleAdd={this.handleDelete}
-                                    style={ingredientName.family}
-                                />
-                            )
-                        }
-                        </div>
-                        <button className="btn btn--validate btn--recipeSearch">Lancer la recherche</button>
-                    </>}
-                
-                    {/* <label className="label">Rechercher un ingrédient</label> */}
-                    <div className="select">
-                        <select name="family" id="family" size="1" onChange={this.handleFamily}>
-                            <option hidden>Rechercher un ingrédient</option>
-                            <option value="féculents">Féculents</option>
-                            <option value="légumes">Légumes</option>
-                            <option value="légumineuses">Légumineuses</option>
-                            <option value="fruits">Fruits</option>
-                            <option value="matière grasse">Matières grasses</option>
-                            <option value="aliments sucrés">Aliments sucrés</option>
-                            <option value="boisson">Boissons</option>
-                        </select>
+                            {this.state.ingSelect.length === 0 ? <> </> : 
+                            <>
+                                <label className="label">Mes ingrédients</label>
+                                <div className="fruitVegBlocks" > 
+                                {
+                                    this.state.ingSelect.map((ingredientName) => 
+                                        <IngredientBlockButton
+                                            key={ingredientName.id}
+                                            id={ingredientName.id}
+                                            family={ingredientName.family}
+                                            name={ingredientName.name}
+                                            icon={ingredientName.icon}
+                                            value={ingredientName.name}
+                                            handleAdd={this.handleDelete}
+                                            style={ingredientName.family}
+                                        />
+                                    )
+                                }
+                                </div>
+                                <button className="btn btn--validate btn--recipeSearch">Lancer la recherche</button>
+                            </>}
+                        
+                            {/* <label className="label">Rechercher un ingrédient</label> */}
+                            <div className="select">
+                                <select name="family" id="family" size="1" onChange={this.handleFamily}>
+                                    <option hidden>Rechercher un ingrédient</option>
+                                    <option value="féculents">Féculents</option>
+                                    <option value="légumes">Légumes</option>
+                                    <option value="légumineuses">Légumineuses</option>
+                                    <option value="fruits">Fruits</option>
+                                    <option value="matière grasse">Matières grasses</option>
+                                    <option value="aliments sucrés">Aliments sucrés</option>
+                                    <option value="boisson">Boissons</option>
+                                </select>
+                            </div>
+                            <div className="fruitVegBlocks ingredientBlock--family" > 
+                            {
+                                this.state.ingByFamily.sort(tri).map((ingredient) => 
+                                    <IngredientBlockButton
+                                        key={ingredient.id}
+                                        id={ingredient.id}
+                                        family={ingredient.family}
+                                        name={ingredient.name}
+                                        icon={ingredient.icon}
+                                        value={ingredient.name}
+                                        handleAdd={this.handleAdd}
+                                        style={ingredient.family}
+                                    />
+                                )
+                            }
+                            </div>
+                        </form>
                     </div>
-                    <div className="fruitVegBlocks ingredientBlock--family" > 
-                    {
-                        this.state.ingByFamily.sort(tri).map((ingredient) => 
-                            <IngredientBlockButton
-                                key={ingredient.id}
-                                id={ingredient.id}
-                                family={ingredient.family}
-                                name={ingredient.name}
-                                icon={ingredient.icon}
-                                value={ingredient.name}
-                                handleAdd={this.handleAdd}
-                                style={ingredient.family}
-                            />
-                        )
-                    }
-                    </div>
-                </form>
-            </div>
+                </>}
+            </Fragment>
         )
     }
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import { API_URL } from './config';
 
 function logout() {
     //recupere le token et l'efface
@@ -11,7 +12,7 @@ function logout() {
 
 function authenticate(state) {
     return axios
-    .post("http://127.0.0.1:8000/api/login_check", state)
+    .post(API_URL + 'login_check', state)
     .then(response => response.data.token)
     .then(token => {
         //stocke le token dans mon locastorage

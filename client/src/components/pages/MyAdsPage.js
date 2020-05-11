@@ -5,6 +5,7 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import ListLoader from '../../loaders/ListLoader';
 import { toast } from 'react-toastify';
+import { ADS_URL, USERS_URL } from '../../services/config';
 
 
 const MyAdsPage = () => {
@@ -20,7 +21,7 @@ const MyAdsPage = () => {
 
     //Requête pour avoir les annonces qu'il a crée
     axios
-      .get("http://localhost:8000/api/users/"+id+"/ads/")
+      .get(USERS_URL + '/' + id + '/ads/')
       .then(res => {
         const data = res.data['hydra:member'].reverse();
         setLoading(false)
@@ -41,7 +42,7 @@ const MyAdsPage = () => {
 		setAds(Ads.filter(ad => ad.id !== id))
 
 		axios
-		.delete("http://localhost:8000/api/ads/"+id, config)
+		.delete(ADS_URL + '/' + id, config)
     .then(response => 
           toast.info("👌 Votre annonce a été supprimée avec succès")
           )

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import axios from "axios";
 import FruitVegBlock from '../FruitVegBlock'
 import DefaultLoader from '../../loaders/DefaultLoader';
+import { INGREDIENTS_URL } from '../../services/config';
 
 class CalendarPage extends Component {
    
@@ -15,7 +16,7 @@ class CalendarPage extends Component {
 
     // recupère les fruits/légumes dans Ingredient issu des données de l'API
     componentDidMount() {
-        try { axios.get("http://127.0.0.1:8000/api/ingredients")
+        try { axios.get(INGREDIENTS_URL)
             .then(res => res.data["hydra:member"])
             .then((data) => {
                 //retourne un nouveau tableau contenant tous les éléments du tableau d'ingrédients qui ont légumes ou fruits comme family

@@ -6,6 +6,7 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import ListLoader from '../../loaders/ListLoader';
 import { toast } from 'react-toastify';
+import { USERS_URL, BOOKMARKS_URL } from '../../services/config';
 
 
 const MyFavRecipesPages = () => {
@@ -21,7 +22,7 @@ const MyFavRecipesPages = () => {
     
       //Requête pour avoir ses recettes favorites  
       axios
-        .get("http://localhost:8000/api/users/"+id+"/bookmarks/")
+        .get(USERS_URL + '/' + id + "/bookmarks/")
         .then(res => {
           const data = res.data['hydra:member'].reverse();
           setLoading(false)
@@ -44,7 +45,7 @@ const MyFavRecipesPages = () => {
       setFavRecipes(favRecipes.filter(recipe => recipe.id !== id))
 
       axios
-      .put("http://localhost:8000/api/bookmarks/"+user+"/delete", recipe, config)
+      .put(BOOKMARKS_URL + '/' + user + "/delete", recipe, config)
       .then(response => 
           toast.info("👌 Votre recette favorite a été supprimée avec succès")
           )

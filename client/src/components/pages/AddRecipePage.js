@@ -4,6 +4,7 @@ import Autosuggest from 'react-autosuggest';
 import { toast } from 'react-toastify';
 import AlertMessage from '../AlertMessage';
 import inputControls from '../../services/inputControls';
+import { RECIPES_URL, INGREDIENTS_URL } from '../../services/config';
 
 class AddRecipePage extends Component {
 
@@ -26,7 +27,7 @@ class AddRecipePage extends Component {
     //Récupère les données de Ingrédients issues de l'API. 
     //Appellée une fois que le composant AddRecipePage a été rendu correctement dans le DOM réel. 
     componentDidMount() {
-        axios.get("http://127.0.0.1:8000/api/ingredients")
+        axios.get(INGREDIENTS_URL)
             .then(res => {
                 const ingredients = res.data['hydra:member']
                 this.setState({ ingredients });
@@ -191,7 +192,7 @@ class AddRecipePage extends Component {
         if (inputControls.spaceVerif(recipe.recipeTitle) && testArray.every(arraySpace)) {
             if (recipe.quantity && recipe.steps !== "") {
                 try { await axios.post( 
-                    'http://localhost:8000/api/recipes',
+                    RECIPES_URL,
                     recipe,
                     config
                     );

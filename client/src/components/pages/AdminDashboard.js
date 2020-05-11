@@ -5,6 +5,7 @@ import authApi from '../../services/authApi';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import DashBoardLoader from '../../loaders/DashBoardLoader';
+import { USERS_URL } from '../../services/config';
 
 
 class AdminDashboard extends Component {
@@ -20,7 +21,7 @@ class AdminDashboard extends Component {
             const decoded = jwtDecode(token)
             const id = decoded.id     
             axios
-                .get("http://127.0.0.1:8000/api/users/"+id)
+                .get(USERS_URL + '/' + id)
                 .then(res => {
                     const user = res.data;
                     this.setState({ 
