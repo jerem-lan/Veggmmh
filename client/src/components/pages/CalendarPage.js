@@ -96,7 +96,7 @@ class CalendarPage extends Component {
                         </div>
 
                         <label className="label">Rechercher par mois</label>
-                        <div class="select">
+                        <div className="select">
                             <select name="month" id="month" size="1" onChange={this.handleMonth}/>
                         </div>   
                         <div className="fruitVegBlocks" >

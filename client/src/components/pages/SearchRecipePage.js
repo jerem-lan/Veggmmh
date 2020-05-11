@@ -130,7 +130,7 @@ class SearchRecipePage extends Component {
                     </>}
                 
                     {/* <label className="label">Rechercher un ingrédient</label> */}
-                    <div class="select">
+                    <div className="select">
                         <select name="family" id="family" size="1" onChange={this.handleFamily}>
                             <option hidden>Rechercher un ingrédient</option>
                             <option value="féculents">Féculents</option>

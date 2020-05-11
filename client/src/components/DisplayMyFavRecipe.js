@@ -13,7 +13,7 @@ const DisplayFavRecipe = ({ id, title, type, handleDeleteFavRecipe }) => {
 					style={ { backgroundColor: '#e3fcf3'} } 
 				>
 					{/* <FavButton /> */}
-                    <p class="recipeTypeTag recipeTypeTag--table">{type}</p>
+                    <p className="recipeTypeTag recipeTypeTag--table">{type}</p>
 					<NavLink to={{
 						pathname: `/recette/${id}`,
 						props: {
