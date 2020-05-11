@@ -76,7 +76,7 @@ const Root = () => {
                     />
                     
                     <Route  
-                        path='/login'
+                        exact path='/login'
                         render={(props) => 
                         <LoginPage 
                             onLogin={setIsConnected}
@@ -86,7 +86,7 @@ const Root = () => {
                     />
 
                     <Route 
-                        path='/register' 
+                        exact path='/register' 
                         render={(props) => 
                         <RegistrationPage
                             BackWithRouter={BackWithRouter}
@@ -95,22 +95,22 @@ const Root = () => {
                     />
 
                     <Route
-                        path='/dashboard'
+                        exact path='/dashboard'
                         component={DashboardPage} 
                     />
 
                     <Route 
-                        path='/calendrier-des-saisons'
+                        exact path='/calendrier-des-saisons'
                         component={CalendarPage}
                     />
 
                     <Route
-                        path="/liste-annonces"
+                        exact path="/liste-annonces"
                         component={ListAdPage}
                     />
 
                     <Route 
-                        path='/carte-ingredient/:name'
+                        exact path='/carte-ingredient/:name'
                         render={(props) => 
                         <SeasonalItemCardPage
                             BackWithRouter={BackWithRouter}
@@ -119,7 +119,7 @@ const Root = () => {
                     />
 
                     <Route 
-                        path='/annonce/:id'
+                        exact path='/annonce/:id'
                         render={(props) => 
                             <ResumeAdPage
                                 BackWithRouter={BackWithRouter}
@@ -128,12 +128,12 @@ const Root = () => {
                     />
                     
                     <Route 
-                        path="/trouver-recette"
+                        exact path="/trouver-recette"
                         component={SearchRecipePage}
                     />
 
                     <Route 
-                        path="/liste-recette"
+                        exact path="/liste-recette"
                         render={(props) => 
                             <ListRecipePage
                                 BackWithRouter={BackWithRouter}
@@ -142,7 +142,7 @@ const Root = () => {
                     />
 
                     <Route 
-                        path="/recette/:id"
+                        exact path="/recette/:id"
                         render={(props) => 
                             <ResumeRecipe
                             BackWithRouter={BackWithRouter}
@@ -153,67 +153,67 @@ const Root = () => {
                     {/* ROUTE UTILISATEUR CONNECTE */}
 
                     <PrivateRoute
-                        path="/ajouter-annonce"
+                        exact path="/ajouter-annonce"
                         component={AddAdPage}
                     />
                     
                     <PrivateRoute 
-                        path="/mes-recettes" 
+                        exact path="/mes-recettes" 
                         component={MyRecipesPage} 
                     />
                     <PrivateRoute 
-                        path="/mes-recettes-favorites" 
+                        exact path="/mes-recettes-favorites" 
                         component={MyFavRecipesPage} 
                     />
                     <PrivateRoute 
-                        path="/mes-annonces" 
+                        exact path="/mes-annonces" 
                         isAuthenticated={isConnected}
                         component={MyAdsPage} 
                     />
                     <PrivateRoute 
-                        path="/ajouter-recette"
+                        exact path="/ajouter-recette"
                         component={AddRecipePage} 
                     />
                    
                     <PrivateRoute
-                        path="/utilisateur/:id"
+                        exact path="/utilisateur/:id"
                         component={ResumeUserPage}
                     />
                     <PrivateRoute 
-                        path='/modifier-annonce' 
+                        exact path='/modifier-annonce' 
                         component={EditAdPage} 
                     />
                     <PrivateRoute 
-                        path='/modifier-recette/:id' 
+                        exact path='/modifier-recette/:id' 
                         component={EditRecipePage} 
                     />
                     {/*ROUTE ADMIN*/}
                     <AdminRoute 
-                        path="/admin/dashboard"
+                        exact path="/admin/dashboard"
                         isAdmin={isAdmin}
                         component={AdminDashboard}
                     />
 
                     <AdminRoute 
-                        path="/admin/gerer-recettes"
+                        exact path="/admin/gerer-recettes"
                         isAdmin={isAdmin}
                         component={ManageRecipes}
                     />
 
                     <AdminRoute 
-                        path="/admin/gerer-annonces"
+                        exact path="/admin/gerer-annonces"
                         isAdmin={isAdmin}
                         component={ManageAds}
                     />
 
                     <AdminRoute 
-                        path="/admin/gerer-ingredients"
+                        exact path="/admin/gerer-ingredients"
                         isAdmin={isAdmin}
                         component={ManageIngredients}
                     />
 
                     <AdminRoute 
-                        path="/admin/gerer-utilisateurs"
+                        exact path="/admin/gerer-utilisateurs"
                         isAdmin={isAdmin}
                         component={ManageUsers}
                     />
