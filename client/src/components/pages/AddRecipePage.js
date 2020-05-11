@@ -38,7 +38,6 @@ class AddRecipePage extends Component {
 
     //Récupere et set la valeur de l'élément ciblé en fonction de son attribut name.
     handleChange = (event) => {
-        event.preventDefault();
         const { name, value } = event.target;
         this.setState({ [name]: value });
     };
@@ -361,12 +360,12 @@ class AddRecipePage extends Component {
                         <label className="label" htmlFor="type">Tag</label>
                         <div className="btn--radio">
                             <div>
-                                <input type="radio" id="apero" name="type" value="Apero" onChange={this.handleChange}/>
+                                <input type="radio" id="apero" name="type" value="Apéro" onChange={this.handleChange}/>
                                 <label htmlFor="apero">Apéro</label>
                             </div>
                             <div>
-                                <input type="radio" id="entree" name="type" value="Entree" onChange={this.handleChange}/>
-                                <label htmlFor="entree">Entrée</label>
+                                <input type="radio" id="entrée" name="type" value="Entrée" onChange={this.handleChange}/>
+                                <label htmlFor="entrée">Entrée</label>
                             </div>
                             <div>
                                 <input type="radio" id="plat" name="type" value="Plat" onChange={this.handleChange}/>

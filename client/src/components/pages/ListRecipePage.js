@@ -11,7 +11,7 @@ class ListRecipePage extends Component {
         ingredients:[],
         recipeSelect: [],
         filters: {
-                apero: false,
+                apéro: false,
                 entrée: false, 
                 plat: false, 
                 dessert: false
@@ -19,7 +19,7 @@ class ListRecipePage extends Component {
         filteredItems: [],
         isCheck: [
             {
-                apero: false,
+                apéro: false,
                 entrée: false, 
                 plat: false, 
                 dessert: false
