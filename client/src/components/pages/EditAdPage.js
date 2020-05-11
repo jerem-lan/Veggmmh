@@ -74,54 +74,45 @@ const EditAdPage = (props) => {
             } 
         }
     }
-        return (
-                <div className="container">
-                <form
-                    className='form'
-                    onSubmit = {handleSubmit}
-                    >
-                    <label>
-                        <h3>Titre de l'annonce</h3>
-
-                        <input
-                            name='Title'
-                            value={Title}
-                            onChange={handleTitleChange}
-                            type="text"
-                            required
-                        >
-                        </input>
-                        {Error.title ? <AlertMessage message = { Error.title }  /> : ""}
-                        <h3>Description de l'annonce</h3>
-
-                        <textarea
-                            name='Content'
-                            value={Content}
-                            onChange={handleContentChange}
-                            type="text"
-                            rows="10" 
-                            cols="40"
-                            required
-                        />
-                        {Error.content ? <AlertMessage message = { Error.content }  /> : ""}
-                        <h3>Localisation</h3>
-
-                        <input
-                            name='Postcode'
-                            value={Postcode}
-                            onChange={handlePostcodeChange}
-                            type="text"
-                            required
-                        >
-                        </input>
-                        {Error.postcode ? <AlertMessage message = { Error.postcode }  /> : ""}
-                    </label>
-                    <button className="btn" type='submit' >
-                        Envoyer!
-                    </button>
-                </form>
-            </div>
-            );
+    return (
+        <div className="container">
+            <h2 className="SectionTitle">Modifier mon annonce</h2>
+            <form className='form' onSubmit= {handleSubmit}>
+                <span>
+                    <label className="label" htmlFor="Title">Titre de mon annonce</label>
+                    <input
+                        className='input'
+                        name='Title'
+                        value={Title}
+                        onChange={handleTitleChange}
+                        type="text"
+                        required/>
+                    {Error.title ? <AlertMessage message = { Error.title }  /> : ""}
+                        
+                    <label className="label" htmlFor="description">Description de mon annonce</label>
+                    <textarea
+                        className="textarea textarea--adDescription"
+                        name='Content'
+                        value={Content}
+                        onChange={handleContentChange}
+                        type="text"
+                        required/>
+                    {Error.content ? <AlertMessage message = { Error.content }  /> : ""}
+                        
+                    <label className="label" htmlFor="localisation">Localisation</label>
+                    <input
+                        className='input'
+                        name='Postcode'
+                        value={Postcode}
+                        onChange={handlePostcodeChange}
+                        type="text"
+                        required/>
+                    {Error.postcode ? <AlertMessage message = { Error.postcode }  /> : ""}
+                </span>
+                <button className="btn btn--validate" type='submit' >Modifier mon annonce</button>
+            </form>
+        </div>
+    );
 
         
 }

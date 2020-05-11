@@ -117,8 +117,7 @@ class RegistrationPage extends Component {
                             className="subscriptionInput inputBottomMargin" 
                             type="email" 
                             placeholder="Adresse mail"
-                            required
-                        />
+                            required/>
                         {this.state.error.email ? <AlertMessage message = { this.state.error.email }  /> : ""}
                         <input 
                             name='username' 
@@ -134,19 +133,15 @@ class RegistrationPage extends Component {
                             name='password' 
                             value={this.state.password} 
                             onChange={this.handleChange} 
-                            className="subscriptionInput" 
+                            className="subscriptionInput password" 
                             type="password" 
                             pattern= "^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,})$"
                             placeholder="Mot de passe" 
                             required
                         />
-                        <p>- Votre mot de passe doit contenir au moins 8 caractères.</p>
-                        <p>- Votre mot de passe doit contenir au moins une minuscule.</p>
-                        <p>- Votre mot de passe doit contenir au moins une majuscule.</p>
-                        <p>- Votre mot de passe doit contenir au moins un caractère spécial parmis : $ @ % * + - _ !</p>
+                        <p className="passwordWarning">Votre mot de passe doit contenir au moins 8 caractères dont une minuscule, une  majuscule et un caractère spécial parmis $ @ % * + - _ !</p>
                         {this.state.error.password ? <AlertMessage message = { this.state.error.password }  /> : ""}
-                        
-                            <button className="btn" type="submit">Créer un compte</button> 
+                        <button className="btn" type="submit">Créer un compte</button> 
                     </form>
                     <Link to="/login" className="psswrdForgotten">J'ai déjà un compte</Link>
                 </div>

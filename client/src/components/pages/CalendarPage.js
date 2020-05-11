@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import axios from "axios";
 import FruitVegBlock from '../FruitVegBlock'
 import DefaultLoader from '../../loaders/DefaultLoader';
@@ -74,7 +74,7 @@ class CalendarPage extends Component {
         )
 
         return (
-            <>
+            <Fragment>
                 {loading && <DefaultLoader />} 
                 {!loading && <>
                     <div className="container">
@@ -83,41 +83,41 @@ class CalendarPage extends Component {
                         <input className="input input--search" type='text' onChange={this.handleChange} value={this.state.search} placeholder="Ex: tomate"/>
                         <div className="fruitVegBlocks">
                             {this.state.search === "" ? <></> : 
-                                itemSelectionDeux.length === 0 ? <> Aucun résultat </> : 
-                                    itemSelectionDeux.map((ingredient) => 
-                                        <FruitVegBlock
-                                            key={ingredient.id}
-                                            id={ingredient.id}
-                                            family={ingredient.family}
-                                            name={ingredient.name}
-                                            icon={ingredient.icon}
-                                            season={ingredient.season}
-                                        />)
+                                itemSelectionDeux.length === 0 ? <> Aucun résultat </> : itemSelectionDeux.map((ingredient) => 
+                                    <FruitVegBlock
+                                        key={ingredient.id}
+                                        id={ingredient.id}
+                                        family={ingredient.family}
+                                        name={ingredient.name}
+                                        icon={ingredient.icon}
+                                        season={ingredient.season}
+                                    />)
                             } 
                         </div>
 
                         <label className="label">Rechercher par mois</label>
-                        
-                            <select name="month" id="month"  size="1" onChange={this.handleMonth}></select>   
-                            <div className="fruitVegBlocks" >
-                                {
-                                    this.state.itemSelection.map((ingredient) => 
-                                    !loading && <FruitVegBlock
-                                            key={ingredient.id}
-                                            id={ingredient.id}
-                                            family={ingredient.family}
-                                            name={ingredient.name}
-                                            icon={ingredient.icon}
-                                            season={ingredient.season}
-                                        />
-                                        )
-                                }
-                            </div>  
+                        <div class="select">
+                            <select name="month" id="month" size="1" onChange={this.handleMonth}/>
+                        </div>   
+                        <div className="fruitVegBlocks" >
+                            {
+                                this.state.itemSelection.map((ingredient) => 
+                                !loading && <FruitVegBlock
+                                        key={ingredient.id}
+                                        id={ingredient.id}
+                                        family={ingredient.family}
+                                        name={ingredient.name}
+                                        icon={ingredient.icon}
+                                        season={ingredient.season}
+                                    />
+                                )
+                            }
+                        </div>
                     </div>
                 </>}
-            </>
+            </Fragment>
         )
-    }    
+    }
 }
 
 export default CalendarPage;

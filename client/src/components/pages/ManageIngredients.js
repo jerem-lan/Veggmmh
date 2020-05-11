@@ -172,22 +172,23 @@ class ManageIngredients extends Component {
                                             onChange={this.handleChange}
                                             value= {this.state.name}
                                         />
-                                        <select 
-                                            className="input" 
-                                            name="family" 
-                                            onChange={this.handleChange}
-                                            value={this.state.family}
-                                            required
-                                        >
-                                            <option defaultValue hidden>Famille de l'aliment</option>
-                                            <option value="Matière Grasse">Matière grasse</option>
-                                            <option value="légumineuses">Légumineuses</option>
-                                            <option value="légumes">Légumes</option>
-                                            <option value="aliments sucrés">Aliments sucrés</option>
-                                            <option value="féculents">Féculents</option>
-                                            <option value="fruits">Fruits</option>
-                                            <option value="Boisson">Boisson</option>
-                                        </select>
+                                        <div class="select select--manageIngredients">
+                                            <select 
+                                                name="family" 
+                                                onChange={this.handleChange}
+                                                value={this.state.family}
+                                                required
+                                            >
+                                                <option defaultValue hidden>Famille de l'aliment</option>
+                                                <option value="Matière Grasse">Matière grasse</option>
+                                                <option value="légumineuses">Légumineuses</option>
+                                                <option value="légumes">Légumes</option>
+                                                <option value="aliments sucrés">Aliments sucrés</option>
+                                                <option value="féculents">Féculents</option>
+                                                <option value="fruits">Fruits</option>
+                                                <option value="Boisson">Boisson</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <textarea 
                                         className="textarea textarea--steps"

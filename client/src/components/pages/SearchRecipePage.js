@@ -73,7 +73,7 @@ class SearchRecipePage extends Component {
 
     //Affiche les ingrédients en fonction du type selectionné
     handleFamily = (event) => {
-        const selectedFamily = event.target.options[event.target.selectedIndex].text
+        const selectedFamily = event.target.options[event.target.selectedIndex].value
        
         if (this.state.ingSelect.length !== 0) {
             const ing = this.state.ingredients.filter(item =>
@@ -94,41 +94,23 @@ class SearchRecipePage extends Component {
 
 
     render() { 
-        function tri(a,b)
-        {
-        return (a.name > b.name)?1:-1;
+        function tri(a,b) {
+            return (a.name > b.name)?1:-1;
         }
-        const families = ['légumes', 'fruits', 'boisson', 'matière grasse', 'aliments sucrés', 'féculents', 'légumineuses'].map((family, ind) => {
-        return(
-                <option name={family} key={ind} id={ind}  size="1" >{family}</option>
-            )})
+        // const families = ['légumes', 'fruits', 'boisson', 'matière grasse', 'aliments sucrés', 'féculents', 'légumineuses'].map((family, ind) => {
+        // return(
+        //         <option name={family} key={ind} id={ind}  size="1" >{family}</option>
+        //     )})
 
         return (
-            <form onSubmit= {this.handleSubmit} value={this.state.ingByFamily}>
-                <select name="family" id="family" size="1" onChange={this.handleFamily}>
-                    <option defaultValue>Choisir une famille d'ingrédient</option>
-                    {families}
-                </select>
-                <div className="fruitVegBlocks" > 
-                        {
-                            this.state.ingByFamily.sort(tri).map((ingredient) => 
-                                <IngredientBlockButton
-                                    key={ingredient.id}
-                                    id={ingredient.id}
-                                    family={ingredient.family}
-                                    name={ingredient.name}
-                                    icon={ingredient.icon}
-                                    value={ingredient.name}
-                                    handleAdd={this.handleAdd}
-                                />
-                            )
-                        }
-                    </div>
-                    <p>Selection</p>
-                    <button className="btn">
-                        Valider
-                    </button>
-                    <div className="fruitVegBlocks" > 
+            <div className="container">
+                <h2 className="SectionTitle">Trouver une recette</h2>
+                <form onSubmit= {this.handleSubmit} value={this.state.ingByFamily}>
+
+                    {this.state.ingSelect.length === 0 ? <> </> : 
+                    <>
+                        <label className="label">Mes ingrédients</label>
+                        <div className="fruitVegBlocks" > 
                         {
                             this.state.ingSelect.map((ingredientName) => 
                                 <IngredientBlockButton
@@ -139,11 +121,45 @@ class SearchRecipePage extends Component {
                                     icon={ingredientName.icon}
                                     value={ingredientName.name}
                                     handleAdd={this.handleDelete}
+                                    style={ingredientName.family}
                                 />
                             )
                         }
+                        </div>
+                        <button className="btn btn--validate btn--recipeSearch">Lancer la recherche</button>
+                    </>}
+                
+                    {/* <label className="label">Rechercher un ingrédient</label> */}
+                    <div class="select">
+                        <select name="family" id="family" size="1" onChange={this.handleFamily}>
+                            <option hidden>Rechercher un ingrédient</option>
+                            <option value="féculents">Féculents</option>
+                            <option value="légumes">Légumes</option>
+                            <option value="légumineuses">Légumineuses</option>
+                            <option value="fruits">Fruits</option>
+                            <option value="matière grasse">Matières grasses</option>
+                            <option value="aliments sucrés">Aliments sucrés</option>
+                            <option value="boisson">Boissons</option>
+                        </select>
                     </div>
-            </form>
+                    <div className="fruitVegBlocks ingredientBlock--family" > 
+                    {
+                        this.state.ingByFamily.sort(tri).map((ingredient) => 
+                            <IngredientBlockButton
+                                key={ingredient.id}
+                                id={ingredient.id}
+                                family={ingredient.family}
+                                name={ingredient.name}
+                                icon={ingredient.icon}
+                                value={ingredient.name}
+                                handleAdd={this.handleAdd}
+                                style={ingredient.family}
+                            />
+                        )
+                    }
+                    </div>
+                </form>
+            </div>
         )
     }
 }

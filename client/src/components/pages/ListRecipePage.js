@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import ListLoader from '../../loaders/ListLoader';
+import PaginationForTab from '../PaginationForTab';
 
 //recherche les recettes en fonction des ingrédients sélectionnés précédemment
 class ListRecipePage extends Component {
@@ -25,7 +26,8 @@ class ListRecipePage extends Component {
                 dessert: false
             }
         ],
-        loading: true
+        loading: true,
+        currentRecipesPage : 1,
     }
 
     componentDidMount(){
@@ -74,28 +76,33 @@ class ListRecipePage extends Component {
                 activeFilterTypes.some(
                   activeFilterType => activeFilterType === item.type
                 )
-              );
+            );
+            this.setState({
+                currentRecipesPage : 1
+            })
             return {
             filters,
             filteredItems
             };
-             
-        })
-        
+        }) 
+    }
+
+    handlePageChangedRecipes = (page) => {
+        this.setState({currentRecipesPage : page})
     }
 
     renderCheckboxes() {
         return Object.keys(this.state.filters).map((type, index) => {
           return (
-            <label key={index}>
-              <input
-                onChange={this.handleCheck}
-                type="checkbox"
-                checked={this.state.filters[type]}
-                name={type}
-              />
-              {type}
-            </label>
+            <div key={index}>
+                <input
+                    onChange={this.handleCheck}
+                    type="checkbox"
+                    checked={this.state.filters[type]}
+                    name={type}
+                />  
+                <label htmlFor={type}>{type}</label>
+            </div>
           );
         });
       }
@@ -109,33 +116,46 @@ class ListRecipePage extends Component {
         const items = this.state.filteredItems.length || isCheck(Object.values(this.state.filters).every(isCheck))
             ? this.state.filteredItems
             : this.state.recipeSelect
+
+        //Nombre d'élément affiché par page
+        const itemsPerPage = 5;
+
+        // Calcule qui slice le tableau des recettes en fonction de la page sur laquelle on se trouve : ANNONCES
+        const startRecipes = this.state.currentRecipesPage * itemsPerPage - itemsPerPage
+        const paginatedRecipes = items.slice(startRecipes, startRecipes + itemsPerPage)
            
-        
+        // Back Button Component
+        const BackWithRouter = this.props.BackWithRouter
+
         return (
-            <>
-                <div className="container--pageTitle">
-                    <h2 className="pageTitle">Trouver une recette</h2>
-                </div>
+            <Fragment>
+                <BackWithRouter />
                 <div className="container">
+                    <h2 className="SectionTitle">Recette(s) trouvée(s)</h2>
                     {loading && <ListLoader />}
 
                     {!loading && 
                     <>      
-                        <div>{this.renderCheckboxes()}</div>
-                        <h2>Recettes</h2>
-                        {!items.length ? <p>Aucune recette trouvée</p>  : items.map(recipe => 
+                        <div className="btn--radio">{this.renderCheckboxes()}</div>
+                        {!items.length ? <p>Aucune recette trouvée</p>  : paginatedRecipes.map(recipe => 
                         <div 
                             className="Card"
                             style={{ backgroundColor: '#e3fcf3' }} 
                             key={recipe.id}
-                        >  
+                        >
+                            <p class="recipeTypeTag recipeTypeTag--table">{recipe.type}</p> 
                             <Link to={"/recette/" + recipe.id} className="CardTitle"> 
                                 {recipe.recipeTitle}
                             </Link> 
                         </div>
                     )} </> }
+                    {items.length ?
+                        <div>
+                            <PaginationForTab currentPage={this.state.currentRecupesPage} itemsPerPage={itemsPerPage} length={items.length} onPageChanged={this.handlePageChangedRecipes}/>
+                        </div> : <></>
+                    }
                 </div>
-            </>
+            </Fragment>
         );
     }
 }

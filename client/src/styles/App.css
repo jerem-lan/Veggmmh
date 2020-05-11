@@ -66,6 +66,52 @@ select,
 textarea {
   background-color: transparent;
 }
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: transparent;
+  background-image: none;
+}
+select::-ms-expand {
+  display: none;
+}
+.select {
+  border: 1px solid #444;
+  position: relative;
+  display: flex;
+  max-width: fit-content;
+  line-height: 3;
+  overflow: hidden;
+  border-radius: 25px;
+  margin-bottom: 15px;
+}
+select {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1em;
+  font-weight: 600;
+  flex: 1;
+  padding: 7px 50px 7px 15px;
+  color: #444;
+  cursor: pointer;
+}
+.select::after {
+  content: '\02C5';
+  position: absolute;
+  color: #444;
+  font-size: 1.2em;
+  line-height: 2em;
+  top: 0;
+  right: 0;
+  padding: 0 15px;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: none;
+}
 textarea {
   resize: none;
 }
@@ -720,6 +766,40 @@ Add Recipe Page
 .btn--validate {
   align-self: flex-start;
 }
+.btn--recipeSearch {
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 40px;
+}
+.btn--contact {
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+.passwordWarning {
+  transform: translateY(-10px);
+  position: relative;
+  display: none;
+  background-color: rgba(170,218,201, .5);
+  border-radius: 7px;
+  padding: 7px 10px;
+  color: #444;
+  font-size: .8em;
+  font-weight: 500;
+}
+.passwordWarning:after {
+  content: "";
+  position: absolute;
+  top:0;
+  transform: translateY(-100%);
+  width: 0px;
+  height: 0px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 10px solid rgba(170,218,201, .5);
+}
+.password:focus + .passwordWarning {
+  display: inherit;
+}
 /* ----------------------------
 Favorites Pages
 ---------------------------- */
@@ -793,9 +873,13 @@ Resume Recipe Page
   min-width: 150px;
   margin: 0 15px 15px 0;
   font-size: 1em;
+  cursor:pointer;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 500;
   border-radius: 10px;
   padding: 15px;
   border: 1px solid #AADAC9;
+  color: #826489;
 }
 .ingredientBlock .icon {
   margin-bottom: 15px;
@@ -803,10 +887,72 @@ Resume Recipe Page
 .ingredientBlock span {
   max-width: 100px;
 }
-/* .step::before {
-  counter-increment: section;
-  content: counter(section);
-} */
+.ingredientBlock--button {
+  padding: 75px 15px 15px 15px;
+  transition: .2s;
+}
+.ingredientBlock--button:hover {
+  transform: scale(1.05);
+}
+.feculents {
+  border-color: bisque;
+  background-color: bisque;
+}
+.feculents:hover {
+  border-color: rgba(255,228,196, .5);;
+  background-color: rgba(255,228,196, .5);;
+}
+.legumes {
+  border-color: #DFE178;
+  background-color: #DFE178;
+}
+.legumes:hover {
+  background: rgba(223,225,120, .5);
+  border-color: rgba(223,225,120, .5);
+}
+.legumineuses {
+  border-color: #FFAF70;
+  background:#FFAF70;
+}
+.legumineuses:hover {
+  background: rgba(255,175,112, .5);
+  border-color:  rgba(255,175,112, .5);
+}
+.fruits {
+  border-color: #F18585;
+  background-color: #F18585;
+}
+.fruits:hover {
+  background: rgba(241,133,133, .5);
+  border-color: rgba(241,133,133, .5);
+}
+.matiere-grasse {
+  border-color: #FFCE6F;
+  background-color: #FFCE6F;
+}
+.matiere-grasse:hover {
+  background: rgba(255,206,111, .5);
+  border-color: rgba(255,206,111, .5);
+}
+.aliments-sucres {
+  border-color: #FDAEA7;
+  background-color: #FDAEA7;
+}
+.aliments-sucres:hover {
+  background: rgba(253,174,167, .5);
+  border-color: rgba(253,174,167, .5);
+}
+.boisson {
+  border-color: #9ADEBD;
+  background-color: #9ADEBD;
+}
+.boisson:hover {
+  background: rgba(154,222,189, .5);
+  border-color: rgba(154,222,189, .5);
+}
+.ingredientBlock--family > button {
+  background-color: transparent;
+}
 .steps {
   list-style: none;
   padding: 0;
@@ -933,17 +1079,20 @@ Calendar Page
 .fruitVegBlock:hover {
   transform: scale(1.05);
 }
-.fruits {
+.fruitVegBlock.fruits {
   border: 1px solid #F18585;
+  background: transparent;
+}
+.fruitVegBlock.fruits:hover {
+  background: rgba(241,133,133, .5);
+  border-color: rgba(241,133,133, .5);
 }
 .légumes {
   border: 1px solid #DFE178;
 }
-.fruits:hover {
-  background: rgba(241,133,133, .1);
-}
 .légumes:hover {
-  background: rgba(223,225,120, .1);
+  background: rgba(223,225,120, .5);
+  border-color: rgba(223,225,120, .5);
 }
 .fruitVegBlock a {
   display: flex;
