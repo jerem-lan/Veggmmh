@@ -48,7 +48,7 @@ class Recipe
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le type de la recette est obligatoire")
-     * @Assert\Choice(choices={"Apero","Entree","Plat","Dessert"}, message="Le type de plat doit être Apero, Entree, Plat ou Dessert")
+     * @Assert\Choice(choices={"Apéro","Entrée","Plat","Dessert"}, message="Le type de plat doit être Apero, Entree, Plat ou Dessert")
      * @Groups({"recipes_subresource", "recipe_read"})
      */
     private $type;
